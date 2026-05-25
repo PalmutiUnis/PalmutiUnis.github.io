@@ -3,28 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamer Portal - MPM Studio</title>
+    <title>Eerie Dash World — Store Page | Eerie Inc.</title>
     <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
-    
-    <!-- Google Fonts para estilo Acadêmico + Gamer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles.css">
+    <style>
+        :root {
+            --eerie-dark:   #0a0a12;
+            --eerie-purple: #6c2eff;
+            --eerie-violet: #9d5cff;
+            --eerie-glow:   #c084fc;
+            --eerie-cyan:   #22d3ee;
+            --eerie-red:    #c0392b;
+            --eerie-text:   #e2e8f0;
+            --eerie-muted:  #94a3b8;
+        }
+
+        body { background: var(--eerie-dark); color: var(--eerie-text); font-family: 'Outfit', sans-serif; }
+
+        /* ===== HERO ===== */
+        .store-hero {
+            position: relative;
+            width: 100%;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 2px solid #8b0000;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('img/screenshot_menu.png');
+            background-size: cover;
+            background-position: center top;
+            filter: brightness(0.35);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 3.5rem 2rem;
+        }
+
+        .hero-studio {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: #f97316;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin-bottom: 1.4rem;
+            opacity: 0.9;
+        }
+
+        .hero-logo {
+            max-width: 520px;
+            width: 90%;
+            margin: 0 auto 1.6rem;
+            display: block;
+            filter: drop-shadow(0 0 40px rgba(139,0,0,0.8));
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            max-width: 540px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.2rem;
+        }
+
+        .hero-badge {
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .badge-platform { background: rgba(139,0,0,0.35); border: 1px solid #8b0000; color: #fca5a5; }
+        .badge-genre    { background: rgba(34,211,238,0.12); border: 1px solid var(--eerie-cyan); color: var(--eerie-cyan); }
+        .badge-players  { background: rgba(251,146,60,0.15); border: 1px solid #f97316; color: #fb923c; }
+        .badge-status   { background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #4ade80; }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1rem 2.6rem;
+            background: linear-gradient(135deg, #8b0000, #c0392b);
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.72rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 24px rgba(139,0,0,0.6);
+        }
+        .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(200,0,0,0.75); }
+        .hero-cta svg { width: 18px; height: 18px; fill: currentColor; }
+
+        /* ===== STORE BODY ===== */
+        .store-body {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2.5rem;
+            align-items: start;
+        }
+        @media (max-width: 800px) { .store-body { grid-template-columns: 1fr; } }
+
+        /* ===== SCREENSHOTS ===== */
+        .gallery-section h2,
+        .desc-section h2 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.82rem;
+            color: #fca5a5;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.08em;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .screenshot-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(139,0,0,0.35);
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+        }
+        .screenshot-img:hover { transform: scale(1.03); border-color: #c0392b; }
+
+        /* ===== DESCRIPTION ===== */
+        .desc-section p {
+            color: var(--eerie-muted);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== CHARACTERS ===== */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .character-card {
+            background: rgba(139,0,0,0.1);
+            border: 1px solid rgba(139,0,0,0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .character-card .char-name {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: #fca5a5;
+            margin-bottom: 0.4rem;
+        }
+        .character-card .char-stat {
+            font-size: 0.82rem;
+            color: var(--eerie-muted);
+        }
+        .character-card .char-ability {
+            display: inline-block;
+            margin-top: 0.4rem;
+            background: rgba(139,0,0,0.25);
+            border: 1px solid rgba(192,57,43,0.4);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            color: #fb923c;
+            font-weight: 600;
+        }
+
+        /* FEATURES LIST */
+        .features-list { list-style: none; padding: 0; margin: 1rem 0; }
+        .features-list li {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: var(--eerie-text);
+            font-size: 0.95rem;
+        }
+        .features-list li:last-child { border-bottom: none; }
+        .features-list li span.icon { color: #f97316; font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+
+        /* ===== SIDEBAR ===== */
+        .store-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .sidebar-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(139,0,0,0.25);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .sidebar-card h3 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: #fca5a5;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.88rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-row .label { color: var(--eerie-muted); }
+        .info-row .value { color: var(--eerie-text); font-weight: 600; }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 0.88rem;
+        }
+        .team-member:last-child { border-bottom: none; }
+        .member-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: linear-gradient(135deg, #8b0000, #c0392b);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 800; color: #fff; flex-shrink: 0;
+        }
+
+        .btn-primary-store {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.6rem; padding: 0.9rem 1.5rem;
+            background: linear-gradient(135deg, #8b0000, #c0392b);
+            color: #fff; font-weight: 700; font-size: 0.95rem;
+            border-radius: 8px; text-decoration: none;
+            transition: all 0.2s; box-shadow: 0 4px 20px rgba(139,0,0,0.5);
+            margin-bottom: 0.75rem;
+        }
+        .btn-primary-store:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(200,0,0,0.7); }
+        .btn-primary-store svg { width: 18px; height: 18px; fill: currentColor; }
+
+        .btn-secondary-store {
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.6rem; padding: 0.9rem 1.5rem;
+            background: transparent; color: #fca5a5;
+            font-weight: 600; font-size: 0.9rem; border-radius: 8px;
+            text-decoration: none; border: 1px solid rgba(192,57,43,0.4);
+            transition: all 0.2s;
+        }
+        .btn-secondary-store:hover { background: rgba(139,0,0,0.15); border-color: #c0392b; }
+        .btn-secondary-store svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            color: var(--eerie-muted); font-size: 0.85rem; text-decoration: none;
+            padding: 0.75rem 1.5rem; transition: color 0.2s;
+        }
+        .back-link:hover { color: #fca5a5; }
+        .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .section-divider { border: none; border-top: 1px solid rgba(139,0,0,0.2); margin: 2rem 0; }
+
+        /* Lightbox simples */
+        .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:1000; align-items:center; justify-content:center; }
+        .lightbox.active { display:flex; }
+        .lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; }
+        .lightbox-close { position:absolute; top:20px; right:28px; font-size:2rem; color:#fff; cursor:pointer; }
+    </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO DA PÁGINA -->
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <!-- CABEÇALHO -->
     <header class="main-header">
         <div class="header-container">
-            <!-- Espaço reservado para a logo da instituição (Substitua a div por <img src="sua-logo.png" alt="Logo"> quando tiver o arquivo) -->
-            <div class="institution-logo-container" id="logo-placeholder">
+            <div class="institution-logo-container">
                 <span>
-                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
+                    <a href="https://portal.unis.edu.br/?hsLang=pt-br">
+                        <img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&height=60&name=LogoUnisBranca.png"
+                             height="60" style="height:auto;width:97px;border:0;" width="97" alt="Logo UNIS">
+                    </a>
                 </span>
             </div>
-            
             <div class="header-titles">
                 <h1>EXPO_GAMES_PORTAL v1.0</h1>
                 <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
@@ -32,21 +323,181 @@
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        <section>
+    <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Voltar ao Portal
+    </a>
 
-        </section>
-    </main>
-''
+    <!-- HERO -->
+    <section class="store-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-studio">⚡ Eerie Inc. &nbsp;·&nbsp; Mostra de Games UNIS 2026</p>
+
+            <!-- Usa o screenshot do menu como "logo" -->
+            <img src="img/screenshot_menu.png" class="hero-logo"
+                 alt="Eerie Dash World"
+                 style="max-width:460px; border-radius:12px; border:2px solid rgba(139,0,0,0.5);">
+
+            <p class="hero-subtitle">
+                Escolha seu personagem e enfrente um mundo sombrio cheio de plataformas, obstáculos
+                e desafios cronometrados. Velocidade, dash e wall jump — você vai precisar de tudo.
+            </p>
+            <div class="hero-badges">
+                <span class="hero-badge badge-platform">🖥️ PC / Desktop</span>
+                <span class="hero-badge badge-genre">🎮 Plataforma 2D</span>
+                <span class="hero-badge badge-players">👥 2 Personagens</span>
+                <span class="hero-badge badge-status">✅ Em Desenvolvimento</span>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1zeP3Ch_ZYUd7UBp7aGVDB0CpJ9Ram2Nq?usp=sharing" target="_blank" class="hero-cta">
+                <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                BAIXAR O JOGO
+            </a>
+        </div>
+    </section>
+
+    <!-- STORE BODY -->
+    <div class="store-body">
+        <main>
+
+            <!-- GALERIA DE SCREENSHOTS -->
+            <section class="gallery-section">
+                <h2>📸 CAPTURAS DE TELA</h2>
+                <div class="screenshots-grid">
+                    <img src="img/screenshot_menu.png"        class="screenshot-img" alt="Menu Principal"      onclick="openLightbox(this.src)">
+                    <img src="img/screenshot_gameplay.png"    class="screenshot-img" alt="Gameplay"            onclick="openLightbox(this.src)">
+                    <img src="img/screenshot_characters1.png" class="screenshot-img" alt="Seleção de Personagem — Erie" onclick="openLightbox(this.src)">
+                    <img src="img/screenshot_characters2.png" class="screenshot-img" alt="Seleção de Personagem — Cubo" onclick="openLightbox(this.src)">
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- SOBRE O JOGO -->
+            <section class="desc-section">
+                <h2>🕹️ SOBRE O JOGO</h2>
+                <p>
+                    <strong style="color:#fca5a5;">Eerie Dash World</strong> é um jogo de plataforma 2D de ritmo acelerado
+                    desenvolvido pela <strong style="color:#fca5a5;">Eerie Inc.</strong> para a Mostra de Games Acadêmicos do
+                    Centro Universitário UNIS.
+                </p>
+                <p>
+                    Em um mundo sombrio com floresta obscura ao fundo, o jogador escolhe entre dois personagens
+                    distintos e enfrenta fases cronometradas repletas de plataformas, obstáculos e coletáveis.
+                    Cada personagem possui habilidades únicas — velocidade, dash e wall jump — que mudam
+                    completamente a forma de jogar.
+                </p>
+                <p>
+                    Com controles fluidos e mecânicas bem encadeadas, o desafio cresce a cada capítulo.
+                    Colete todos os itens, bata seu recorde de tempo e descubra até onde você consegue chegar.
+                </p>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- PERSONAGENS -->
+            <section class="desc-section">
+                <h2>👾 PERSONAGENS</h2>
+                <div class="characters-grid">
+                    <div class="character-card">
+                        <div class="char-name">ERIE</div>
+                        <div class="char-stat">Demônio vermelho com chifres e cauda</div>
+                        <div class="char-ability">⚡ Velocidade & Dash</div>
+                        <div class="char-ability" style="margin-left:4px;">🧱 Dash Wall Jump</div>
+                    </div>
+                    <div class="character-card">
+                        <div class="char-name">CUBO SOMBRIO</div>
+                        <div class="char-stat">Criatura quadrada e misteriosa</div>
+                        <div class="char-ability">🌑 Habilidade Especial</div>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+
+            <!-- FEATURES -->
+            <section class="desc-section">
+                <h2>⭐ CARACTERÍSTICAS</h2>
+                <ul class="features-list">
+                    <li><span class="icon">🎮</span><span><strong>2 personagens jogáveis</strong> com habilidades distintas — Erie (Dash + Wall Jump) e o Cubo Sombrio.</span></li>
+                    <li><span class="icon">⏱️</span><span><strong>Sistema de cronômetro</strong> — corra contra o tempo e bata seus recordes em cada fase.</span></li>
+                    <li><span class="icon">💰</span><span><strong>Coletáveis</strong> — itens espalhados pelas fases para maximizar sua pontuação.</span></li>
+                    <li><span class="icon">🗺️</span><span><strong>Chapters</strong> — fases organizadas em capítulos com dificuldade progressiva.</span></li>
+                    <li><span class="icon">🌑</span><span><strong>Estética dark e pixel art</strong> — visual único com floresta sombria, serras e engrenagens.</span></li>
+                    <li><span class="icon">🖥️</span><span><strong>PC / Desktop</strong> — desenvolvido para Windows com controles de teclado.</span></li>
+                </ul>
+            </section>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="store-sidebar">
+
+            <div class="sidebar-card">
+                <h3>🕹️ JOGAR / BAIXAR</h3>
+                <a href="https://drive.google.com/drive/folders/1zeP3Ch_ZYUd7UBp7aGVDB0CpJ9Ram2Nq?usp=sharing" target="_blank" class="btn-primary-store">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    Download (Google Drive)
+                </a>
+                <a href="pdfs/eerie_dash_gdd.pdf" target="_blank" class="btn-secondary-store">
+                    <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+                    Visualizar GDD (PDF)
+                </a>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>📋 INFORMAÇÕES</h3>
+                <div class="info-row"><span class="label">Plataforma</span><span class="value">PC / Desktop</span></div>
+                <div class="info-row"><span class="label">Sistema</span><span class="value">Windows</span></div>
+                <div class="info-row"><span class="label">Gênero</span><span class="value">Plataforma 2D</span></div>
+                <div class="info-row"><span class="label">Personagens</span><span class="value">2 jogáveis</span></div>
+                <div class="info-row"><span class="label">Modo</span><span class="value">Single Player</span></div>
+                <div class="info-row"><span class="label">Mecânicas</span><span class="value">Dash · Wall Jump</span></div>
+                <div class="info-row"><span class="label">Status</span><span class="value" style="color:#4ade80;">Em Desenvolvimento</span></div>
+                <div class="info-row"><span class="label">Evento</span><span class="value">Expo Games Jun/2026</span></div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>👾 EERIE INC. — EQUIPE</h3>
+                <div class="team-member"><div class="member-avatar">JP</div><span>João Pedro Tavares Vicente</span></div>
+                <div class="team-member"><div class="member-avatar">IL</div><span>Ingryd de Lima</span></div>
+                <div class="team-member"><div class="member-avatar">VH</div><span>Vinicius Henrique André Alves</span></div>
+                <div class="team-member"><div class="member-avatar">MP</div><span>Matheus Percker Donato dos Santos</span></div>
+                <div class="team-member"><div class="member-avatar">VE</div><span>Victor Emanuel Souza Martins</span></div>
+            </div>
+
+            <div class="sidebar-card" style="text-align:center;">
+                <h3>🎓 INSTITUIÇÃO</h3>
+                <a href="https://portal.unis.edu.br" target="_blank">
+                    <img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=120&name=LogoUnisBranca.png"
+                         alt="Logo UNIS" style="width:120px; opacity:0.8;">
+                </a>
+                <p style="color:var(--eerie-muted);font-size:0.8rem;margin-top:0.75rem;">
+                    Centro Universitário UNIS<br>
+                    Desenvolvimento de Games<br>
+                    Mostra de Jogos — Junho 2026
+                </p>
+            </div>
+
+        </aside>
+    </div>
+
     <!-- RODAPÉ -->
     <footer class="main-footer">
-        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+        <p>&copy; 2026 &bull; Eerie Inc. &bull; Mostra de Games Acadêmica.
+           Desenvolvido para <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+        </p>
     </footer>
 
-    <!-- LOGICA JAVASCRIPT EM JS PURO (SEM DEPENDÊNCIAS EXTERNAS) -->
     <script>
-
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
     </script>
 </body>
 </html>
