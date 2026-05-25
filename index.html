@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gamer Portal - Mostra de Jogos Acadêmicos</title>
     <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
     <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
-    
+
     <!-- Google Fonts para estilo Acadêmico + Gamer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
+
 <body>
 
     <!-- CABEÇALHO DA PÁGINA -->
@@ -21,10 +24,17 @@
             <!-- Espaço reservado para a logo da instituição (Substitua a div por <img src="sua-logo.png" alt="Logo"> quando tiver o arquivo) -->
             <div class="institution-logo-container" id="logo-placeholder">
                 <span>
-                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
+                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget"
+                        style="border-width:0px;border:0px;"><img
+                            src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png"
+                            class="hs-image-widget " height="60"
+                            style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca"
+                            title="LogoUnisBranca"
+                            srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w"
+                            sizes="(max-width: 97px) 100vw, 97px"></a>
                 </span>
             </div>
-            
+
             <div class="header-titles">
                 <h1>EXPO_GAMES_PORTAL v1.0</h1>
                 <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
@@ -34,11 +44,12 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
-        
+
         <!-- Painel de Controle e Busca de Projetos -->
         <section class="control-panel">
             <div class="search-wrapper">
-                <input type="text" id="searchBar" class="search-input" placeholder="Buscar por jogo, equipe, plataforma ou integrante...">
+                <input type="text" id="searchBar" class="search-input"
+                    placeholder="Buscar por jogo, equipe, plataforma ou integrante...">
             </div>
             <div class="hud-stats">
                 <span>Status: <strong style="color: var(--brand-accent);">Online</strong></span>
@@ -48,27 +59,37 @@
 
         <!-- Grade de Exibição dos Trabalhos (Cards) -->
         <section class="teams-grid" id="teamsGrid">
-            
+
             <!-- Os dados abaixo são estruturados como exemplo completo para você clonar e alterar -->
             <!-- CARD EXEMPLO 1 -->
-            <div class="team-card" data-tags="mpm studio pixel quest pc desktop joao maria carlos">
-                <span class="card-badge">PC / Desktop</span>
+            <div class="team-card" data-tags="mpm studio">
+                <span class="card-badge">PC / Web</span>
                 <div class="card-body">
                     <div class="team-name">MPM Studio</div>
-                    <div class="game-title">Pixel Quest: Legends</div>
-                    <p class="game-description">Um jogo de aventura em plataforma 2D com forte apelo à era de ouro dos 16-bits. Explora masmorras geradas proceduralmente e gerencie recursos escassos.</p>
+                    <div class="game-title">IronHearts</div>
+                    <p class="game-description">Iron Hearts é um jogo de ação em plataforma 2D (Side-Scroller) focado no
+                        estilo Run-and-Gun frenético, fortemente inspirado em clássicos imortais dos fliperamas como
+                        Metal Slug. Combinando a jogabilidade nostálgica dos anos 90 com uma programação moderna e
+                        fluida, o jogo coloca o jogador no controle de um herói altamente armado contra um exército
+                        implacável em cenários dinâmicos e destrutíveis.</p>
                     <ul class="meta-list">
-                        <li><strong>Gênero:</strong> Roguelike de Ação</li>
-                        <li><strong>Integrantes:</strong> João Silva, Maria Souza, Carlos Santos</li>
+                        <li><strong>Gênero:</strong> Run-and-Gun</li>
+                        <li><strong>Integrantes:</strong> Pedro Augusto, Miguel Cunha, Matheus Selvati</li>
                     </ul>
                     <a href="mpmstudio.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <!-- O arquivo PDF deve ser colocado na mesma pasta ou subpasta do repositório no GitHub -->
-                    <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                    <a href="pdfs/ironhearts.pdf" target="_blank" class="btn-download">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Visualizar PDF
                     </a>
                 </div>
@@ -80,18 +101,25 @@
                 <div class="card-body">
                     <div class="team-name">ATOM</div>
                     <div class="game-title">Neon Pulse</div>
-                    <p class="game-description">Jogo de ritmo frenético ambientado em um universo cyberpunk de alta velocidade. Desenvolvido com foco total na jogabilidade responsiva mobile e de navegadores.</p>
+                    <p class="game-description">Jogo de ritmo frenético ambientado em um universo cyberpunk de alta
+                        velocidade. Desenvolvido com foco total na jogabilidade responsiva mobile e de navegadores.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Ritmo / Musical</li>
                         <li><strong>Integrantes:</strong> Ana Oliveira, Beatriz Lima</li>
                     </ul>
                     <a href="atom.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -103,18 +131,26 @@
                 <div class="card-body">
                     <div class="team-name">Erie's Inc</div>
                     <div class="game-title">Eco Defender</div>
-                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas eficientes.</p>
+                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em
+                        sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas
+                        eficientes.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Tower Defense / Estratégia</li>
                         <li><strong>Integrantes:</strong> Pedro Rocha, Lucas Rezende</li>
                     </ul>
                     <a href="eries_inc.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -126,18 +162,26 @@
                 <div class="card-body">
                     <div class="team-name">TDC</div>
                     <div class="game-title">Eco Defender</div>
-                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas eficientes.</p>
+                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em
+                        sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas
+                        eficientes.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Tower Defense / Estratégia</li>
                         <li><strong>Integrantes:</strong> Pedro Rocha, Lucas Rezende</li>
                     </ul>
                     <a href="tdc.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -149,18 +193,26 @@
                 <div class="card-body">
                     <div class="team-name">Arcadia Labs</div>
                     <div class="game-title">Eco Defender</div>
-                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas eficientes.</p>
+                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em
+                        sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas
+                        eficientes.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Tower Defense / Estratégia</li>
                         <li><strong>Integrantes:</strong> Pedro Rocha, Lucas Rezende</li>
                     </ul>
                     <a href="arcadia_labs.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -172,18 +224,26 @@
                 <div class="card-body">
                     <div class="team-name">Não era pra dividir</div>
                     <div class="game-title">Eco Defender</div>
-                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas eficientes.</p>
+                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em
+                        sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas
+                        eficientes.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Tower Defense / Estratégia</li>
                         <li><strong>Integrantes:</strong> Pedro Rocha, Lucas Rezende</li>
                     </ul>
                     <a href="nao_era_pra_dividir.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -195,18 +255,26 @@
                 <div class="card-body">
                     <div class="team-name">A outra metade</div>
                     <div class="game-title">Eco Defender</div>
-                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas eficientes.</p>
+                    <p class="game-description">Estratégia no formato Tower Defense educacional focado em
+                        sustentabilidade. Enfrente ondas de poluição industrial organizando defesas ecológicas
+                        eficientes.</p>
                     <ul class="meta-list">
                         <li><strong>Gênero:</strong> Tower Defense / Estratégia</li>
                         <li><strong>Integrantes:</strong> Pedro Rocha, Lucas Rezende</li>
                     </ul>
                     <a href="a_outra_metade.html" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page
                     </a>
-                    <br/>
+                    <br />
                     <a href="pdfs/Boa_Sorte.pdf" target="_blank" class="btn-download">
-                        <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z" />
+                        </svg>
                         Acessar Store Page (PDF)
                     </a>
                 </div>
@@ -223,7 +291,8 @@
 
     <!-- RODAPÉ -->
     <footer class="main-footer">
-        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a
+                href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
     </footer>
 
     <!-- LOGICA JAVASCRIPT EM JS PURO (SEM DEPENDÊNCIAS EXTERNAS) -->
@@ -238,7 +307,7 @@
             function updateProjectCount() {
                 const visibleCards = Array.from(cards).filter(card => card.style.display !== "none").length;
                 projectCountElement.textContent = visibleCards;
-                
+
                 if (visibleCards === 0) {
                     emptyState.style.display = "block";
                 } else {
@@ -257,7 +326,7 @@
                     const searchTags = card.getAttribute("data-tags").toLowerCase();
                     const gameTitle = card.querySelector(".game-title").textContent.toLowerCase();
                     const teamName = card.querySelector(".team-name").textContent.toLowerCase();
-                    
+
                     // Verifica se o termo pesquisado bate com tags, título ou nome da equipe
                     if (searchTags.includes(searchTerm) || gameTitle.includes(searchTerm) || teamName.includes(searchTerm)) {
                         card.style.display = "flex";
@@ -271,4 +340,5 @@
         });
     </script>
 </body>
+
 </html>
