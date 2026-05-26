@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Ray - LFA GAMES | Página da Loja</title>
+    <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
+    
+    <!-- Google Fonts para estilo Acadêmico + Gamer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+
+    <!-- Custom Neon Arcade Styles specifically for Project Ray Store Page -->
+    <style>
+        :root {
+            --ray-purple: #8b5cf6;
+            --ray-purple-glow: rgba(139, 92, 246, 0.4);
+            --ray-cyan: #06b6d4;
+            --ray-cyan-glow: rgba(6, 182, 212, 0.4);
+            --ray-green: #10b981;
+            --ray-green-glow: rgba(16, 185, 129, 0.4);
+            --ray-bg: #070a13;
+            --ray-surface: #0f172a;
+            --ray-surface-alt: #1e293b;
+            --ray-text: #f8fafc;
+            --ray-text-muted: #94a3b8;
+            --ray-border: #334155;
+            --ray-glow-border: #6366f1;
+        }
+
+        body.ray-theme {
+            background-color: var(--ray-bg);
+            color: var(--ray-text);
+            font-family: var(--font-academic);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Scanline Overlay simulating a CRT monitor inside gallery and terminal */
+        .crt-scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.3) 50%
+            );
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Navigation Header */
+        .ray-nav {
+            max-width: 1200px;
+            margin: 1.5rem auto 0;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--ray-cyan);
+            text-decoration: none;
+            font-family: var(--font-gamer);
+            font-size: 0.7rem;
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--ray-cyan);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: rgba(6, 182, 212, 0.05);
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-back:hover {
+            background-color: var(--ray-cyan);
+            color: #070a13;
+            box-shadow: 0 0 15px var(--ray-cyan-glow);
+            transform: translateX(-4px);
+        }
+
+        /* Hero Section */
+        .ray-hero {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.98));
+            border: 2px solid var(--ray-border);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ray-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--ray-purple), var(--ray-cyan), var(--ray-green));
+        }
+
+        .ray-hero-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .ray-badge {
+            align-self: flex-start;
+            background-color: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--ray-green);
+            color: var(--ray-green);
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-family: var(--font-gamer);
+            font-size: 0.6rem;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse-green 2.5s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .ray-title {
+            font-family: var(--font-gamer);
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--ray-purple-glow), 3px 3px 0 var(--ray-purple);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            letter-spacing: -1px;
+        }
+
+        .ray-subtitle {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ray-cyan);
+            margin-bottom: 1.25rem;
+            border-left: 3px solid var(--ray-cyan);
+            padding-left: 0.75rem;
+        }
+
+        .ray-description {
+            color: var(--ray-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .ray-hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .ray-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            font-family: var(--font-gamer);
+            font-size: 0.7rem;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border: none;
+        }
+
+        .ray-btn-primary {
+            background-color: var(--ray-green);
+            color: #070a13;
+            box-shadow: 0 4px 15px var(--ray-green-glow);
+        }
+
+        .ray-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px var(--ray-green), 0 0 10px #fff inset;
+            background-color: #12d393;
+        }
+
+        .ray-btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--ray-purple);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+        }
+
+        .ray-btn-secondary:hover {
+            transform: translateY(-3px);
+            background-color: var(--ray-purple);
+            box-shadow: 0 8px 25px var(--ray-purple);
+        }
+
+        /* Mock Screenshot Gallery */
+        .ray-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .gallery-main {
+            aspect-ratio: 16/9;
+            background-color: #030712;
+            border: 2px solid var(--ray-border);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            transition: border-color 0.3s;
+        }
+
+        .gallery-main:hover {
+            border-color: var(--ray-cyan);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), inset 0 0 30px rgba(0,0,0,0.9);
+        }
+
+        .gallery-main svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-thumbs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+
+        .gallery-thumb {
+            aspect-ratio: 16/9;
+            background-color: #12192c;
+            border: 2px solid var(--ray-border);
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+        }
+
+        .gallery-thumb svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+
+        .gallery-thumb:hover, .gallery-thumb.active {
+            border-color: var(--ray-purple);
+            box-shadow: 0 0 10px var(--ray-purple-glow);
+            transform: scale(1.02);
+        }
+
+        .gallery-thumb:hover svg, .gallery-thumb.active svg {
+            opacity: 1;
+        }
+
+        /* Sections structure */
+        .ray-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .ray-section {
+            background-color: var(--ray-surface);
+            border: 1px solid var(--ray-border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        .ray-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .ray-section-title {
+            font-family: var(--font-gamer);
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 2px solid var(--ray-border);
+            padding-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .ray-section-title svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--ray-purple);
+        }
+
+        /* About Section */
+        .ray-about-text {
+            color: var(--ray-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .ray-about-text p {
+            margin-bottom: 1rem;
+        }
+
+        .ray-about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--ray-border);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--ray-cyan);
+            background-color: rgba(6, 182, 212, 0.03);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.1);
+        }
+
+        .feature-icon-wrapper {
+            background-color: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--ray-purple);
+            color: var(--ray-purple);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon-wrapper {
+            background-color: var(--ray-purple);
+            color: #fff;
+            box-shadow: 0 0 10px var(--ray-purple-glow);
+        }
+
+        .feature-icon-wrapper svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .feature-title {
+            font-family: var(--font-academic);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Story Section (CRT Terminal Theme) */
+        .crt-terminal {
+            background-color: #04060b;
+            border: 2px solid #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #38bdf8;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(56, 189, 248, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            color: #0ea5e9;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .terminal-log-row {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .terminal-log-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .terminal-alert {
+            color: #ef4444;
+            font-weight: bold;
+            animation: flash 1.5s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Gameplay Section */
+        .gameplay-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            list-style: none;
+        }
+
+        .gameplay-item {
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: var(--ray-text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .gameplay-item:hover {
+            border-color: var(--ray-cyan);
+            background-color: rgba(6, 182, 212, 0.02);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .gameplay-bullet {
+            width: 8px;
+            height: 8px;
+            background-color: var(--ray-cyan);
+            box-shadow: 0 0 8px var(--ray-cyan);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Inspirations */
+        .inspirations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .inspiration-tag {
+            background-color: #1e293b;
+            border: 1px solid var(--ray-border);
+            border-radius: 6px;
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-family: var(--font-gamer);
+            font-size: 0.55rem;
+            color: #fff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .inspiration-tag:hover {
+            border-color: var(--ray-purple);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.2));
+            box-shadow: 0 4px 12px var(--ray-purple-glow);
+            transform: scale(1.03);
+        }
+
+        /* Development Box */
+        .dev-badge-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background-color: #0b0f19;
+            border: 1px solid var(--ray-border);
+            border-left: 4px solid var(--ray-purple);
+            padding: 1.25rem;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .gdevelop-logo {
+            align-self: flex-start;
+            font-family: var(--font-gamer);
+            font-size: 0.65rem;
+            background: linear-gradient(135deg, #0056ff, #00d2ff);
+            color: #fff;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 86, 255, 0.4);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .dev-box-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--ray-text-muted);
+            text-align: justify;
+        }
+
+        /* Team Section */
+        .team-members-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .team-member-card {
+            background-color: #1e293b;
+            border: 1px solid var(--ray-border);
+            border-radius: 10px;
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: var(--ray-purple);
+            transition: all 0.3s ease;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--ray-purple);
+            box-shadow: 0 10px 20px var(--ray-purple-glow);
+        }
+
+        .team-member-card:hover::after {
+            background-color: var(--ray-cyan);
+            box-shadow: 0 0 10px var(--ray-cyan);
+        }
+
+        .member-avatar {
+            width: 64px;
+            height: 64px;
+            background-color: #0b0f19;
+            border: 2px dashed var(--ray-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--ray-purple);
+            transition: all 0.3s ease;
+        }
+
+        .team-member-card:hover .member-avatar {
+            border-style: solid;
+            border-color: var(--ray-cyan);
+            color: var(--ray-cyan);
+            transform: rotate(360deg);
+        }
+
+        .member-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.35rem;
+        }
+
+        .member-role {
+            font-family: var(--font-gamer);
+            font-size: 0.5rem;
+            color: var(--ray-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: rgba(6, 182, 212, 0.15);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Footer override styling */
+        .ray-footer-decor {
+            margin: 2rem 0 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .decor-block {
+            width: 10px;
+            height: 10px;
+            background-color: var(--ray-border);
+        }
+        .decor-block:nth-child(1) { background-color: var(--ray-purple); }
+        .decor-block:nth-child(2) { background-color: var(--ray-cyan); }
+        .decor-block:nth-child(3) { background-color: var(--ray-green); }
+
+        /* Media Queries for Desktop layout */
+        @media (min-width: 768px) {
+            .ray-hero {
+                grid-template-columns: 1.1fr 0.9fr;
+                align-items: center;
+            }
+
+            .ray-grid-layout {
+                grid-template-columns: 2fr 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .team-members-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body class="ray-theme">
+
+    <!-- CABEÇALHO DA PÁGINA -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="institution-logo-container" id="logo-placeholder">
+                <span>
+                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
+                </span>
+            </div>
+            
+            <div class="header-titles">
+                <h1>EXPO_GAMES_PORTAL v1.0</h1>
+                <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGAÇÃO / VOLTAR -->
+    <nav class="ray-nav">
+        <a href="index.html" class="btn-back">
+            <svg style="width:14px;height:14px;fill:currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            ← Voltar ao Portal
+        </a>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- HERO SECTION -->
+        <section class="ray-hero">
+            <div class="ray-hero-info">
+                <span class="ray-badge">Web/Browser | RETRÔ</span>
+                <h2 class="ray-title">PROJECT RAY</h2>
+                <div class="ray-subtitle">Uma aventura de plataforma retrô com mutantes, caos e ação em pixel art.</div>
+                <p class="ray-description">
+                    Inspirado nos grandes jogos de plataforma dos anos 90, Project Ray combina jogabilidade desafiadora, inimigos mutantes e visuais nostálgicos em pixel art em um mundo urbano vibrante.
+                </p>
+                <div class="ray-hero-buttons">
+                    <a href="javascript:void(0);" onclick="alert('O jogo estará disponível para jogar no navegador em breve! Fique atento às atualizações da equipe LFA GAMES.')" class="ray-btn ray-btn-primary">
+                        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        Jogar
+                    </a>
+                    <a href="project-ray-gdd.pdf" target="_blank" class="ray-btn ray-btn-secondary">
+                        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                        Baixar GDD
+                    </a>
+                </div>
+            </div>
+
+            <!-- GALERIA DE MÍDIA INTERATIVA -->
+            <div class="ray-gallery">
+                <div class="gallery-main" id="galleryMain">
+                    <div class="crt-scanlines"></div>
+                    
+                    <!-- SVG 1 (Default display - Capsule lab scene) -->
+                    <svg id="svg-scene1" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Dark Grid Background -->
+                        <rect width="320" height="180" fill="#04060e"/>
+                        <g stroke="#10172a" stroke-width="1">
+                            <line x1="0" y1="30" x2="320" y2="30"/>
+                            <line x1="0" y1="60" x2="320" y2="60"/>
+                            <line x1="0" y1="90" x2="320" y2="90"/>
+                            <line x1="0" y1="120" x2="320" y2="120"/>
+                            <line x1="0" y1="150" x2="320" y2="150"/>
+                            <line x1="40" y1="0" x2="40" y2="180"/>
+                            <line x1="80" y1="0" x2="80" y2="180"/>
+                            <line x1="120" y1="0" x2="120" y2="180"/>
+                            <line x1="160" y1="0" x2="160" y2="180"/>
+                            <line x1="200" y1="0" x2="200" y2="180"/>
+                            <line x1="240" y1="0" x2="240" y2="180"/>
+                            <line x1="280" y1="0" x2="280" y2="180"/>
+                        </g>
+                        
+                        <!-- Laboratory Platform -->
+                        <rect x="0" y="140" width="320" height="40" fill="#1e293b"/>
+                        <rect x="0" y="140" width="320" height="4" fill="#0ea5e9"/>
+                        
+                        <!-- Mutant Capsule Chamber -->
+                        <rect x="130" y="30" width="60" height="110" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" stroke-width="3" rx="10"/>
+                        <rect x="130" y="30" width="60" height="12" fill="#334155" stroke="#10b981" stroke-width="2"/>
+                        <rect x="130" y="128" width="60" height="12" fill="#334155" stroke="#10b981" stroke-width="2"/>
+                        
+                        <!-- Inside Capsule Mutant Creature (Pixelated style) -->
+                        <rect x="150" y="60" width="20" height="45" fill="#8b5cf6" rx="5"/>
+                        <rect x="146" y="70" width="28" height="15" fill="#a78bfa" rx="2"/>
+                        <circle cx="152" cy="68" r="2" fill="#e11d48"/>
+                        <circle cx="168" cy="68" r="2" fill="#e11d48"/>
+                        
+                        <!-- Bubbles in capsule -->
+                        <circle cx="140" cy="110" r="3" fill="#10b981" opacity="0.6"/>
+                        <circle cx="178" cy="95" r="2" fill="#10b981" opacity="0.8"/>
+                        <circle cx="145" cy="80" r="4" fill="#10b981" opacity="0.5"/>
+                        <circle cx="172" cy="50" r="2.5" fill="#10b981" opacity="0.7"/>
+                        
+                        <!-- Laboratory computers -->
+                        <rect x="40" y="90" width="40" height="50" fill="#334155" rx="3"/>
+                        <rect x="45" y="95" width="30" height="25" fill="#000" stroke="#06b6d4" stroke-width="1.5"/>
+                        <line x1="50" y1="105" x2="70" y2="105" stroke="#06b6d4" stroke-width="2"/>
+                        <line x1="55" y1="112" x2="65" y2="112" stroke="#0ea5e9" stroke-width="2"/>
+                        <circle cx="50" cy="130" r="2" fill="#10b981"/>
+                        <circle cx="60" cy="130" r="2" fill="#ef4444"/>
+                        
+                        <rect x="240" y="80" width="50" height="60" fill="#334155" rx="3"/>
+                        <rect x="245" y="85" width="40" height="30" fill="#000" stroke="#a855f7" stroke-width="1.5"/>
+                        <!-- Sine Wave on display -->
+                        <path d="M 248 100 Q 255 85, 260 100 T 272 100 T 282 100" fill="none" stroke="#a855f7" stroke-width="2"/>
+                        <rect x="250" y="125" width="15" height="5" fill="#1e293b"/>
+                        <circle cx="275" cy="127" r="2" fill="#0ea5e9"/>
+                        
+                        <!-- Warning indicator -->
+                        <polygon points="160,5 170,22 150,22" fill="#e11d48"/>
+                        <text x="158" y="19" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fff">!</text>
+                        <text x="10" y="20" font-family="'Press Start 2P'" font-size="6" fill="#10b981">SISTEMA: ATIVO</text>
+                        <text x="210" y="20" font-family="'Press Start 2P'" font-size="6" fill="#ef4444">CONTENÇÃO: 84%</text>
+                    </svg>
+
+                    <!-- SVG 2 (Hidden by default - Mutant close-up) -->
+                    <svg id="svg-scene2" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                        <rect width="320" height="180" fill="#0f0715"/>
+                        <!-- Dark Grid Background -->
+                        <g stroke="#2d123d" stroke-width="1">
+                            <line x1="0" y1="30" x2="320" y2="30"/>
+                            <line x1="0" y1="60" x2="320" y2="60"/>
+                            <line x1="0" y1="90" x2="320" y2="90"/>
+                            <line x1="0" y1="120" x2="320" y2="120"/>
+                            <line x1="0" y1="150" x2="320" y2="150"/>
+                            <line x1="40" y1="0" x2="40" y2="180"/>
+                            <line x1="80" y1="0" x2="80" y2="180"/>
+                            <line x1="120" y1="0" x2="120" y2="180"/>
+                            <line x1="160" y1="0" x2="160" y2="180"/>
+                            <line x1="200" y1="0" x2="200" y2="180"/>
+                            <line x1="240" y1="0" x2="240" y2="180"/>
+                            <line x1="280" y1="0" x2="280" y2="180"/>
+                        </g>
+
+                        <!-- Mutant Glow Background -->
+                        <circle cx="160" cy="90" r="70" fill="rgba(139, 92, 246, 0.15)" filter="blur(10px)"/>
+                        
+                        <!-- Mutant Face in Pixel Vectors -->
+                        <!-- Scaly Head outline -->
+                        <path d="M 110,60 L 210,60 L 230,100 L 210,140 L 110,140 L 90,100 Z" fill="#6d28d9" stroke="#8b5cf6" stroke-width="4"/>
+                        <!-- Brow -->
+                        <path d="M 100,80 L 150,90 L 160,90 L 170,90 L 220,80" fill="none" stroke="#4c1d95" stroke-width="6"/>
+                        <!-- Glowing Yellow Eyes -->
+                        <polygon points="115,85 145,95 140,105 110,95" fill="#facc15" stroke="#eab308" stroke-width="1.5"/>
+                        <polygon points="205,85 175,95 180,105 210,95" fill="#facc15" stroke="#eab308" stroke-width="1.5"/>
+                        <!-- Red Pupils -->
+                        <rect x="127" y="93" width="5" height="5" fill="#e11d48"/>
+                        <rect x="187" y="93" width="5" height="5" fill="#e11d48"/>
+                        <!-- Snarl / Mouth -->
+                        <path d="M 120,120 Q 160,135 200,120" fill="none" stroke="#000" stroke-width="4"/>
+                        <!-- Sharp teeth -->
+                        <polygon points="130,121 135,128 140,122" fill="#fff"/>
+                        <polygon points="145,122 150,131 155,123" fill="#fff"/>
+                        <polygon points="165,123 170,131 175,122" fill="#fff"/>
+                        <polygon points="180,122 185,128 190,121" fill="#fff"/>
+                        
+                        <!-- Green Slime patches -->
+                        <rect x="105" y="65" width="12" height="12" fill="#10b981" rx="2"/>
+                        <rect x="200" y="65" width="12" height="12" fill="#10b981" rx="2"/>
+                        <rect x="154" y="55" width="12" height="8" fill="#10b981" rx="2"/>
+                        <rect x="154" y="132" width="12" height="12" fill="#10b981" rx="2"/>
+                        
+                        <!-- Overlay Text -->
+                        <text x="10" y="25" font-family="'Press Start 2P'" font-size="8" fill="#ef4444">MUTANTE: CONFIDENCIAL</text>
+                        <text x="10" y="165" font-family="'Press Start 2P'" font-size="6" fill="#a78bfa">NÍVEL DE AMEAÇA: CRÍTICO</text>
+                    </svg>
+
+                    <!-- SVG 3 (Hidden by default - Side scrolling gameplay mockup) -->
+                    <svg id="svg-scene3" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                        <rect width="320" height="180" fill="#0b0f19"/>
+                        <!-- Urban Skyline Background -->
+                        <rect x="20" y="60" width="30" height="80" fill="#1e293b" opacity="0.5"/>
+                        <rect x="60" y="40" width="45" height="100" fill="#1e293b" opacity="0.4"/>
+                        <rect x="130" y="70" width="35" height="70" fill="#1e293b" opacity="0.6"/>
+                        <rect x="180" y="50" width="40" height="90" fill="#1e293b" opacity="0.5"/>
+                        <rect x="240" y="30" width="50" height="110" fill="#1e293b" opacity="0.4"/>
+                        
+                        <!-- Platforms -->
+                        <rect x="0" y="140" width="120" height="40" fill="#334155"/>
+                        <rect x="0" y="140" width="120" height="4" fill="#8b5cf6"/>
+                        
+                        <!-- Moving Platform -->
+                        <rect x="140" y="110" width="60" height="12" fill="#1e293b" stroke="#06b6d4" stroke-width="2" rx="3"/>
+                        <line x1="140" y1="116" x2="200" y2="116" stroke="#06b6d4" stroke-dasharray="4,4"/>
+
+                        <rect x="220" y="130" width="100" height="50" fill="#334155"/>
+                        <rect x="220" y="130" width="100" height="4" fill="#8b5cf6"/>
+
+                        <!-- Scientist Hero Character jumping (Dr. Axel in blue suit) -->
+                        <g transform="translate(60, 100)">
+                            <rect x="0" y="0" width="12" height="24" fill="#0ea5e9" rx="3"/> <!-- Suit -->
+                            <rect x="2" y="-10" width="8" height="10" fill="#fed7aa" rx="2"/> <!-- Head -->
+                            <rect x="2" y="-10" width="8" height="3" fill="#1e293b"/> <!-- Hair -->
+                            <rect x="-4" y="4" width="4" height="12" fill="#3b82f6" rx="1"/> <!-- Arms -->
+                            <rect x="4" y="24" width="4" height="8" fill="#1e1b4b"/> <!-- Leg 1 -->
+                            <rect x="-2" y="22" width="4" height="8" fill="#1e1b4b"/> <!-- Leg 2 -->
+                            <circle cx="8" cy="-6" r="1.5" fill="#000"/> <!-- Eye -->
+                        </g>
+
+                        <!-- Glowing mutant slime hazard -->
+                        <g transform="translate(250, 115)">
+                            <path d="M 0,15 Q 10,0 20,15 Z" fill="#10b981" stroke="#34d399" stroke-width="1.5"/>
+                            <circle cx="6" cy="10" r="1.5" fill="#fff"/>
+                            <circle cx="14" cy="8" r="1" fill="#fff"/>
+                        </g>
+                        
+                        <!-- Floating Coins to collect -->
+                        <circle cx="110" cy="90" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+                        <circle cx="130" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+                        <circle cx="150" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+                        <circle cx="170" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
+
+                        <!-- HUD Display -->
+                        <text x="10" y="20" font-family="'Press Start 2P'" font-size="6" fill="#fff">PONTOS: 00240</text>
+                        <text x="120" y="20" font-family="'Press Start 2P'" font-size="6" fill="#fbbf24">MOEDAS: x04</text>
+                        <text x="240" y="20" font-family="'Press Start 2P'" font-size="6" fill="#10b981">VIDAS: ♥ x3</text>
+                    </svg>
+                </div>
+                
+                <!-- Thumbnails row linking to script -->
+                <div class="gallery-thumbs">
+                    <div class="gallery-thumb active" onclick="switchScene(1)" id="thumb1">
+                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="80" height="45" fill="#04060e"/>
+                            <rect x="32" y="10" width="16" height="25" fill="none" stroke="#10b981" stroke-width="1" rx="2"/>
+                            <circle cx="40" cy="22" r="3" fill="#8b5cf6"/>
+                        </svg>
+                    </div>
+                    <div class="gallery-thumb" onclick="switchScene(2)" id="thumb2">
+                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="80" height="45" fill="#0f0715"/>
+                            <path d="M 28,15 L 52,15 L 56,25 L 52,35 L 28,35 Z" fill="#6d28d9" stroke="#8b5cf6" stroke-width="1"/>
+                            <circle cx="36" cy="22" r="2.5" fill="#facc15"/>
+                            <circle cx="44" cy="22" r="2.5" fill="#facc15"/>
+                        </svg>
+                    </div>
+                    <div class="gallery-thumb" onclick="switchScene(3)" id="thumb3">
+                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="80" height="45" fill="#0b0f19"/>
+                            <rect x="10" y="35" width="30" height="10" fill="#334155"/>
+                            <rect x="10" y="35" width="30" height="1" fill="#8b5cf6"/>
+                            <rect x="25" y="25" width="4" height="10" fill="#0ea5e9"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TWO COLUMN LAYOUT FOR GAME INFO -->
+        <div class="ray-grid-layout">
+            
+            <!-- LEFT COLUMN: PRIMARY DETAILS -->
+            <div class="left-col">
+                
+                <!-- ABOUT THE GAME SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h-2v-2h4v8zm0-10h-2V5h2v2z"/></svg>
+                        Sobre o Jogo
+                    </h3>
+                    <div class="ray-about-text">
+                        <p>
+                            Project Ray é um jogo de plataforma 2D de inspiração retrô desenvolvido pela LFA GAMES. Os jogadores controlam cientistas presos em um experimento perigoso que deu errado, enfrentando criaturas mutantes e fases cada vez mais difíceis.
+                        </p>
+                        <p>
+                            O jogo mistura a jogabilidade clássica de plataforma com design de níveis moderno, desafios progressivos e visuais vibrantes em pixel art inspirados em jogos de arcade dos anos 90.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- GAME FEATURES SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                        Recursos do Jogo
+                    </h3>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                            </div>
+                            <span class="feature-title">4 fases progressivas</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+                            </div>
+                            <span class="feature-title">Batalha contra chefe</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                            </div>
+                            <span class="feature-title">Visuais em pixel art</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+                            </div>
+                            <span class="feature-title">Plataformas móveis</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            </div>
+                            <span class="feature-title">Trilha sonora retrô</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                            </div>
+                            <span class="feature-title">Sistema de moedas</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                            </div>
+                            <span class="feature-title">Suporte a controle</span>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+                            </div>
+                            <span class="feature-title">Dificuldade progressiva</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STORY SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h-2v-2h4v8zm0-10h-2V5h2v2z"/></svg>
+                        História
+                    </h3>
+                    <div class="crt-terminal">
+                        <div class="terminal-header">
+                            <span>TERMINAL_SISTEMA_LAB_v4.0.2</span>
+                            <span>STATUS: ERRO!</span>
+                        </div>
+                        <div class="terminal-log-row">
+                            <span class="terminal-alert">&gt; [PERIGO]: VIOLAÇÃO GENÉTICA DETECTADA NO SETOR 7.</span>
+                        </div>
+                        <div class="terminal-log-row">
+                            &gt; Experimento genético fracassado. Cobaias sofreram mutações rápidas. Animais de laboratório escaparam do confinamento. Nível de contenção crítico.
+                        </div>
+                        <div class="terminal-log-row">
+                            &gt; Sobreviventes identificados: <span style="color:#a855f7;">Dra. Kim</span>, <span style="color:#0ea5e9;">Dr. Axel</span>, <span style="color:#10b981;">Dra. Andy</span>.
+                        </div>
+                        <div class="terminal-log-row">
+                            &gt; Perfil da missão: Sobreviver ao caos, navegar pelos setores infestados de mutantes, proteger amostras ativas e sintetizar a cura antes que a contaminação escape do laboratório.
+                        </div>
+                        <div class="terminal-log-row" style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem; color:#10b981;">
+                            &gt; EXECUTANDO PROTOCOLOS DE CONTENÇÃO... APERTE START PARA INICIAR
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GAMEPLAY SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2z"/></svg>
+                        Jogabilidade
+                    </h3>
+                    <ul class="gameplay-list">
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Desafios de plataforma:</strong> Navegue por elevadores, esteiras e armadilhas.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Encontros com inimigos:</strong> Derrote ou evite insetos tóxicos, robôs hostis e mutantes aterrorizantes.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Pulos de precisão:</strong> Calcule seus saltos perfeitamente para evitar poços de ácido mortal e perigos elétricos.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Plataformas móveis:</strong> Domine superfícies móveis para alcançar áreas escondidas.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Sistema de pontuação:</strong> Maximize sua pontuação completando as fases o mais rápido possível.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Moedas colecionáveis:</strong> Colete microchips dourados espalhados pelas fases.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Várias vidas:</strong> Comece com três vidas e ganhe tentativas extras conforme avança.</span>
+                        </li>
+                        <li class="gameplay-item">
+                            <span class="gameplay-bullet"></span>
+                            <span><strong>Dificuldade progressiva:</strong> Enfrente mutantes mais fortes e armadilhas mais inteligentes nas fases avançadas.</span>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN: SIDEBAR DETAILS -->
+            <div class="right-col">
+                
+                <!-- INSPIRATIONS SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.59 10.56 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm1-8.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-5 3c0-.83-.67-1.5-1.5-1.5S5 11.67 5 12.5 5.67 14 6.5 14s1.5-.67 1.5-1.5zm10 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5z"/></svg>
+                        Inspirações
+                    </h3>
+                    <div class="inspirations-grid">
+                        <div class="inspiration-tag">Super Mario</div>
+                        <div class="inspiration-tag">Sonic</div>
+                        <div class="inspiration-tag">Donkey Kong Jr.</div>
+                        <div class="inspiration-tag">TMNT</div>
+                    </div>
+                </section>
+
+                <!-- DEVELOPMENT SECTION -->
+                <section class="ray-section">
+                    <h3 class="ray-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                        Desenvolvimento
+                    </h3>
+                    <div class="dev-badge-container">
+                        <div class="gdevelop-logo">GDevelop</div>
+                        <div class="dev-box-content">
+                            Project Ray foi totalmente desenvolvido utilizando o GDevelop com foco em sistemas de jogabilidade, design de níveis e experiências interativas.
+                            <br/><br/>
+                            O projeto combina recursos originais, pixel art personalizada, fluxos criativos assistidos por IA e recursos de áudio.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- TEAM SECTION -->
+        <section class="ray-section">
+            <h3 class="ray-section-title" style="justify-content: center; border-bottom: none; margin-bottom: 0;">
+                <svg viewBox="0 0 24 24" style="fill: var(--ray-cyan);"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                DESENVOLVIDO POR LFA GAMES
+            </h3>
+            <div class="team-members-grid">
+                
+                <!-- MEMBER 1 -->
+                <div class="team-member-card">
+                    <div class="member-avatar">
+                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <div class="member-name">Andriele de Fátima Silva</div>
+                    <span class="member-role">Desenvolvedora / Level Designer</span>
+                </div>
+
+                <!-- MEMBER 2 -->
+                <div class="team-member-card">
+                    <div class="member-avatar">
+                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <div class="member-name">Fernanda Laudares Silva</div>
+                    <span class="member-role">Diretora de Arte / Desenvolvedora</span>
+                </div>
+
+                <!-- MEMBER 3 -->
+                <div class="team-member-card">
+                    <div class="member-avatar">
+                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <div class="member-name">Lucas Silva Ciacci</div>
+                    <span class="member-role">Programador Líder / Designer de Sistemas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- DECORATIVE PIXEL BLOCKS -->
+        <div class="ray-footer-decor">
+            <div class="decor-block"></div>
+            <div class="decor-block"></div>
+            <div class="decor-block"></div>
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="main-footer">
+        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+    </footer>
+
+    <!-- INTERACTION LOGIC (DYNAMIC GALLERY PREVIEW SWAP) -->
+    <script>
+        function switchScene(sceneNumber) {
+            // Get all SVG scenes
+            const s1 = document.getElementById('svg-scene1');
+            const s2 = document.getElementById('svg-scene2');
+            const s3 = document.getElementById('svg-scene3');
+            
+            // Get all thumbnails
+            const t1 = document.getElementById('thumb1');
+            const t2 = document.getElementById('thumb2');
+            const t3 = document.getElementById('thumb3');
+
+            // Reset displays
+            s1.style.display = 'none';
+            s2.style.display = 'none';
+            s3.style.display = 'none';
+
+            // Reset active classes
+            t1.classList.remove('active');
+            t2.classList.remove('active');
+            t3.classList.remove('active');
+
+            // Activate chosen scene
+            if (sceneNumber === 1) {
+                s1.style.display = 'block';
+                t1.classList.add('active');
+            } else if (sceneNumber === 2) {
+                s2.style.display = 'block';
+                t2.classList.add('active');
+            } else if (sceneNumber === 3) {
+                s3.style.display = 'block';
+                t3.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
