@@ -1,52 +1,1029 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamer Portal - MPM Studio</title>
-    <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
-    
-    <!-- Google Fonts para estilo Acadêmico + Gamer -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ashen Heart — Equipe Atom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ash: #0d0c0b;
+    --ash-2: #161411;
+    --ash-3: #1f1c18;
+    --ash-4: #2c2820;
+    --ember: #c8501a;
+    --ember-bright: #e8693a;
+    --ember-glow: #ff8c55;
+    --gold: #c9973a;
+    --gold-pale: #e8c47a;
+    --bone: #d4c9b8;
+    --bone-muted: #8a8070;
+    --soul: #6fa3b0;
+    --soul-bright: #8fc4d4;
+    --red-dark: #7a1a0a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ash);
+    color: var(--bone);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── PIXEL SCANLINE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.07) 2px,
+      rgba(0,0,0,0.07) 3px
+    );
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 56px;
+    background: rgba(13,12,11,0.92);
+    border-bottom: 1px solid rgba(200,80,26,0.2);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    color: var(--gold-pale);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bone-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ember-bright); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 0 0 8vw;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,80,26,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 70% 30%, rgba(111,163,176,0.06) 0%, transparent 60%),
+      linear-gradient(165deg, #0d0c0b 0%, #181410 40%, #0e0d0c 100%);
+  }
+
+  .embers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .ember-particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float-up linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float-up {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-100vh) translateX(var(--drift)); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 660px;
+    padding: 8rem 0 6rem;
+  }
+
+  .studio-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .studio-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--ember);
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 80px rgba(200,80,26,0.4);
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--ember-bright);
+    text-shadow: 0 0 60px rgba(232,105,58,0.6);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bone-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .genre-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .genre-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border: 1px solid rgba(200,80,26,0.4);
+    color: var(--ember-bright);
+    background: rgba(200,80,26,0.08);
+  }
+
+  .hero-pitch {
+    font-size: 17px;
+    font-style: italic;
+    color: rgba(212,201,184,0.75);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    border-left: 2px solid var(--ember);
+    padding-left: 1.25rem;
+    max-width: 520px;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    background: var(--ember);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: background 0.2s, transform 0.15s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover { background: var(--ember-bright); transform: translateY(-2px); }
+
+  .btn-secondary {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 13px 32px;
+    background: transparent;
+    color: var(--bone-muted);
+    border: 1px solid rgba(138,128,112,0.4);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--bone); border-color: rgba(212,201,184,0.5); }
+
+  .rating-badge {
+    position: absolute;
+    top: 50%;
+    right: 8vw;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 2;
+  }
+
+  .rating-number {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 0 40px rgba(201,151,58,0.4);
+  }
+
+  .rating-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bone-muted);
+  }
+
+  .rating-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--ember), transparent);
+    margin: 0.75rem auto;
+  }
+
+  .rating-score {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--ember-bright);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 7rem 8vw;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--ember);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,80,26,0.25), transparent);
+  }
+
+  /* ── STORY ── */
+  .story-section { background: var(--ash-2); }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .story-text p {
+    font-size: 17px;
+    color: rgba(212,201,184,0.8);
+    margin-bottom: 1.25rem;
+  }
+
+  .story-text p strong {
+    color: var(--bone);
+    font-weight: 400;
+  }
+
+  .stats-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .stat-box {
+    border: 1px solid rgba(200,80,26,0.2);
+    padding: 1.25rem 1.5rem;
+    background: rgba(200,80,26,0.04);
+  }
+
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--ember-bright);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-desc {
+    font-size: 13px;
+    color: var(--bone-muted);
+    margin-top: 0.3rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── FEATURES ── */
+  .features-section { background: var(--ash); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3.5rem;
+    background: rgba(200,80,26,0.15);
+  }
+
+  .feature-card {
+    background: var(--ash);
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+
+  .feature-card:hover { background: var(--ash-2); }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1.25rem;
+    color: var(--ember);
+  }
+
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: var(--gold-pale);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .feature-desc {
+    font-size: 15px;
+    color: rgba(212,201,184,0.65);
+    line-height: 1.6;
+  }
+
+  /* ── SCREENSHOTS ── */
+  .screenshots-section {
+    background: var(--ash-3);
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .screenshots-scroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 3rem;
+  }
+
+  .screenshot-frame {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    position: relative;
+    background: var(--ash-4);
+    border: 1px solid rgba(200,80,26,0.1);
+  }
+
+  .screenshot-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+    filter: saturate(0.85) brightness(0.9);
+  }
+
+  .screenshot-frame:hover img {
+    transform: scale(1.04);
+    filter: saturate(1) brightness(1);
+  }
+
+  .screenshot-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--bone-muted);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* ── TECH SPECS & CONTROLS ── */
+  .specs-section { background: var(--ash-2); }
+
+  .specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+    font-size: 15px;
+  }
+
+  .specs-table tr { border-bottom: 1px solid rgba(200,80,26,0.12); }
+  .specs-table tr:last-child { border-bottom: none; }
+
+  .specs-table td {
+    padding: 1rem 0;
+    vertical-align: top;
+  }
+
+  .specs-table td:first-child {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ember);
+    width: 200px;
+    padding-right: 2rem;
+    padding-top: 1.1rem;
+  }
+
+  .specs-table td:last-child { color: rgba(212,201,184,0.75); }
+
+  /* ── REVIEWS ── */
+  .reviews-section { background: var(--ash); }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .review-card {
+    border: 1px solid rgba(200,80,26,0.15);
+    padding: 2rem;
+    background: rgba(200,80,26,0.03);
+    position: relative;
+  }
+
+  .review-card::before {
+    content: '"';
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 5rem;
+    color: rgba(200,80,26,0.15);
+    position: absolute;
+    top: 0.5rem;
+    left: 1.25rem;
+    line-height: 1;
+  }
+
+  .review-text {
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(212,201,184,0.75);
+    margin-bottom: 1.25rem;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .review-source {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--soul-bright);
+  }
+
+  .score-banner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+    padding: 2rem 2.5rem;
+    border: 1px solid rgba(201,151,58,0.25);
+    background: rgba(201,151,58,0.04);
+  }
+
+  .big-score {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bone-muted);
+    margin-top: 0.3rem;
+  }
+
+  .score-divider {
+    width: 1px;
+    height: 60px;
+    background: rgba(201,151,58,0.2);
+  }
+
+  .score-verdict {
+    font-size: 15px;
+    color: rgba(212,201,184,0.7);
+    font-style: italic;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    padding: 6rem 8vw;
+    background: var(--ash-3);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(200,80,26,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .footer-cta-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: #fff;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .footer-cta-sub {
+    font-size: 17px;
+    color: var(--bone-muted);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+  }
+
+  .footer-meta {
+    padding: 1.5rem 8vw;
+    background: var(--ash);
+    border-top: 1px solid rgba(200,80,26,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bone-muted);
+  }
+
+  .classif-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--ember);
+    background: rgba(200,80,26,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .classif-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 22px;
+    color: var(--ember-bright);
+    line-height: 1;
+  }
+
+  .classif-plus {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--ember);
+  }
+
+  .platform-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .platform-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--soul-bright);
+    border: 1px solid rgba(111,163,176,0.3);
+    padding: 5px 14px;
+  }
+
+  /* ── ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: none; }
+
+  .pixel-border-top {
+    height: 3px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--ember) 0px,
+      var(--ember) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    opacity: 0.6;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding-left: 6vw; }
+    .rating-badge { display: none; }
+    .story-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .screenshots-scroll { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    section { padding: 5rem 6vw; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- CABEÇALHO DA PÁGINA -->
-    <header class="main-header">
-        <div class="header-container">
-            <!-- Espaço reservado para a logo da instituição (Substitua a div por <img src="sua-logo.png" alt="Logo"> quando tiver o arquivo) -->
-            <div class="institution-logo-container" id="logo-placeholder">
-                <span>
-                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
-                </span>
-            </div>
-            
-            <div class="header-titles">
-                <h1>EXPO_GAMES_PORTAL v1.0</h1>
-                <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
-            </div>
+<nav>
+  <span class="nav-logo">Equipe Atom</span>
+  <ul class="nav-links">
+    <li><a href="#historia">História</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#capturas">Capturas</a></li>
+    <li><a href="#controles">Controles</a></li>
+    <li><a href="#specs">Requisitos</a></li>
+  </ul>
+</nav>
+
+<div class="embers" id="embers"></div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="classif-badge">
+      <span class="classif-num">12</span>
+      <span class="classif-plus">+</span>
+    </div>
+
+    <p class="studio-tag">Equipe Atom &nbsp;·&nbsp; Godot Engine</p>
+
+    <h1 class="hero-title">
+      Ashen
+      <span>Heart</span>
+    </h1>
+
+    <p class="hero-subtitle">Bullet Hell · Roguelike · Plataforma 2D · Pixel Art</p>
+
+    <div class="genre-tags">
+      <span class="genre-tag">Bullet Hell</span>
+      <span class="genre-tag">Roguelike</span>
+      <span class="genre-tag">Plataforma 2D</span>
+      <span class="genre-tag">Pixel Art</span>
+      <span class="genre-tag">Single-player</span>
+    </div>
+
+    <p class="hero-pitch">
+      "Enquanto se aventurava pela floresta, o herói recebe uma carta dizendo que um dragão maligno havia assassinado seu pai e raptado sua amada. Enfurecido, ele parte em uma épica jornada de vingança contra o maligno dragão Fafnir."
+    </p>
+
+    <div class="cta-group">
+      <a href="#" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Jogar Agora
+      </a>
+      <a href="Game Mechanics Documentation.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Visualizar GDD
+      </a>
+    </div>
+
+    <div class="platform-row">
+      <span class="platform-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        PC / Desktop
+      </span>
+      <span class="platform-pill">Windows 10 / 11</span>
+      <span class="platform-pill">Linux</span>
+    </div>
+  </div>
+
+  <div class="rating-badge">
+    <span class="rating-number">9.2</span>
+    <div class="rating-line"></div>
+    <p class="rating-score">Muito Positivas</p>
+    <p class="rating-label" style="margin-top:0.3rem;">Avaliação Geral</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="story-section" id="historia">
+  <div class="pixel-border-top" style="position:absolute;top:0;left:0;right:0;"></div>
+
+  <p class="section-label reveal">Narrativa</p>
+  <h2 class="section-title reveal">A Jornada do Príncipe</h2>
+
+  <div class="story-grid">
+    <div class="story-text reveal">
+      <p>
+        <strong>Ashen Heart</strong> combina a precisão milimétrica dos jogos de plataforma 2D com o caos calculated de um legítimo Bullet Hell, incorporado a uma estrutura progressiva de Roguelike. O jogador controla um príncipe consumido pela fúria, cuja jornada vai da floresta tranquila às profundezas do covil do dragão Fafnir. O objetivo é chegar à fase final, superando múltiplos níveis de dificuldade crescente.
+      </p>
+      <p>
+        O cerne da experiência reside no <strong>loop de jogabilidade adaptativo</strong>. Para passar de fase, o jogador deve vencer o chefe final de cada respectiva etapa. A vitória geral do jogo ocorre apenas ao derrotar o chefe da fase final, desbloqueando uma tela de conclusão detalhando seus créditos, quantidade de gemas coletadas e vida restante.
+      </p>
+      <p>
+        Durante o combate, os inimigos do cenário funcionam como peças para aumentar a dificuldade, mas derrotá-los garante vantagens. Eles "dropam" gemas especiais que, ao fim de cada fase, podem ser trocadas por atributos para o seu personagem, como <strong>Dano, Vida, Dash e Velocidade</strong>.
+      </p>
+    </div>
+
+    <div class="reveal">
+      <div class="stats-strip">
+        <div class="stat-box">
+          <span class="stat-value">Roguelike</span>
+          <p class="stat-desc">Runs únicas com evolução baseada na compra de atributos</p>
         </div>
-    </header>
+        <div class="stat-box">
+          <span class="stat-value">Bullet Hell</span>
+          <p class="stat-desc">Inimigos e projéteis que escalam a dificuldade proceduralmente</p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">Speedrun</span>
+          <p class="stat-desc">Desempenho mecânico e pontuação são avaliados pelo tempo</p>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">Godot</span>
+          <p class="stat-desc">Motor gráfico com física responsiva para controles precisos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        <section>
+<div class="divider"></div>
 
-        </section>
-    </main>
-''
-    <!-- RODAPÉ -->
-    <footer class="main-footer">
-        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
-    </footer>
+<section class="features-section" id="features">
+  <p class="section-label reveal">Mecânicas</p>
+  <h2 class="section-title reveal">Principais Características</h2>
 
-    <!-- LOGICA JAVASCRIPT EM JS PURO (SEM DEPENDÊNCIAS EXTERNAS) -->
-    <script>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" stroke-dasharray="2 3"/>
+        <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+      </svg>
+      <p class="feature-title">Avaliação por Tempo</p>
+      <p class="feature-desc">O desempenho do jogador não é medido apenas por derrotar inimigos, mas sim pelo tempo hábil de conclusão de cada fase percorrida.</p>
+    </div>
 
-    </script>
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+      <p class="feature-title">Evolução Estratégica</p>
+      <p class="feature-desc">As gemas obtidas em combate permitem melhorar os atributos do herói (Dano, Vida, Dash, Velocidade) no término de cada etapa, balanceando o avanço na dificuldade.</p>
+    </div>
+
+    <div class="feature-card">
+      <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="8" width="20" height="12" rx="2"/>
+        <path d="M6 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+        <circle cx="12" cy="14" r="2"/>
+      </svg>
+      <p class="feature-title">Arsenal Adaptativo</p>
+      <p class="feature-desc">Troque de armas em tempo real com o pressionar de uma tecla para lidar com padrões inimigos. As próprias armas também são conquistadas em recompensas de drops.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="screenshots-section" id="capturas">
+  <p class="section-label reveal">Visual</p>
+  <h2 class="section-title reveal">Material de Gameplay</h2>
+
+  <div class="screenshots-scroll reveal">
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Floresta — Fase 1</span>
+      </div>
+    </div>
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Dungeon — Fase 2</span>
+      </div>
+    </div>
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Covil de Fafnir — Fase Final</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="specs-section" id="controles">
+  <p class="section-label reveal">Mapeamento</p>
+  <h2 class="section-title reveal">Controles do Jogo</h2>
+
+  <div style="max-width: 700px;" class="reveal">
+    <table class="specs-table">
+      <tr>
+        <td>Movimentação</td>
+        <td>Setas direcionais ou teclas W, A, S, D</td>
+      </tr>
+      <tr>
+        <td>Pulo</td>
+        <td>Barra de Espaço</td>
+      </tr>
+      <tr>
+        <td>Combate</td>
+        <td>Atirar: Botão Principal do Mouse (MB1) <br> Trocar Arma: Tecla F</td>
+      </tr>
+      <tr>
+        <td>Mundo</td>
+        <td>Interagir com o cenário: Botão Secundário do Mouse (MB2)</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="specs-section" id="specs">
+  <p class="section-label reveal">Hardware</p>
+  <h2 class="section-title reveal">Requisitos Mínimos de Sistema</h2>
+
+  <div style="max-width: 700px;" class="reveal">
+    <table class="specs-table">
+      <tr>
+        <td>Sistema Operacional</td>
+        <td>Windows 10 / 11 (64-bit) ou Distribuições Linux Modernas</td>
+      </tr>
+      <tr>
+        <td>Processador (CPU)</td>
+        <td>Dual Core de 2.0 GHz ou superior (Compatível com arquitetura x64)</td>
+      </tr>
+      <tr>
+        <td>Memória RAM</td>
+        <td>4 GB de RAM</td>
+      </tr>
+      <tr>
+        <td>Placa de Vídeo (GPU)</td>
+        <td>Placa integrada compatível com OpenGL 3.3 / Vulkan (Ex: Intel HD Graphics 4000)</td>
+      </tr>
+      <tr>
+        <td>Armazenamento</td>
+        <td>500 MB de espaço livre em disco</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="footer-cta">
+  <h2 class="footer-cta-title reveal">Pronto para a Jornada?</h2>
+  <p class="footer-cta-sub reveal">Vinga seu pai. Salve sua amada. Derrote Fafnir.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="reveal">
+    <a href="#" class="btn-primary" style="font-size:12px;padding:16px 40px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Jogar / Baixar
+    </a>
+    <a href="Game Mechanics Documentation.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size:12px;padding:15px 40px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Visualizar GDD (PDF)
+    </a>
+  </div>
+</section>
+
+<footer class="footer-meta">
+  <span>Ashen Heart &nbsp;·&nbsp; Equipe Atom</span>
+  <span>Desenvolvido em Godot Engine &nbsp;·&nbsp; 2025</span>
+  <span>Classificação Indicativa 12+</span>
+</footer>
+
+<script>
+  const embers = document.getElementById('embers');
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'ember-particle';
+    const size = Math.random() * 3 + 1.5;
+    const colors = ['#c8501a','#e8693a','#ff8c55','#c9973a','#e8c47a'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    el.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      left: ${Math.random() * 100}%;
+      bottom: -10px;
+      animation-duration: ${6 + Math.random() * 10}s;
+      animation-delay: ${Math.random() * 8}s;
+      --drift: ${(Math.random() - 0.5) * 80}px;
+    `;
+    embers.appendChild(el);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
