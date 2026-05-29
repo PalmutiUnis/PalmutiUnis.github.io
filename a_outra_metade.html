@@ -1,52 +1,1052 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gamer Portal - MPM Studio</title>
-    <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
-    
-    <!-- Google Fonts para estilo Acadêmico + Gamer -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <title>GLINTH — A Dreamer's Odyssey</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --purple: #7B2FBE;
+            --purple-light: #a855f7;
+            --purple-glow: #c084fc;
+            --dark: #05020f;
+            --darker: #02010a;
+            --grid-color: rgba(123, 47, 190, 0.18);
+            --white: #f0eaff;
+            --accent: #e0aaff;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--darker);
+            color: var(--white);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* ── GRID BACKGROUND ── */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        /* ── PARTICLES ── */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--purple-glow);
+            opacity: 0;
+            animation: float-up linear infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1.5);
+            }
+        }
+
+        /* ── LAYOUT ── */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── HERO ── */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(123, 47, 190, 0.35) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            padding: 6px 20px;
+            border-radius: 2px;
+            margin-bottom: 36px;
+            animation: fadeDown 0.8s ease both;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(5rem, 14vw, 11rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-shadow:
+                0 0 30px rgba(192, 132, 252, 0.8),
+                0 0 80px rgba(123, 47, 190, 0.6),
+                0 0 150px rgba(123, 47, 190, 0.3);
+            animation: fadeDown 0.8s 0.1s ease both;
+        }
+
+        .hero-sub {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            letter-spacing: 0.5em;
+            color: var(--accent);
+            margin: 16px 0 48px;
+            animation: fadeDown 0.8s 0.2s ease both;
+        }
+
+        .hero-tagline {
+            font-size: 1.15rem;
+            color: rgba(240, 234, 255, 0.65);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 56px;
+            font-weight: 300;
+            animation: fadeDown 0.8s 0.3s ease both;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeDown 0.8s 0.4s ease both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--purple);
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            padding: 16px 40px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+            transition: all 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.4s;
+        }
+
+        .btn-primary:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary:hover {
+            background: var(--purple-light);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--accent);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            padding: 15px 36px;
+            border: 1px solid rgba(192, 132, 252, 0.5);
+            cursor: pointer;
+            text-decoration: none;
+            clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+            transition: all 0.25s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple-glow);
+            background: rgba(123, 47, 190, 0.15);
+            box-shadow: 0 0 20px rgba(123, 47, 190, 0.3);
+        }
+
+        /* ── SCROLL INDICATOR ── */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.4;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--purple-light);
+            animation: fadeDown 1s 1s ease both;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--purple-light), transparent);
+            animation: scroll-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scroll-pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(1)
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleY(1.1)
+            }
+        }
+
+        /* ── SECTION STYLES ── */
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .section-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.5em;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple), transparent);
+            margin-bottom: 48px;
+        }
+
+        /* ── ABOUT ── */
+        #about {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: rgba(240, 234, 255, 0.75);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .about-card {
+            background: rgba(123, 47, 190, 0.08);
+            border: 1px solid rgba(123, 47, 190, 0.3);
+            padding: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple), var(--purple-glow), transparent);
+        }
+
+        .about-stat {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(123, 47, 190, 0.15);
+        }
+
+        .about-stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-icon {
+            font-size: 1.3rem;
+            width: 32px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--purple-light);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+
+        /* ── FEATURES ── */
+        #features {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .feature-card {
+            background: rgba(10, 5, 25, 0.8);
+            border: 1px solid rgba(123, 47, 190, 0.2);
+            padding: 36px 28px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--purple), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(123, 47, 190, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--purple-glow);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: rgba(240, 234, 255, 0.6);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* ── NARRATIVE ── */
+        #narrative {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+        }
+
+        .narrative-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .narrative-quote {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            line-height: 1.5;
+            color: #fff;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .narrative-quote::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--purple-light), var(--purple), transparent);
+        }
+
+        .narrative-body {
+            font-size: 1.05rem;
+            color: rgba(240, 234, 255, 0.65);
+            line-height: 1.9;
+            font-weight: 300;
+        }
+
+        /* ── REVIEWS ── */
+        #reviews {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+        }
+
+        .reviews-score {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .score-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--purple-glow);
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(192, 132, 252, 0.5);
+        }
+
+        .score-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .score-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .score-sublabel {
+            font-size: 0.85rem;
+            color: rgba(240, 234, 255, 0.5);
+            letter-spacing: 0.1em;
+        }
+
+        .score-stars {
+            color: var(--purple-light);
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .review-card {
+            background: rgba(123, 47, 190, 0.07);
+            border: 1px solid rgba(123, 47, 190, 0.25);
+            padding: 28px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .review-card:hover {
+            border-color: rgba(192, 132, 252, 0.5);
+            background: rgba(123, 47, 190, 0.15);
+        }
+
+        .review-text {
+            font-size: 1rem;
+            color: rgba(240, 234, 255, 0.8);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .review-stars {
+            color: var(--purple-light);
+            font-size: 0.9rem;
+        }
+
+        /* ── SYSTEM ── */
+        #system {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+            background: rgba(123, 47, 190, 0.04);
+        }
+
+        .system-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .sys-block {
+            background: rgba(10, 5, 25, 0.6);
+            border: 1px solid rgba(123, 47, 190, 0.2);
+            padding: 32px;
+        }
+
+        .sys-block-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(123, 47, 190, 0.2);
+        }
+
+        .sys-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(123, 47, 190, 0.08);
+            font-size: 0.95rem;
+        }
+
+        .sys-row:last-child {
+            border-bottom: none;
+        }
+
+        .sys-key {
+            color: rgba(240, 234, 255, 0.5);
+        }
+
+        .sys-val {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ── CTA ── */
+        #cta {
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+            text-align: center;
+            background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(123, 47, 190, 0.2) 0%, transparent 70%);
+        }
+
+        .cta-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 16px;
+            text-shadow: 0 0 60px rgba(192, 132, 252, 0.4);
+        }
+
+        .cta-sub {
+            font-size: 1.1rem;
+            color: rgba(240, 234, 255, 0.5);
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(123, 47, 190, 0.2);
+            padding: 36px 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(240, 234, 255, 0.3);
+            letter-spacing: 0.05em;
+        }
+
+        footer span {
+            color: var(--purple-light);
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px;
+            background: rgba(2, 1, 10, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(123, 47, 190, 0.15);
+        }
+
+        .nav-logo {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 20px rgba(192, 132, 252, 0.6);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: rgba(240, 234, 255, 0.5);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-glow);
+        }
+
+        .nav-play {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            color: #fff;
+            text-decoration: none;
+            background: var(--purple);
+            padding: 10px 24px;
+            clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+            transition: all 0.2s;
+        }
+
+        .nav-play:hover {
+            background: var(--purple-light);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .about-grid,
+            .narrative-wrap,
+            .system-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .features-grid,
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-inner {
+                padding: 60px 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <!-- CABEÇALHO DA PÁGINA -->
-    <header class="main-header">
-        <div class="header-container">
-            <!-- Espaço reservado para a logo da instituição (Substitua a div por <img src="sua-logo.png" alt="Logo"> quando tiver o arquivo) -->
-            <div class="institution-logo-container" id="logo-placeholder">
-                <span>
-                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
-                </span>
+    <!-- Grid background -->
+    <div class="grid-bg"></div>
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-logo">GLINTH</a>
+        <div class="nav-links">
+            <a href="#about">Sobre</a>
+            <a href="#features">Características</a>
+            <a href="#narrative">Narrativa</a>
+            <a href="#reviews">Avaliações</a>
+            <a href="#system">Sistema</a>
+        </div>
+        <a href="https://juliaragibeltrao.github.io/glinth/" target="_blank" class="nav-play">▶ JOGAR</a>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-tag">Júlia Ragi · Maurício de Oliveira · Sara Veríssimo</div>
+        <h1 class="hero-title">GLINTH</h1>
+        <p class="hero-sub">A Dreamer's Odyssey</p>
+        <p class="hero-tagline">Entre dimensões esquecidas, apenas a luz pode restaurar o equilíbrio.</p>
+        <div class="btn-group">
+            <a href="https://juliaragibeltrao.github.io/glinth/" target="_blank" class="btn-primary">
+                ▶&nbsp;&nbsp;JOGAR AGORA
+            </a>
+            <a href="#about" class="btn-secondary">Saiba Mais</a>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">Sobre o Jogo</p>
+                <h2 class="section-title">Uma jornada entre<br>mundos fragmentados</h2>
+                <div class="divider"></div>
             </div>
-            
-            <div class="header-titles">
-                <h1>EXPO_GAMES_PORTAL v1.0</h1>
-                <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
+            <div class="about-grid reveal">
+                <p class="about-text">
+                    GLINTH é um jogo de aventura e puzzle em 2D que mistura exploração, fantasia e narrativa visual. O
+                    jogador atravessa diferentes dimensões fragmentadas enquanto busca restaurar os fragmentos
+                    energéticos perdidos do universo.<br><br>
+                    Com uma direção artística marcante inspirada em fantasia e energia cósmica, cada dimensão revela
+                    novos mistérios e desafios únicos — incentivando a curiosidade e a interpretação narrativa a cada
+                    passo.
+                </p>
+                <div class="about-card">
+                    <div class="about-stat">
+                        <div class="stat-icon">🎮</div>
+                        <div>
+                            <div class="stat-label">Modalidade</div>
+                            <div class="stat-value">Single-player · Offline</div>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-icon">🌐</div>
+                        <div>
+                            <div class="stat-label">Plataforma</div>
+                            <div class="stat-value">Browser (Navegadores Modernos)</div>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-icon">🎯</div>
+                        <div>
+                            <div class="stat-label">Gênero</div>
+                            <div class="stat-value">Aventura · Puzzle · Plataforma 2D</div>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-icon">🔞</div>
+                        <div>
+                            <div class="stat-label">Classificação</div>
+                            <div class="stat-value">+10 anos</div>
+                        </div>
+                    </div>
+                    <div class="about-stat">
+                        <div class="stat-icon">✨</div>
+                        <div>
+                            <div class="stat-label">Subgêneros</div>
+                            <div class="stat-value">Atmospheric · Puzzle Narrativo · Fantasy</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
-        <section>
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">Características</p>
+                <h2 class="section-title">O que torna<br>GLINTH único</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="features-grid reveal">
+                <div class="feature-card">
+                    <div class="feature-icon">🌌</div>
+                    <div class="feature-title">Múltiplas Dimensões</div>
+                    <p class="feature-desc">Explore mundos fragmentados e únicos, cada um com sua própria atmosfera e
+                        mistérios a serem desvendados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧩</div>
+                    <div class="feature-title">Puzzles Ambientais</div>
+                    <p class="feature-desc">Mecânicas interativas e desafios integrados ao cenário incentivam observação
+                        e raciocínio constante.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">Descoberta</div>
+                    <p class="feature-desc">Gameplay focado em exploração livre e descoberta orgânica, sem pressão —
+                        apenas curiosidade e intuição.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <div class="feature-title">Narrativa Visual</div>
+                    <p class="feature-desc">Uma história misteriosa contada através do ambiente e dos cenários, sem
+                        textos excessivos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Arte Imersiva</div>
+                    <p class="feature-desc">Cenários atmosféricos com direção artística própria, inspirados em fantasia
+                        e energia cósmica.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Jogue Agora</div>
+                    <p class="feature-desc">Disponível diretamente no browser — sem instalação, sem espera. Apenas abra
+                        e mergulhe no universo Glinth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        </section>
-    </main>
-''
-    <!-- RODAPÉ -->
-    <footer class="main-footer">
-        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+    <!-- NARRATIVE -->
+    <section id="narrative">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">Pitch Narrativo</p>
+                <h2 class="section-title">A história por trás<br>da energia</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="narrative-wrap reveal">
+                <blockquote class="narrative-quote">
+                    "Quando as dimensões começam a colapsar, apenas uma pequena criatura luminosa é capaz de restaurar o
+                    equilíbrio do universo."
+                </blockquote>
+                <p class="narrative-body">
+                    Atravessando mundos misteriosos e cenários fragmentados, o jogador deverá descobrir os segredos por
+                    trás da energia conhecida como <strong style="color: var(--purple-glow)">Glinth</strong>.<br><br>
+                    Cada dimensão representa uma nova descoberta, incentivando curiosidade, interpretação narrativa e
+                    uma conexão profunda com os elementos do cenário. Não há mapas, não há instruções — apenas a luz que
+                    guia.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">Avaliações da Comunidade</p>
+                <h2 class="section-title">O que dizem<br>os jogadores</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="reviews-score reveal">
+                <div class="score-num">9</div>
+                <div class="score-info">
+                    <div class="score-stars">★★★★★</div>
+                    <div class="score-label">Muito Positivas</div>
+                    <div class="score-sublabel">Avaliação da comunidade · /10</div>
+                </div>
+            </div>
+            <div class="reviews-grid reveal">
+                <div class="review-card">
+                    <p class="review-text">"A ambientação transmite mistério e imersão do começo ao fim. Uma experiência
+                        que fica na memória."</p>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Os cenários possuem personalidade própria e são visualmente incríveis. Arte
+                        de altíssimo nível."</p>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">"Os puzzles incentivam exploração e observação constante. Nunca me senti
+                        perdido, sempre curioso."</p>
+                    <div class="review-stars">★★★★☆</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SYSTEM -->
+    <section id="system">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">Requisitos</p>
+                <h2 class="section-title">Compatibilidade<br>& Sistema</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="system-grid reveal">
+                <div class="sys-block">
+                    <div class="sys-block-title">🖥️ Requisitos do Sistema</div>
+                    <div class="sys-row"><span class="sys-key">Sistema Operacional</span><span class="sys-val">Windows
+                            10 / Linux / macOS</span></div>
+                    <div class="sys-row"><span class="sys-key">Plataforma</span><span class="sys-val">Browser</span>
+                    </div>
+                    <div class="sys-row"><span class="sys-key">Conexão</span><span class="sys-val">Offline</span></div>
+                    <div class="sys-row"><span class="sys-key">Instalação</span><span class="sys-val">Não
+                            necessária</span></div>
+                </div>
+                <div class="sys-block">
+                    <div class="sys-block-title">🎮 Identidade do Jogo</div>
+                    <div class="sys-row"><span class="sys-key">Modalidade</span><span
+                            class="sys-val">Single-player</span></div>
+                    <div class="sys-row"><span class="sys-key">Gênero</span><span class="sys-val">Aventura · Puzzle ·
+                            2D</span></div>
+                    <div class="sys-row"><span class="sys-key">Classificação</span><span class="sys-val">+10 anos</span>
+                    </div>
+                    <div class="sys-row"><span class="sys-key">Navegadores</span><span class="sys-val">Modernos (Chrome,
+                            Firefox, Edge)</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+        <div class="section-inner">
+            <div class="reveal">
+                <h2 class="cta-title">Pronto para<br>atravessar as dimensões?</h2>
+                <p class="cta-sub">A luz aguarda. O universo precisa de você.</p>
+                <div class="btn-group" style="justify-content:center">
+                    <a href="https://juliaragibeltrao.github.io/glinth/" target="_blank" class="btn-primary"
+                        style="font-size:1rem;padding:20px 56px">
+                        ▶&nbsp;&nbsp;JOGAR GLINTH
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 <span>GLINTH</span> — Júlia Ragi · Maurício de Oliveira · Sara Veríssimo</p>
+        <p style="margin-top:8px;font-size:0.75rem;">Aventura · Puzzle · Plataforma 2D · Browser</p>
     </footer>
 
-    <!-- LOGICA JAVASCRIPT EM JS PURO (SEM DEPENDÊNCIAS EXTERNAS) -->
     <script>
+        // Particles
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 4 + 1;
+            p.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      animation-duration: ${Math.random() * 12 + 8}s;
+      animation-delay: ${Math.random() * 8}s;
+      opacity: ${Math.random() * 0.5};
+    `;
+            container.appendChild(p);
+        }
 
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        reveals.forEach(r => observer.observe(r));
     </script>
 </body>
+
 </html>
