@@ -267,11 +267,10 @@
         .ss-frame {
             aspect-ratio: 16/9; overflow: hidden; background: var(--ash-4); border: 1px solid rgba(200,80,26,0.09);
             display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.5rem;
-            color: var(--bone-m); transition: border-color 0.2s;
+            color: var(--bone-m); transition: border-color 0.2s; position: relative;
         }
         .ss-frame:hover { border-color: rgba(200,80,26,0.25); }
-        .ss-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; }
-        .ss-hint { font-size: 12px; color: var(--bone-m); font-style: italic; margin-top: 1.5rem; text-align: center; }
+        .ss-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; position: relative; z-index: 1; background: rgba(13, 12, 11, 0.85); padding: 6px 12px; border: 1px solid rgba(200,80,26,0.3); }
 
         /* ── SPECS & CONTROLS ── */
         .specs-bg { background: var(--ash-2); }
@@ -302,9 +301,21 @@
         .fcta-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2rem, 5vw, 4rem); color: #fff; margin-bottom: 1rem; position: relative; }
         .fcta-sub { font-size: 17px; color: var(--bone-m); font-style: italic; margin-bottom: 2.5rem; }
 
-        footer.site-footer { padding: 1.5rem 8vw; background: var(--ash); border-top: 1px solid rgba(200,80,26,0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bone-m); }
-        footer.site-footer a { color: var(--ember-b); text-decoration: none; }
-        footer.site-footer a:hover { text-decoration: underline; }
+        /* ── MAIN FOOTER ── */
+        .main-footer { 
+            padding: 2rem 8vw; 
+            background: var(--ash); 
+            border-top: 1px solid rgba(200,80,26,0.1); 
+            text-align: center; 
+            font-family: 'Cinzel', serif; 
+            font-size: 10px; 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            color: var(--bone-m); 
+        }
+        .main-footer p { margin: 0; }
+        .main-footer a { color: var(--ember-b); text-decoration: none; transition: color 0.2s; }
+        .main-footer a:hover { color: var(--ember-g); text-decoration: underline; }
 
         /* REVEAL */
         .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
@@ -349,8 +360,6 @@
         </a>
     </div>
 </header>
-
-
 
 <section class="hero">
     <div class="hero-bg"></div>
@@ -516,16 +525,16 @@
     <h2 class="s-title rv">Material de Gameplay</h2>
     <div class="ss-grid rv">
         <div class="ss-frame">
-            <img src="imgs_Atom/Floresta - Fase 2.png" alt="Captura de tela da fase Floresta" style="width:100%;height:auto;object-fit:cover;">
+            <img src="imgs_Atom/Floresta - Fase 2.png" alt="Captura de tela da fase Floresta" style="position: absolute; width:100%; height:100%; object-fit:cover; top: 0; left: 0; z-index: 0;">
             <span class="ss-label">Diversas fases</span>
         </div>
         <div class="ss-frame">
-            <img src="imgs_Atom/Atacando.png" alt="Captura de tela do jogador atacando" style="width:100%;height:auto;object-fit:cover;">
+            <img src="imgs_Atom/Atacando.png" alt="Captura de tela do jogador atacando" style="position: absolute; width:100%; height:100%; object-fit:cover; top: 0; left: 0; z-index: 0;">
             <span class="ss-label">Combate com inimigos</span>
         </div>
         <div class="ss-frame">
-            <img src="imgs_Atom/Castelo.png" alt="Captura de tela do castelo do Príncipe" style="width:100%;height:auto;object-fit:cover;">
-            <span class="ss-label">Cenários incriveis</span>
+            <img src="imgs_Atom/Castelo.png" alt="Captura de tela do castelo do Príncipe" style="position: absolute; width:100%; height:100%; object-fit:cover; top: 0; left: 0; z-index: 0;">
+            <span class="ss-label">Cenários incríveis</span>
         </div>
     </div>
 </section>
@@ -591,9 +600,9 @@
     </div>
 </section>
 
-<footer class="site-footer">
-    <span>Ashen Heart &nbsp;·&nbsp; Equipe Atom</span>
-    <span>&copy; 2026 &bull; Mostra de Games Acadêmica. Hospedado via <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</span>
+<footer class="main-footer">
+    <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a
+            href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
 </footer>
 
 <script>
