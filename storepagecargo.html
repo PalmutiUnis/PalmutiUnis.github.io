@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Car Go - Página da loja</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: radial-gradient(ellipse at top right, #1b3a6b 0%, #050a14 70%);
+    color: #e6e6e6;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 4rem; font-weight: 800; margin-bottom: 24px; color: #fff; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+  .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; margin-bottom: 48px; }
+  .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; display: block; }
+  .gallery .main { grid-column: 1 / -1; }
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .video-wrap {
+    position: relative; padding-bottom: 56.25%; height: 0;
+    border-radius: 6px; overflow: hidden; margin-bottom: 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    width: 100%;
+  }
+  .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .description { font-size: 1.05rem; line-height: 1.6; color: #cfd8e3; text-align: center; }
+  .reviews { font-weight: 700; line-height: 2; text-align: center; }
+  .reviews .positive { color: #66c0f4; }
+  .reviews .very-positive { color: #66ff66; }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(to bottom, #75b022, #588a1b);
+    color: #fff; padding: 12px 28px; border-radius: 4px; text-decoration: none; font-weight: 700;
+    font-size: 1.1rem; width: fit-content; text-align: center; border: 1px solid #75b022;
+  }
+  .btn:hover { filter: brightness(1.15); cursor: pointer; }
+  .requisitos {
+    background: linear-gradient(135deg, #0a1a2e 0%, #050a14 100%);
+    border-radius: 8px; padding: 40px; margin-top: 40px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  }
+  .req-col h2 { color: #fff; font-size: 1.8rem; margin-bottom: 20px; }
+  .req-col ul { list-style: none; }
+  .req-col li { padding: 6px 0; color: #cfd8e3; font-size: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .req-col li::before { content: "• "; color: #66c0f4; }
+</style>
+</head>
+<body>
+  <main class="container">
+    <h1>Car Go</h1>
+    <section class="hero">
+      <div class="gallery">
+        <img class="main" src="screenshots/ss1.jpg" onerror="this.src='screenshots/ss1.jpg.jpeg'" alt="Gameplay de Car Go" />
+        <img src="screenshots/ss2.jpg" onerror="this.src='screenshots/ss2.jpg.jpeg'" alt="Inimigos atacando" />
+        <img src="screenshots/ss3.jpg" onerror="this.src='screenshots/ss3.jpg.jpeg'" alt="Veículo inimigo na pista" />
+      </div>
+      <div class="info">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/2BJALC0ypZc" allowfullscreen></iframe>
+        </div>
+        <p class="description">
+          Um eletrizante bullet hell em alta velocidade situado em uma estrada, 
+          sobreviva as ondas de inimigos e diversos veículos que irão lhe atacar freneticamente!
+        </p>
+        <div class="reviews">
+          <div>Avaliações recentes: <span class="very-positive">Muito positivas</span></div>
+          <div>Avaliações em PT-BR: <span class="positive">Positivas</span></div>
+        </div>
+        <a class="btn" href="https://drive.google.com/drive/folders/1DgOjsamAVIguwikBcn9Hh0Ly1kI94IVh?hl=pt-br" target="_blank">Jogar agora</a>
+      </div>
+    </section>
+    <section class="requisitos">
+      <div class="req-col">
+        <h2>Requisitos mínimos</h2>
+        <ul>
+          <li>Windows 10 64-bit</li>
+          <li>Processador Intel Core i3</li>
+          <li>4 GB de memória RAM</li>
+          <li>Placa de vídeo Intel HD 4000</li>
+        </ul>
+      </div>
+      <div class="req-col">
+        <h2>Requisitos Recomendados</h2>
+        <ul>
+          <li>Windows 10 ou 11 64-bit</li>
+          <li>Processador Intel Core i5</li>
+          <li>8 GB de memória RAM</li>
+          <li>Placa de vídeo NVIDIA GTX 750 Ti</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
