@@ -88,7 +88,7 @@
             );
         }
 
-        /* Green/purple corner glows */
+        /* Green/purple lab atmosphere glow */
         body::after {
             content: '';
             position: fixed;
@@ -96,9 +96,22 @@
             z-index: 0;
             pointer-events: none;
             background:
-                radial-gradient(ellipse 40% 35% at 5%  5%,  rgba(106,217,69,.07)  0%, transparent 70%),
-                radial-gradient(ellipse 35% 30% at 95% 5%,  rgba(191,104,255,.07) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 40% at 50% 100%,rgba(106,217,69,.05)  0%, transparent 65%);
+                radial-gradient(circle at 10% 20%,  rgba(106,217,69,.04) 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%,  rgba(191,104,255,.04) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%,  rgba(106,217,69,.02) 0%, transparent 70%);
+        }
+
+        /* Scientific lab hex/grid pattern */
+        .lab-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(rgba(106, 217, 69, 0.08) 1px, transparent 1px),
+                radial-gradient(rgba(191, 104, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
         }
 
         /* Static lab grid — faint pipe/monitor lines */
@@ -142,14 +155,20 @@
            GAME SUB-NAV
         ══════════════════════════════════════════════════════ */
         .game-nav {
-            position: sticky;
-            top: 0;
-            z-index: 400;
-            height: 50px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 600;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
+            background: transparent;
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+        }
+
+        .game-nav.scrolled {
             background: rgba(5,3,10,.94);
             border-bottom: 1px solid var(--b1);
             backdrop-filter: blur(14px);
@@ -170,6 +189,12 @@
 
         .nav-back:hover { color: var(--g); }
         .nav-back svg { width:16px; height:16px; fill:currentColor; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
 
         .nav-anchors {
             display: flex;
@@ -195,7 +220,7 @@
         #hero {
             position: relative;
             z-index: 1;
-            height: calc(100vh - 50px);
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1268,14 +1293,19 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
         Voltar ao Portal
     </a>
-    <ul class="nav-anchors">
-        <li><a href="#about">Sobre</a></li>
-        <li><a href="#rattus">Missão</a></li>
-        <li><a href="#cientistas">Cientistas</a></li>
-        <li><a href="#features">Mecânicas</a></li>
-        <li><a href="#capturas">Capturas</a></li>
-        <li><a href="#equipe">Equipe</a></li>
-    </ul>
+    <div class="nav-right">
+        <ul class="nav-anchors">
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#rattus">Missão</a></li>
+            <li><a href="#cientistas">Cientistas</a></li>
+            <li><a href="#features">Mecânicas</a></li>
+            <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#equipe">Equipe</a></li>
+        </ul>
+        <a href="#" class="btn-play" style="padding: 12px 28px; font-size: 11px;">
+            JOGAR
+        </a>
+    </div>
 </nav>
 
 <!-- ═══════════════════════════════════════════════
@@ -1340,7 +1370,7 @@
 <!-- ═══════════════════════════════════════════════
      SOBRE O JOGO
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap bg-deep" id="about">
+<section class="s-wrap" id="about">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Sobre o Jogo</p>
@@ -1411,7 +1441,7 @@
 <!-- ═══════════════════════════════════════════════
      MISSÃO — O VILÃO RATTUS
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="rattus" style="background:#060409;">
+<section class="s-wrap" id="rattus">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Missão Ativa</p>
@@ -1480,7 +1510,7 @@
 <!-- ═══════════════════════════════════════════════
      OS CIENTISTAS — PERSONAGENS
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="cientistas" style="background:#07050e;">
+<section class="s-wrap" id="cientistas">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Personagens</p>
@@ -1535,7 +1565,7 @@
 <!-- ═══════════════════════════════════════════════
      CAPTURAS DE TELA
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="capturas" style="background:#06040f;">
+<section class="s-wrap" id="capturas">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Visual</p>
@@ -1565,7 +1595,7 @@
 <!-- ═══════════════════════════════════════════════
      FEATURES — CARACTERÍSTICAS DO JOGO
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="features" style="background:#080511;">
+<section class="s-wrap" id="features">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Características</p>
@@ -1620,7 +1650,7 @@
 <!-- ═══════════════════════════════════════════════
      MECÂNICAS + INSPIRAÇÕES
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="mecanicas" style="background:#06040f;">
+<section class="s-wrap" id="mecanicas">
     <div class="s-inner">
         <div class="rv">
             <p class="s-tag">Jogabilidade</p>
@@ -1678,7 +1708,7 @@
 <!-- ═══════════════════════════════════════════════
      EQUIPE — LFA GAMES
 ═══════════════════════════════════════════════ -->
-<section class="s-wrap" id="equipe" style="background:#080511;">
+<section class="s-wrap" id="equipe">
     <div class="s-inner">
         <div class="rv" style="text-align:center;max-width:480px;margin:0 auto 3.5rem;">
             <p class="s-tag" style="justify-content:center;">Desenvolvimento</p>
@@ -1771,6 +1801,16 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // ── Transparent to solid Nav bar on scroll ──
+    const nav = document.querySelector('.game-nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
 </script>
 
 </body>
