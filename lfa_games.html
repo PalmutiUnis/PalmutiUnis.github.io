@@ -101,29 +101,19 @@
                 radial-gradient(circle at 50% 50%,  rgba(106,217,69,.02) 0%, transparent 70%);
         }
 
-        /* Scientific lab hex/grid pattern */
-        .lab-grid {
+        /* Slime/goo background pattern */
+        .lab-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background-image: 
-                radial-gradient(rgba(106, 217, 69, 0.08) 1px, transparent 1px),
-                radial-gradient(rgba(191, 104, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-        }
-
-        /* Static lab grid — faint pipe/monitor lines */
-        .lab-grid {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
+            background-color: #040206;
             background-image:
-                linear-gradient(rgba(106,217,69,.025) 1px,  transparent 1px),
-                linear-gradient(90deg, rgba(191,104,255,.025) 1px, transparent 1px);
-            background-size: 80px 80px;
+                radial-gradient(circle at 15% 20%, rgba(106, 217, 69, 0.06) 0%, transparent 55%),
+                radial-gradient(circle at 85% 75%, rgba(106, 217, 69, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(106, 217, 69, 0.03) 0%, transparent 70%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cpath d='M-10%2C-10 L120%2C-10 C110%2C30 90%2C40 80%2C60 C70%2C80 85%2C90 70%2C110 C55%2C130 30%2C120 15%2C100 C0%2C80 -5%2C50 -10%2C20 Z' fill='%236ad945' opacity='0.035'/%3E%3Cpath d='M180%2C150 C210%2C130 250%2C140 270%2C170 C290%2C200 270%2C240 240%2C250 C210%2C260 170%2C230 160%2C200 C150%2C170 160%2C160 180%2C150 Z' fill='%236ad945' opacity='0.025'/%3E%3Cpath d='M320%2C-10 C340%2C30 350%2C60 345%2C90 C340%2C110 325%2C120 325%2C135 C325%2C150 335%2C160 330%2C170 C320%2C185 305%2C175 305%2C150 C305%2C120 315%2C80 310%2C-10 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M350%2C300 C380%2C280 410%2C290 410%2C330 L410%2C410 L310%2C410 C310%2C380 320%2C350 330%2C330 C340%2C310 335%2C310 350%2C300 Z' fill='%236ad945' opacity='0.04'/%3E%3Cpath d='M50%2C250 C65%2C240 75%2C255 70%2C265 C65%2C275 45%2C280 40%2C270 C35%2C260 40%2C255 50%2C250 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M110%2C320 C120%2C315 130%2C320 128%2C330 C125%2C340 115%2C345 108%2C335 C100%2C325 105%2C320 110%2C320 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M280%2C70 C290%2C65 300%2C70 298%2C80 C295%2C90 285%2C95 278%2C85 C270%2C75 275%2C70 280%2C70 Z' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='90' cy='180' r='14' fill='%236ad945' opacity='0.035'/%3E%3Ccircle cx='90' cy='180' r='12' stroke='%236ad945' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3Cpath d='M84%2C174 A 8 8 0 0 1 94 170' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3Ccircle cx='230' cy='80' r='8' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='230' cy='80' r='7' stroke='%236ad945' stroke-width='1.2' fill='none' opacity='0.04'/%3E%3Cpath d='M226%2C76 A 4 4 0 0 1 232 74' stroke='%23ffffff' stroke-width='0.8' fill='none' opacity='0.06'/%3E%3Ccircle cx='150' cy='310' r='10' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='150' cy='310' r='9' stroke='%236ad945' stroke-width='1.2' fill='none' opacity='0.045'/%3E%3Cpath d='M146%2C306 A 5 5 0 0 1 152 304' stroke='%23ffffff' stroke-width='0.8' fill='none' opacity='0.07'/%3E%3Ccircle cx='40' cy='50' r='5' fill='%236ad945' opacity='0.025'/%3E%3Ccircle cx='310' cy='250' r='6' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M80%2C60 C120%2C90 140%2C110 180%2C150' stroke='%236ad945' stroke-width='1.5' fill='none' opacity='0.015'/%3E%3Cpath d='M240%2C250 C260%2C280 280%2C290 330%2C330' stroke='%236ad945' stroke-width='2' fill='none' opacity='0.015'/%3E%3C/svg%3E");
+            background-size: 100% 100%, 100% 100%, 100% 100%, 360px 360px;
         }
 
         /* Floating bio-particles */
@@ -381,7 +371,7 @@
         .hero-tagline {
             font-size: clamp(1.1rem, 2vw, 1.4rem);
             color: var(--t2);
-            max-width: 660px;
+            max-width: 720px;
             line-height: 1.7;
             margin: .6rem 0 2.5rem;
             font-weight: 300;
@@ -535,6 +525,9 @@
         .s-wrap {
             position: relative;
             z-index: 1;
+        }
+
+        #about.s-wrap {
             border-top: 1px solid var(--b1);
         }
 
@@ -655,7 +648,7 @@
         /* ══════════════════════════════════════════════════════
            VILLAIN SECTION — RATTUS
         ══════════════════════════════════════════════════════ */
-        #rattus { background: #060409; }
+        #rattus { background: transparent; }
 
         .rattus-layout {
             display: grid;
@@ -788,7 +781,7 @@
         /* ══════════════════════════════════════════════════════
            SCIENTISTS / CHARACTERS SECTION
         ══════════════════════════════════════════════════════ */
-        #cientistas { background: #07050e; }
+        #cientistas { background: transparent; }
 
         .scientists-intro {
             font-size: 1rem;
@@ -893,7 +886,7 @@
         /* ══════════════════════════════════════════════════════
            SCREENSHOTS SECTION
         ══════════════════════════════════════════════════════ */
-        #capturas { background: #06040f; }
+        #capturas { background: transparent; }
 
         .ss-grid {
             display: grid;
@@ -942,7 +935,7 @@
         /* ══════════════════════════════════════════════════════
            FEATURES / MECHANICS
         ══════════════════════════════════════════════════════ */
-        #features { background: #080511; }
+        #features { background: transparent; }
 
         .feat-grid {
             display: grid;
@@ -997,7 +990,7 @@
         /* ══════════════════════════════════════════════════════
            GAMEPLAY MECHANICS DETAIL
         ══════════════════════════════════════════════════════ */
-        #mecanicas { background: #06040f; }
+        #mecanicas { background: transparent; }
 
         .mec-layout {
             display: grid;
@@ -1037,7 +1030,7 @@
 
         .inspo-lbl {
             font-family: var(--f-mono);
-            font-size: 9px;
+            font-size: 12px;
             letter-spacing: .3em;
             text-transform: uppercase;
             color: var(--p);
@@ -1056,7 +1049,7 @@
             padding: 1rem;
             text-align: center;
             font-family: var(--f-mono);
-            font-size: 8px;
+            font-size: 12px;
             letter-spacing: .1em;
             text-transform: uppercase;
             color: var(--t1);
@@ -1096,7 +1089,7 @@
         /* ══════════════════════════════════════════════════════
            TEAM SECTION (dev team as scientists)
         ══════════════════════════════════════════════════════ */
-        #equipe { background: #080511; }
+        #equipe { background: transparent; }
 
         .team-grid {
             display: grid;
@@ -1153,11 +1146,11 @@
             box-shadow: 0 0 22px var(--g-glow);
         }
 
-        .tm-name { font-size:.98rem; font-weight:700; color:var(--white); margin-bottom:.4rem; }
+        .tm-name { font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:.4rem; }
 
         .tm-role {
             font-family: var(--f-mono);
-            font-size: 7px;
+            font-size: 10px;
             letter-spacing: .14em;
             text-transform: uppercase;
             color: var(--p);
@@ -1174,12 +1167,7 @@
             position: relative;
             z-index: 1;
             text-align: center;
-            border-top: 1px solid var(--b1);
-            background:
-                radial-gradient(ellipse 70% 80% at 50% 50%,
-                    rgba(106,217,69,.07) 0%,
-                    rgba(191,104,255,.06) 55%,
-                    transparent 75%);
+            background: transparent;
         }
 
         /* Warning stripe divider at top of CTA */
@@ -1225,12 +1213,11 @@
         .main-footer {
             position: relative;
             z-index: 1;
-            border-top: 1px solid var(--b1);
             padding: 2rem;
             text-align: center;
             font-size: .82rem;
             color: var(--t3);
-            background: var(--bg0);
+            background: transparent;
         }
 
         .main-footer a { color:var(--p); text-decoration:none; transition:color .2s; }
@@ -1279,7 +1266,7 @@
 <body>
 
 <!-- Persistent lab atmosphere -->
-<div class="lab-grid"></div>
+<div class="lab-bg"></div>
 <div id="bio-particles"></div>
 
 
@@ -1661,15 +1648,15 @@
             <ul class="mec-list">
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
-                    <span class="mec-txt"><strong>Desafios de plataforma:</strong> Navegue por elevadores, esteiras e armadilhas progressivas pelo laboratório.</span>
+                    <span class="mec-txt"><strong>Desafios de plataforma:</strong> Navegue por elevadores, plataformas móveis e armadilhas progressivas pelo laboratório.</span>
                 </li>
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
-                    <span class="mec-txt"><strong>Encontros com inimigos:</strong> Insetos tóxicos, robôs hostis e mutantes do experimento bloqueiam o caminho.</span>
+                    <span class="mec-txt"><strong>Encontros com inimigos:</strong> Tubos de ensaio e objetos químicos ganham vida, além de ratos mutantes do experimento bloqueiam a passagem.</span>
                 </li>
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
-                    <span class="mec-txt"><strong>Pulos de precisão:</strong> Evite poços de ácido, relâmpagos e perigos elétricos com timing perfeito.</span>
+                    <span class="mec-txt"><strong>Pulos de precisão:</strong> Evite gosmas ácidas, esgoto radioativo e veículos violentos pelo caminho.</span>
                 </li>
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
@@ -1677,11 +1664,11 @@
                 </li>
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
-                    <span class="mec-txt"><strong>Microchips colecionáveis:</strong> Itens dourados espalhados estrategicamente em cada setor.</span>
+                    <span class="mec-txt"><strong>Moedas colecionáveis:</strong> Itens dourados espalhados estrategicamente em cada setor que guiam o caminho.</span>
                 </li>
                 <li class="mec-item">
                     <span class="mec-bullet"></span>
-                    <span class="mec-txt"><strong>Múltiplas vidas:</strong> Três tentativas por partida, com possibilidade de ganhar mais ao avançar.</span>
+                    <span class="mec-txt"><strong>Múltiplas vidas:</strong> Três corações por fase, com possibilidade de kits médicos para recuperar a vida.</span>
                 </li>
             </ul>
             <div class="inspo-block">
@@ -1719,19 +1706,19 @@
             <div class="team-card">
                 <div class="tm-avatar">A</div>
                 <div class="tm-name">Andriele de Fátima Silva</div>
-                <span class="tm-role">Desenvolvedora · Level Designer</span>
+                <span class="tm-role">Documentação · Testes</span>
             </div>
 
             <div class="team-card">
                 <div class="tm-avatar">F</div>
                 <div class="tm-name">Fernanda Laudares Silva</div>
-                <span class="tm-role">Diretora de Arte · Desenvolvedora</span>
+                <span class="tm-role">Game Designer · Desenvolvedora</span>
             </div>
 
             <div class="team-card">
                 <div class="tm-avatar">L</div>
                 <div class="tm-name">Lucas Silva Ciacci</div>
-                <span class="tm-role">Programador Líder · Designer de Sistemas</span>
+                <span class="tm-role">Artista Técnico · Desenvolvedor</span>
             </div>
 
         </div>
