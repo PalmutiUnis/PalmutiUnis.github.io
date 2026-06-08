@@ -13,6 +13,7 @@
 
     <!-- SCR-N Seven (pixel font used in the game menus) -->
     <link href="https://fonts.cdnfonts.com/css/scr-n-seven" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
 
     <style>
         /* ══════════════════════════════════════════════════════
@@ -142,11 +143,45 @@
 
 
         /* ══════════════════════════════════════════════════════
-           GAME SUB-NAV
+           HEADER OVERRIDE — fixed, compact
+        ══════════════════════════════════════════════════════ */
+        .main-header {
+            position: fixed !important;
+            top: 0; left: 0; right: 0;
+            z-index: 700;
+            padding: 0.35rem 1rem !important;
+            border-bottom-width: 2px !important;
+        }
+
+        .main-header .header-container {
+            gap: 0.5rem;
+        }
+
+        .main-header .institution-logo-container {
+            height: 28px;
+            max-width: 100px;
+        }
+
+        .main-header .institution-logo-container img {
+            width: 62px !important;
+        }
+
+        .main-header .header-titles h1 {
+            font-size: 0.6rem;
+            margin-bottom: 0;
+        }
+
+        .main-header .header-titles p {
+            font-size: 0.68rem;
+            line-height: 1.3;
+        }
+
+        /* ══════════════════════════════════════════════════════
+           GAME SUB-NAV — sits below the header
         ══════════════════════════════════════════════════════ */
         .game-nav {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: var(--header-h, 83px); left: 0; right: 0;
             z-index: 600;
             height: 70px;
             display: flex;
@@ -217,7 +252,7 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            padding: 2rem;
+            padding: 2rem 2rem 0.1rem;
         }
 
         /* Art background — game's key art */
@@ -301,6 +336,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0;
+            padding-top: 2rem;
         }
 
         /* Studio tag */
@@ -490,7 +526,7 @@
         /* ── Scroll hint ── */
         .scroll-hint {
             position: absolute;
-            bottom: 2.5rem;
+            bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
             z-index: 5;
@@ -1271,6 +1307,24 @@
 
 
 
+<!-- CABEÇALHO -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="institution-logo-container">
+            <span>
+                <a href="https://portal.unis.edu.br/?hsLang=pt-br">
+                    <img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&height=60&name=LogoUnisBranca.png"
+                         height="60" style="height:auto;width:97px;border:0;" width="97" alt="Logo UNIS">
+                </a>
+            </span>
+        </div>
+        <div class="header-titles">
+            <h1>EXPO_GAMES_PORTAL v1.0</h1>
+            <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
+        </div>
+    </div>
+</header>
+
 <!-- ═══════════════════════════════════════════════
      GAME SUB-NAV
 ═══════════════════════════════════════════════ -->
@@ -1788,6 +1842,16 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // ── Measure header height and position game-nav below it ──
+    const hdr = document.querySelector('.main-header');
+    function syncHeaderHeight() {
+        if (hdr) {
+            document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px');
+        }
+    }
+    syncHeaderHeight();
+    window.addEventListener('resize', syncHeaderHeight);
 
     // ── Transparent to solid Nav bar on scroll ──
     const nav = document.querySelector('.game-nav');
