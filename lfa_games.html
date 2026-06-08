@@ -3,1190 +3,1866 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Ray - LFA GAMES | Página da Loja</title>
+    <title>Project Ray — LFA GAMES | Store Page</title>
+    <meta name="description" content="Project Ray é um jogo de plataforma 2D retrô onde três cientistas enfrentam Rattus, um experimento que deu errado. Desenvolvido pela LFA GAMES.">
+
     <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png">
-    
-    <!-- Google Fonts para estilo Acadêmico + Gamer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- SCR-N Seven (pixel font used in the game menus) -->
+    <link href="https://fonts.cdnfonts.com/css/scr-n-seven" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles.css">
 
-    <!-- Custom Neon Arcade Styles specifically for Project Ray Store Page -->
     <style>
+        /* ══════════════════════════════════════════════════════
+           RESET & TOKENS
+        ══════════════════════════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
         :root {
-            --ray-purple: #8b5cf6;
-            --ray-purple-glow: rgba(139, 92, 246, 0.4);
-            --ray-cyan: #06b6d4;
-            --ray-cyan-glow: rgba(6, 182, 212, 0.4);
-            --ray-green: #10b981;
-            --ray-green-glow: rgba(16, 185, 129, 0.4);
-            --ray-bg: #070a13;
-            --ray-surface: #0f172a;
-            --ray-surface-alt: #1e293b;
-            --ray-text: #f8fafc;
-            --ray-text-muted: #94a3b8;
-            --ray-border: #334155;
-            --ray-glow-border: #6366f1;
+            /* ── Brand Palette ── */
+            --g:        #6ad945;   /* green */
+            --g-dim:    rgba(106,217,69,.14);
+            --g-glow:   rgba(106,217,69,.55);
+            --g-dark:   #3fa520;
+
+            --p:        #bf68ff;   /* purple */
+            --p-dim:    rgba(191,104,255,.14);
+            --p-glow:   rgba(191,104,255,.50);
+            --p-dark:   #8830d4;
+
+            --white:    #f4f0ff;
+            --black:    #000000;
+
+            /* ── Backgrounds ── */
+            --bg0:  #030206;   /* near black */
+            --bg1:  #080511;   /* surface */
+            --bg2:  #0d0818;   /* card */
+            --bg3:  #130d22;   /* card hover */
+
+            /* ── Text ── */
+            --t1:   #f0eaff;
+            --t2:   rgba(240,234,255,.58);
+            --t3:   rgba(240,234,255,.30);
+
+            /* ── Borders ── */
+            --b1:   rgba(191,104,255,.10);
+            --b2:   rgba(191,104,255,.25);
+            --b3:   rgba(106,217,69,.30);
+
+            /* ── Fonts ── */
+            --f-game:  'SCR-N Seven', 'Share Tech Mono', monospace;
+            --f-body:  'Outfit', sans-serif;
+            --f-mono:  'Share Tech Mono', monospace;
         }
 
-        body.ray-theme {
-            background-color: var(--ray-bg);
-            color: var(--ray-text);
-            font-family: var(--font-academic);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        body {
+            font-family: var(--f-body);
+            background: var(--bg0);
+            color: var(--t1);
             overflow-x: hidden;
+            line-height: 1.65;
+            font-size: 18px;
         }
 
-        /* Scanline Overlay simulating a CRT monitor inside gallery and terminal */
-        .crt-scanlines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.3) 50%
-            );
-            background-size: 100% 4px;
-            z-index: 10;
+        /* ══════════════════════════════════════════════════════
+           LAB BACKGROUND SYSTEM
+           Persistent dark lab atmosphere across entire page
+        ══════════════════════════════════════════════════════ */
+
+        /* Horizontal scan line sweep */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
             pointer-events: none;
+            background: repeating-linear-gradient(
+                180deg,
+                transparent 0px,
+                transparent 3px,
+                rgba(0,0,0,.06) 3px,
+                rgba(0,0,0,.06) 4px
+            );
         }
 
-        /* Navigation Header */
-        .ray-nav {
-            max-width: 1200px;
-            margin: 1.5rem auto 0;
-            padding: 0 1rem;
-            width: 100%;
+        /* Green/purple lab atmosphere glow */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 10% 20%,  rgba(106,217,69,.04) 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%,  rgba(191,104,255,.04) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%,  rgba(106,217,69,.02) 0%, transparent 70%);
         }
 
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--ray-cyan);
-            text-decoration: none;
-            font-family: var(--font-gamer);
-            font-size: 0.7rem;
-            padding: 0.6rem 1rem;
-            border: 2px solid var(--ray-cyan);
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            background-color: rgba(6, 182, 212, 0.05);
-            text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        /* Slime/goo background pattern */
+        .lab-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-color: #040206;
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(106, 217, 69, 0.06) 0%, transparent 55%),
+                radial-gradient(circle at 85% 75%, rgba(106, 217, 69, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(106, 217, 69, 0.03) 0%, transparent 70%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cpath d='M-10%2C-10 L120%2C-10 C110%2C30 90%2C40 80%2C60 C70%2C80 85%2C90 70%2C110 C55%2C130 30%2C120 15%2C100 C0%2C80 -5%2C50 -10%2C20 Z' fill='%236ad945' opacity='0.035'/%3E%3Cpath d='M180%2C150 C210%2C130 250%2C140 270%2C170 C290%2C200 270%2C240 240%2C250 C210%2C260 170%2C230 160%2C200 C150%2C170 160%2C160 180%2C150 Z' fill='%236ad945' opacity='0.025'/%3E%3Cpath d='M320%2C-10 C340%2C30 350%2C60 345%2C90 C340%2C110 325%2C120 325%2C135 C325%2C150 335%2C160 330%2C170 C320%2C185 305%2C175 305%2C150 C305%2C120 315%2C80 310%2C-10 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M350%2C300 C380%2C280 410%2C290 410%2C330 L410%2C410 L310%2C410 C310%2C380 320%2C350 330%2C330 C340%2C310 335%2C310 350%2C300 Z' fill='%236ad945' opacity='0.04'/%3E%3Cpath d='M50%2C250 C65%2C240 75%2C255 70%2C265 C65%2C275 45%2C280 40%2C270 C35%2C260 40%2C255 50%2C250 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M110%2C320 C120%2C315 130%2C320 128%2C330 C125%2C340 115%2C345 108%2C335 C100%2C325 105%2C320 110%2C320 Z' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M280%2C70 C290%2C65 300%2C70 298%2C80 C295%2C90 285%2C95 278%2C85 C270%2C75 275%2C70 280%2C70 Z' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='90' cy='180' r='14' fill='%236ad945' opacity='0.035'/%3E%3Ccircle cx='90' cy='180' r='12' stroke='%236ad945' stroke-width='1.5' fill='none' opacity='0.05'/%3E%3Cpath d='M84%2C174 A 8 8 0 0 1 94 170' stroke='%23ffffff' stroke-width='1' fill='none' opacity='0.08'/%3E%3Ccircle cx='230' cy='80' r='8' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='230' cy='80' r='7' stroke='%236ad945' stroke-width='1.2' fill='none' opacity='0.04'/%3E%3Cpath d='M226%2C76 A 4 4 0 0 1 232 74' stroke='%23ffffff' stroke-width='0.8' fill='none' opacity='0.06'/%3E%3Ccircle cx='150' cy='310' r='10' fill='%236ad945' opacity='0.03'/%3E%3Ccircle cx='150' cy='310' r='9' stroke='%236ad945' stroke-width='1.2' fill='none' opacity='0.045'/%3E%3Cpath d='M146%2C306 A 5 5 0 0 1 152 304' stroke='%23ffffff' stroke-width='0.8' fill='none' opacity='0.07'/%3E%3Ccircle cx='40' cy='50' r='5' fill='%236ad945' opacity='0.025'/%3E%3Ccircle cx='310' cy='250' r='6' fill='%236ad945' opacity='0.03'/%3E%3Cpath d='M80%2C60 C120%2C90 140%2C110 180%2C150' stroke='%236ad945' stroke-width='1.5' fill='none' opacity='0.015'/%3E%3Cpath d='M240%2C250 C260%2C280 280%2C290 330%2C330' stroke='%236ad945' stroke-width='2' fill='none' opacity='0.015'/%3E%3C/svg%3E");
+            background-size: 100% 100%, 100% 100%, 100% 100%, 360px 360px;
         }
 
-        .btn-back:hover {
-            background-color: var(--ray-cyan);
-            color: #070a13;
-            box-shadow: 0 0 15px var(--ray-cyan-glow);
-            transform: translateX(-4px);
-        }
-
-        /* Hero Section */
-        .ray-hero {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.98));
-            border: 2px solid var(--ray-border);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
+        /* Floating bio-particles */
+        #bio-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
             overflow: hidden;
         }
 
-        .ray-hero::before {
-            content: '';
+        .bp {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--ray-purple), var(--ray-cyan), var(--ray-green));
+            border-radius: 50%;
+            animation: bio-rise linear infinite;
+            opacity: 0;
         }
 
-        .ray-hero-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        @keyframes bio-rise {
+            0%   { opacity:0;   transform:translateY(0) scale(.4); }
+            12%  { opacity:.65; }
+            88%  { opacity:.25; }
+            100% { opacity:0;   transform:translateY(-110vh) scale(1.3); }
         }
 
-        .ray-badge {
-            align-self: flex-start;
-            background-color: rgba(16, 185, 129, 0.15);
-            border: 1px solid var(--ray-green);
-            color: var(--ray-green);
-            padding: 0.35rem 0.75rem;
-            border-radius: 4px;
-            font-family: var(--font-gamer);
+
+
+        /* ══════════════════════════════════════════════════════
+           HEADER OVERRIDE — fixed, compact
+        ══════════════════════════════════════════════════════ */
+        .main-header {
+            position: fixed !important;
+            top: 0; left: 0; right: 0;
+            z-index: 700;
+            padding: 0.35rem 1rem !important;
+            border-bottom-width: 2px !important;
+        }
+
+        .main-header .header-container {
+            gap: 0.5rem;
+        }
+
+        .main-header .institution-logo-container {
+            height: 28px;
+            max-width: 100px;
+        }
+
+        .main-header .institution-logo-container img {
+            width: 62px !important;
+        }
+
+        .main-header .header-titles h1 {
             font-size: 0.6rem;
-            margin-bottom: 1.25rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulse-green 2.5s infinite;
+            margin-bottom: 0;
         }
 
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        .ray-title {
-            font-family: var(--font-gamer);
-            font-size: 1.8rem;
-            color: #fff;
-            text-shadow: 0 0 10px var(--ray-purple-glow), 3px 3px 0 var(--ray-purple);
-            margin-bottom: 0.75rem;
+        .main-header .header-titles p {
+            font-size: 0.68rem;
             line-height: 1.3;
-            letter-spacing: -1px;
         }
 
-        .ray-subtitle {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--ray-cyan);
-            margin-bottom: 1.25rem;
-            border-left: 3px solid var(--ray-cyan);
-            padding-left: 0.75rem;
-        }
-
-        .ray-description {
-            color: var(--ray-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            text-align: justify;
-        }
-
-        .ray-hero-buttons {
+        /* ══════════════════════════════════════════════════════
+           GAME SUB-NAV — sits below the header
+        ══════════════════════════════════════════════════════ */
+        .game-nav {
+            position: fixed;
+            top: var(--header-h, 83px); left: 0; right: 0;
+            z-index: 600;
+            height: 70px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            background: transparent;
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
         }
 
-        .ray-btn {
+        .game-nav.scrolled {
+            background: rgba(5,3,10,.94);
+            border-bottom: 1px solid var(--b1);
+            backdrop-filter: blur(14px);
+        }
+
+        .nav-back {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 0.8rem 1.6rem;
-            border-radius: 8px;
-            font-family: var(--font-gamer);
-            font-size: 0.7rem;
-            text-decoration: none;
-            font-weight: 700;
+            gap: .5rem;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .18em;
             text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: var(--t3);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .nav-back:hover { color: var(--g); }
+        .nav-back svg { width:16px; height:16px; fill:currentColor; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-anchors {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-anchors a {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--t3);
+            text-decoration: none;
+            transition: color .2s;
+        }
+
+        .nav-anchors a:hover { color: var(--p); }
+
+        /* ══════════════════════════════════════════════════════
+           ██████  HERO — CINEMATIC FULL VIEWPORT
+        ══════════════════════════════════════════════════════ */
+        #hero {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 2rem 2rem 0.1rem;
+        }
+
+        /* Art background — game's key art */
+        .hero-art-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-art-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            display: block;
+            /* Dark, saturated, slightly blurred — atmospheric */
+            filter: brightness(.28) saturate(1.6) blur(1.5px);
+            transform: scale(1.04);
+        }
+
+        /* Multi-layer gradient overlay — makes center readable */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(to bottom,
+                    rgba(3,2,6,.75)  0%,
+                    rgba(3,2,6,.15) 35%,
+                    rgba(3,2,6,.20) 65%,
+                    rgba(3,2,6,.88) 100%),
+                radial-gradient(ellipse 60% 55% at 50% 50%, rgba(191,104,255,.08) 0%, transparent 70%);
+        }
+
+        /* Scan line overlay on hero */
+        .hero-scanlines {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(0,0,0,.15) 2px, rgba(0,0,0,.15) 3px
+            );
+        }
+
+        /* Animated green "drip" at bottom of hero */
+        .hero-drip {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            height: 80px;
+            pointer-events: none;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .hero-drip::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent 0%, var(--g) 20%, var(--p) 50%, var(--g) 80%, transparent 100%);
+            animation: drip-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes drip-pulse {
+            0%,100% { opacity:.5; }
+            50%      { opacity:1;  box-shadow: 0 0 20px var(--g-glow); }
+        }
+
+        /* ── Hero content ── */
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding-top: 2rem;
+        }
+
+        /* Studio tag */
+        .hero-studio {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--g);
+            margin-bottom: 1.5rem;
+            opacity: .85;
+            animation: fade-in-up .6s .1s both;
+        }
+
+        /* ── Hero Title Image ── */
+        .hero-title-img {
+            max-width: 90vw;
+            width: 600px;
+            height: auto;
+            margin-bottom: 0.5rem;
+            animation: fade-in-up .6s .2s both, title-float 4s 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(106, 217, 69, 0.4)) drop-shadow(0 0 70px rgba(191, 104, 255, 0.2));
+        }
+
+        @keyframes title-float {
+            0%, 100% { 
+                transform: translateY(0); 
+                filter: drop-shadow(0 0 30px rgba(106, 217, 69, 0.4)) drop-shadow(0 0 70px rgba(191, 104, 255, 0.2)); 
+            }
+            50% { 
+                transform: translateY(-12px); 
+                filter: drop-shadow(0 0 45px rgba(106, 217, 69, 0.7)) drop-shadow(0 0 100px rgba(191, 104, 255, 0.4)); 
+            }
+        }
+
+        /* ── Danger badge below title ── */
+        .hero-warning {
+            display: inline-flex;
+            align-items: center;
+            gap: .75rem;
+            font-family: var(--f-mono);
+            font-size: 9px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,.35);
+            background: rgba(239,68,68,.07);
+            padding: 5px 16px;
+            margin-top: 1.4rem;
+            margin-bottom: .5rem;
+            animation: fade-in-up .6s .45s both, alert-blink 2.4s .45s ease-in-out infinite;
+        }
+
+        .warning-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+            flex-shrink: 0;
+        }
+
+        @keyframes alert-blink {
+            0%,100% { opacity:1; }
+            50%      { opacity:.55; }
+        }
+
+        /* ── Hero tagline ── */
+        .hero-tagline {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--t2);
+            max-width: 720px;
+            line-height: 1.7;
+            margin: .6rem 0 2.5rem;
+            font-weight: 300;
+            animation: fade-in-up .6s .55s both;
+        }
+
+        .hero-tagline strong { color: var(--g); font-weight: 600; }
+
+        /* ── Genre tags ── */
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            animation: fade-in-up .6s .6s both;
+        }
+
+        .htag {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            padding: 8px 18px;
+            border: 1px solid var(--b2);
+            color: var(--p);
+            background: var(--p-dim);
+            transition: all .2s;
+        }
+
+        .htag:hover {
+            border-color: var(--p);
+            background: rgba(191,104,255,.28);
+            box-shadow: 0 0 12px var(--p-glow);
+        }
+
+        /* ── Hero CTA buttons ── */
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fade-in-up .6s .7s both;
+        }
+
+        /* ══════════════════════════════════════════════════════
+           BUTTONS (shared)
+        ══════════════════════════════════════════════════════ */
+        .btn-play {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--f-game);
+            font-size: 14px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 20px 42px;
+            background: var(--g);
+            color: var(--black);
+            font-weight: 700;
+            clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
+            transition: all .25s;
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
             border: none;
         }
 
-        .ray-btn-primary {
-            background-color: var(--ray-green);
-            color: #070a13;
-            box-shadow: 0 4px 15px var(--ray-green-glow);
+        .btn-play::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+            transform: translateX(-100%);
+            transition: transform .45s;
         }
 
-        .ray-btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px var(--ray-green), 0 0 10px #fff inset;
-            background-color: #12d393;
+        .btn-play:hover::before { transform: translateX(100%); }
+
+        .btn-play:hover {
+            background: #83f054;
+            box-shadow: 0 0 35px var(--g-glow), 0 0 70px rgba(106,217,69,.2);
+            transform: translateY(-2px);
         }
 
-        .ray-btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--ray-purple);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+        .btn-gdd {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--f-game);
+            font-size: 14px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 19px 38px;
+            background: transparent;
+            color: var(--p);
+            border: 1px solid var(--b2);
+            clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
+            transition: all .25s;
+            cursor: pointer;
         }
 
-        .ray-btn-secondary:hover {
-            transform: translateY(-3px);
-            background-color: var(--ray-purple);
-            box-shadow: 0 8px 25px var(--ray-purple);
+        .btn-gdd:hover {
+            background: var(--p-dim);
+            border-color: var(--p);
+            box-shadow: 0 0 28px var(--p-glow);
+            transform: translateY(-2px);
         }
 
-        /* Mock Screenshot Gallery */
-        .ray-gallery {
+        .btn-play svg, .btn-gdd svg {
+            width: 14px; height: 14px;
+            fill: currentColor; flex-shrink: 0;
+        }
+
+        /* ── Scroll hint ── */
+        .scroll-hint {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            align-items: center;
+            gap: 6px;
+            opacity: .4;
+            font-family: var(--f-mono);
+            font-size: 8px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--g);
+            animation: fade-in-up .6s 1.2s both;
         }
 
-        .gallery-main {
-            aspect-ratio: 16/9;
-            background-color: #030712;
-            border: 2px solid var(--ray-border);
-            border-radius: 8px;
+        .scroll-line {
+            width: 1px;
+            height: 44px;
+            background: linear-gradient(to bottom, var(--g), transparent);
+            animation: scroll-bob 1.6s ease-in-out infinite;
+        }
+
+        @keyframes scroll-bob {
+            0%,100% { opacity:.3; transform:scaleY(1); }
+            50%      { opacity:1;  transform:scaleY(1.1); }
+        }
+
+        /* ══════════════════════════════════════════════════════
+           SECTION COMMONS
+        ══════════════════════════════════════════════════════ */
+        .s-wrap {
             position: relative;
-            overflow: hidden;
+            z-index: 1;
+        }
+
+        #about.s-wrap {
+            border-top: 1px solid var(--b1);
+        }
+
+        .s-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 80px 2rem;
+        }
+
+        .s-tag {
+            font-family: var(--f-mono);
+            font-size: 9px;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--g);
+            margin-bottom: .6rem;
+            opacity: .8;
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-            transition: border-color 0.3s;
+            gap: .6rem;
         }
 
-        .gallery-main:hover {
-            border-color: var(--ray-cyan);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), inset 0 0 30px rgba(0,0,0,0.9);
-        }
-
-        .gallery-main svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .gallery-thumbs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.75rem;
-        }
-
-        .gallery-thumb {
-            aspect-ratio: 16/9;
-            background-color: #12192c;
-            border: 2px solid var(--ray-border);
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2px;
-        }
-
-        .gallery-thumb svg {
-            width: 100%;
-            height: 100%;
-            opacity: 0.6;
-            transition: all 0.2s ease;
-        }
-
-        .gallery-thumb:hover, .gallery-thumb.active {
-            border-color: var(--ray-purple);
-            box-shadow: 0 0 10px var(--ray-purple-glow);
-            transform: scale(1.02);
-        }
-
-        .gallery-thumb:hover svg, .gallery-thumb.active svg {
-            opacity: 1;
-        }
-
-        /* Sections structure */
-        .ray-grid-layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .ray-section {
-            background-color: var(--ray-surface);
-            border: 1px solid var(--ray-border);
-            border-radius: 12px;
-            padding: 1.75rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            margin-bottom: 1.5rem;
-        }
-
-        .ray-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .ray-section-title {
-            font-family: var(--font-gamer);
-            font-size: 0.95rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-bottom: 2px solid var(--ray-border);
-            padding-bottom: 0.75rem;
-            letter-spacing: 0.5px;
-        }
-
-        .ray-section-title svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--ray-purple);
-        }
-
-        /* About Section */
-        .ray-about-text {
-            color: var(--ray-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-
-        .ray-about-text p {
-            margin-bottom: 1rem;
-        }
-
-        .ray-about-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Features Section */
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .feature-card {
-            background-color: rgba(255, 255, 255, 0.015);
-            border: 1px solid var(--ray-border);
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--ray-cyan);
-            background-color: rgba(6, 182, 212, 0.03);
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.1);
-        }
-
-        .feature-icon-wrapper {
-            background-color: rgba(139, 92, 246, 0.1);
-            border: 1px solid var(--ray-purple);
-            color: var(--ray-purple);
+        .s-tag::after {
+            content: '';
+            display: block;
+            height: 1px;
             width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
+            background: var(--g);
+            opacity: .4;
         }
 
-        .feature-card:hover .feature-icon-wrapper {
-            background-color: var(--ray-purple);
-            color: #fff;
-            box-shadow: 0 0 10px var(--ray-purple-glow);
+        .s-title {
+            font-family: var(--f-game);
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: .8rem;
         }
 
-        .feature-icon-wrapper svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
+        .s-divider {
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--g), transparent);
+            border-radius: 2px;
+            margin-bottom: 3rem;
         }
 
-        .feature-title {
-            font-family: var(--font-academic);
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #fff;
+        /* Alternating section backgrounds */
+        .bg-deep   { background: #06040f; }
+        .bg-surface{ background: #080511; }
+        .bg-void   { background: var(--bg0); }
+
+        /* ══════════════════════════════════════════════════════
+           ABOUT SECTION
+        ══════════════════════════════════════════════════════ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.25fr .75fr;
+            gap: 5rem;
+            align-items: start;
         }
 
-        /* Story Section (CRT Terminal Theme) */
-        .crt-terminal {
-            background-color: #04060b;
-            border: 2px solid #1e293b;
-            border-radius: 8px;
-            padding: 1.5rem;
-            font-family: 'Courier New', Courier, monospace;
-            color: #38bdf8;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(56, 189, 248, 0.1);
+        .about-text {
+            font-size: 1.02rem;
+            color: var(--t2);
+            line-height: 1.85;
+            font-weight: 300;
+        }
+
+        .about-text p + p { margin-top: 1.1rem; }
+        .about-text strong { color: var(--g); font-weight: 600; }
+        .about-text em { color: var(--p); font-style: normal; }
+
+        .about-card {
+            background: var(--bg2);
+            border: 1px solid var(--b2);
+            border-radius: 4px;
+            padding: 1.75rem;
             position: relative;
             overflow: hidden;
         }
 
-        .terminal-header {
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.8rem;
-            color: #0ea5e9;
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top:0; left:0; right:0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--g), var(--p));
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: flex-start;
+            gap: .9rem;
+            padding: .9rem 0;
+            border-bottom: 1px solid rgba(191,104,255,.07);
+        }
+
+        .stat-row:last-child { border-bottom: none; }
+
+        .stat-ico { font-size: 1.2rem; width: 28px; text-align:center; flex-shrink:0; margin-top:2px; }
+
+        .stat-lbl {
+            font-family: var(--f-mono);
+            font-size: 7.5px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--p);
+            margin-bottom: 3px;
+        }
+
+        .stat-val {
+            font-size: .92rem;
+            color: var(--t1);
+            font-weight: 600;
+        }
+
+        /* ══════════════════════════════════════════════════════
+           VILLAIN SECTION — RATTUS
+        ══════════════════════════════════════════════════════ */
+        #rattus { background: transparent; }
+
+        .rattus-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        /* CRT terminal for the villain briefing */
+        .crt-terminal {
+            background: #02010a;
+            border: 1px solid rgba(106,217,69,.2);
+            border-radius: 4px;
+            padding: 1.5rem;
+            font-family: var(--f-mono);
+            font-size: .82rem;
+            color: var(--g);
+            line-height: 1.7;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                inset 0 0 40px rgba(0,0,0,.9),
+                0 0 20px rgba(106,217,69,.06);
+        }
+
+        /* scanlines on terminal */
+        .crt-terminal::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(0,0,0,.14) 2px, rgba(0,0,0,.14) 3px
+            );
+            pointer-events: none; z-index: 2;
+        }
+
+        .term-header {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
+            align-items: center;
+            border-bottom: 1px solid rgba(106,217,69,.12);
+            padding-bottom: .5rem;
+            margin-bottom: .9rem;
+            font-size: .75rem;
+            color: rgba(106,217,69,.5);
         }
 
-        .terminal-log-row {
-            margin-bottom: 0.8rem;
-            line-height: 1.5;
-            font-size: 0.9rem;
+        .term-dots { display:flex; gap:5px; }
+        .term-dot { width:8px; height:8px; border-radius:50%; }
+        .term-dot:nth-child(1){ background:#ff5f57; }
+        .term-dot:nth-child(2){ background:#febc2e; }
+        .term-dot:nth-child(3){ background:var(--g); }
+
+        .tline { margin-bottom: .45rem; }
+        .tline:last-child { margin-bottom:0; }
+
+        .t-red    { color:#ef4444; animation:t-pulse 1.8s ease-in-out infinite; }
+        .t-purple { color:var(--p); }
+        .t-cyan   { color:#38bdf8; }
+        .t-white  { color:var(--white); }
+
+        @keyframes t-pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+        .t-cursor {
+            display: inline-block;
+            width: 7px; height: 1em;
+            background: var(--g);
+            margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: cursor-blink 1s step-end infinite;
         }
 
-        .terminal-log-row:last-child {
-            margin-bottom: 0;
+        @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* Threat card on the right */
+        .threat-card {
+            background: var(--bg2);
+            border: 1px solid rgba(239,68,68,.2);
+            border-left: 4px solid #ef4444;
+            border-radius: 4px;
+            padding: 2rem;
         }
 
-        .terminal-alert {
+        .threat-title {
+            font-family: var(--f-game);
+            font-size: .9rem;
             color: #ef4444;
-            font-weight: bold;
-            animation: flash 1.5s infinite;
+            margin-bottom: .5rem;
+            text-shadow: 0 0 14px rgba(239,68,68,.5);
         }
 
-        @keyframes flash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        .threat-codename {
+            font-family: var(--f-mono);
+            font-size: 8px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: rgba(239,68,68,.6);
+            margin-bottom: 1.5rem;
         }
 
-        /* Gameplay Section */
-        .gameplay-list {
+        .threat-desc {
+            font-size: .95rem;
+            color: var(--t2);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .threat-stats {
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
-            list-style: none;
+            gap: .5rem;
         }
 
-        .gameplay-item {
-            background-color: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 0.85rem 1rem;
-            border-radius: 8px;
+        .tstat {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 1rem;
-            font-size: 0.95rem;
-            color: var(--ray-text-muted);
-            transition: all 0.3s ease;
+            font-family: var(--f-mono);
+            font-size: 9px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: .5rem 0;
+            border-bottom: 1px solid rgba(239,68,68,.07);
         }
 
-        .gameplay-item:hover {
-            border-color: var(--ray-cyan);
-            background-color: rgba(6, 182, 212, 0.02);
-            color: #fff;
-            transform: translateX(5px);
+        .tstat:last-child { border-bottom: none; }
+        .tstat-key { color: var(--t3); }
+        .tstat-val { color: #ef4444; font-weight: 700; }
+
+        /* ══════════════════════════════════════════════════════
+           SCIENTISTS / CHARACTERS SECTION
+        ══════════════════════════════════════════════════════ */
+        #cientistas { background: transparent; }
+
+        .scientists-intro {
+            font-size: 1rem;
+            color: var(--t2);
+            line-height: 1.75;
+            max-width: 700px;
+            margin-bottom: 3rem;
+            font-weight: 300;
         }
 
-        .gameplay-bullet {
-            width: 8px;
-            height: 8px;
-            background-color: var(--ray-cyan);
-            box-shadow: 0 0 8px var(--ray-cyan);
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* Inspirations */
-        .inspirations-grid {
+        .sci-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
         }
 
-        .inspiration-tag {
-            background-color: #1e293b;
-            border: 1px solid var(--ray-border);
-            border-radius: 6px;
-            padding: 0.75rem 0.5rem;
+        .sci-card {
+            background: var(--bg2);
+            border: 1px solid var(--b1);
+            border-radius: 4px;
+            padding: 2rem 1.5rem;
             text-align: center;
-            font-family: var(--font-gamer);
-            font-size: 0.55rem;
-            color: #fff;
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transition: all .3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        /* Lab coat stripe accent */
+        .sci-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s;
+        }
+
+        .sci-card.c-green::before { background: var(--g); }
+        .sci-card.c-purple::before { background: var(--p); }
+        .sci-card.c-cyan::before { background: #38bdf8; }
+
+        .sci-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--b2);
+            box-shadow: 0 18px 45px rgba(0,0,0,.4);
+        }
+
+        .sci-card:hover::before { transform: scaleX(1); }
+
+        .sci-avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            margin: 0 auto 1.25rem;
+            font-family: var(--f-game);
+            font-size: 1.5rem;
+            transition: all .35s;
+            border: 2px solid;
         }
 
-        .inspiration-tag:hover {
-            border-color: var(--ray-purple);
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.2));
-            box-shadow: 0 4px 12px var(--ray-purple-glow);
-            transform: scale(1.03);
+        .sci-card.c-green  .sci-avatar { border-color:rgba(106,217,69,.3);  background:rgba(106,217,69,.08);  color:var(--g); }
+        .sci-card.c-purple .sci-avatar { border-color:rgba(191,104,255,.3); background:rgba(191,104,255,.08); color:var(--p); }
+        .sci-card.c-cyan   .sci-avatar { border-color:rgba(56,189,248,.3);  background:rgba(56,189,248,.08);  color:#38bdf8; }
+
+        .sci-card:hover .sci-avatar {
+            box-shadow: 0 0 24px currentColor;
+            border-color: currentColor;
         }
 
-        /* Development Box */
-        .dev-badge-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            background-color: #0b0f19;
-            border: 1px solid var(--ray-border);
-            border-left: 4px solid var(--ray-purple);
-            padding: 1.25rem;
-            border-radius: 8px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        .sci-name {
+            font-family: var(--f-body);
+            font-size: .98rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: .4rem;
         }
 
-        .gdevelop-logo {
-            align-self: flex-start;
-            font-family: var(--font-gamer);
-            font-size: 0.65rem;
-            background: linear-gradient(135deg, #0056ff, #00d2ff);
-            color: #fff;
-            padding: 0.5rem 0.75rem;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 86, 255, 0.4);
+        .sci-role {
+            font-family: var(--f-mono);
+            font-size: 7.5px;
+            letter-spacing: .14em;
             text-transform: uppercase;
-            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: .9rem;
         }
 
-        .dev-box-content {
-            font-size: 0.9rem;
+        .sci-card.c-green  .sci-role { color:var(--g); background:var(--g-dim); }
+        .sci-card.c-purple .sci-role { color:var(--p); background:var(--p-dim); }
+        .sci-card.c-cyan   .sci-role { color:#38bdf8;  background:rgba(56,189,248,.1); }
+
+        .sci-bio {
+            font-size: .85rem;
+            color: var(--t2);
             line-height: 1.6;
-            color: var(--ray-text-muted);
-            text-align: justify;
         }
 
-        /* Team Section */
-        .team-members-grid {
+        /* ══════════════════════════════════════════════════════
+           SCREENSHOTS SECTION
+        ══════════════════════════════════════════════════════ */
+        #capturas { background: transparent; }
+
+        .ss-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .team-member-card {
-            background-color: #1e293b;
-            border: 1px solid var(--ray-border);
-            border-radius: 10px;
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .ss-frame {
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: var(--bg2);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .ss-frame img {
+            width:100%; height:100%;
+            object-fit:cover; display:block;
+            transition: transform .4s ease, filter .3s;
+            filter: brightness(.85) saturate(1.15);
+        }
+
+        .ss-frame:hover img {
+            transform: scale(1.06);
+            filter: brightness(1) saturate(1.25);
+        }
+
+        .ss-lbl {
+            position: absolute;
+            bottom:0; left:0; right:0;
+            font-family: var(--f-mono);
+            font-size: 7px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--white);
+            background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+            padding: 24px 12px 10px;
+            opacity:0;
+            transition: opacity .3s;
+        }
+
+        .ss-frame:hover .ss-lbl { opacity:1; }
+
+        /* ══════════════════════════════════════════════════════
+           FEATURES / MECHANICS
+        ══════════════════════════════════════════════════════ */
+        #features { background: transparent; }
+
+        .feat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--b1);
+            border: 1px solid var(--b1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .feat-card {
+            background: var(--bg2);
+            padding: 2rem 1.5rem;
+            transition: background .25s, transform .25s;
             position: relative;
             overflow: hidden;
         }
 
-        .team-member-card::after {
-            content: "";
+        .feat-card::after {
+            content: '';
             position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 3px;
-            background-color: var(--ray-purple);
-            transition: all 0.3s ease;
+            bottom:0; left:0;
+            width:100%; height:2px;
+            background: linear-gradient(90deg, var(--g), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .3s;
         }
 
-        .team-member-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--ray-purple);
-            box-shadow: 0 10px 20px var(--ray-purple-glow);
-        }
+        .feat-card:hover { background: var(--bg3); transform: translateY(-3px); }
+        .feat-card:hover::after { transform: scaleX(1); }
 
-        .team-member-card:hover::after {
-            background-color: var(--ray-cyan);
-            box-shadow: 0 0 10px var(--ray-cyan);
-        }
+        .feat-icon { font-size: 1.7rem; margin-bottom: .9rem; }
 
-        .member-avatar {
-            width: 64px;
-            height: 64px;
-            background-color: #0b0f19;
-            border: 2px dashed var(--ray-purple);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            color: var(--ray-purple);
-            transition: all 0.3s ease;
-        }
-
-        .team-member-card:hover .member-avatar {
-            border-style: solid;
-            border-color: var(--ray-cyan);
-            color: var(--ray-cyan);
-            transform: rotate(360deg);
-        }
-
-        .member-name {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.35rem;
-        }
-
-        .member-role {
-            font-family: var(--font-gamer);
-            font-size: 0.5rem;
-            color: var(--ray-cyan);
+        .feat-title {
+            font-family: var(--f-mono);
+            font-size: 8px;
+            letter-spacing: .12em;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            background-color: rgba(6, 182, 212, 0.15);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            color: var(--g);
+            margin-bottom: .55rem;
         }
 
-        /* Footer override styling */
-        .ray-footer-decor {
-            margin: 2rem 0 1rem;
+        .feat-desc {
+            font-size: .86rem;
+            color: var(--t2);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* ══════════════════════════════════════════════════════
+           GAMEPLAY MECHANICS DETAIL
+        ══════════════════════════════════════════════════════ */
+        #mecanicas { background: transparent; }
+
+        .mec-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .mec-list { list-style:none; display:flex; flex-direction:column; }
+
+        .mec-item {
             display: flex;
-            justify-content: center;
+            align-items: flex-start;
+            gap: .9rem;
+            padding: .85rem 0;
+            border-bottom: 1px solid rgba(191,104,255,.07);
+            transition: all .2s;
+        }
+
+        .mec-item:hover { padding-left: .4rem; }
+        .mec-item:last-child { border-bottom: none; }
+
+        .mec-bullet {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--g);
+            box-shadow: 0 0 8px var(--g-glow);
+            flex-shrink: 0;
+            margin-top: .55rem;
+        }
+
+        .mec-txt { font-size:.93rem; color:var(--t2); line-height:1.5; }
+        .mec-txt strong { color:var(--t1); font-weight:600; }
+
+        /* Inspirations block */
+        .inspo-block { display:flex; flex-direction:column; gap:1.5rem; }
+
+        .inspo-lbl {
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--p);
+        }
+
+        .inspo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .inspo-tag {
+            background: var(--bg2);
+            border: 1px solid var(--b2);
+            border-radius: 3px;
+            padding: 1rem;
+            text-align: center;
+            font-family: var(--f-mono);
+            font-size: 12px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--t1);
+            transition: all .25s;
+        }
+
+        .inspo-tag:hover {
+            border-color: var(--p);
+            background: var(--p-dim);
+            box-shadow: 0 0 14px var(--p-glow);
+        }
+
+        .dev-box {
+            background: var(--bg2);
+            border: 1px solid var(--b1);
+            border-left: 3px solid var(--p);
+            border-radius: 3px;
+            padding: 1.5rem;
+        }
+
+        .dev-badge {
+            display: inline-block;
+            font-family: var(--f-mono);
+            font-size: 8px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg,#0056ff,#00d2ff);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 3px;
+            margin-bottom: .7rem;
+            box-shadow: 0 0 14px rgba(0,86,255,.35);
+        }
+
+        .dev-box p { font-size:.88rem; color:var(--t2); line-height:1.6; }
+
+        /* ══════════════════════════════════════════════════════
+           TEAM SECTION (dev team as scientists)
+        ══════════════════════════════════════════════════════ */
+        #equipe { background: transparent; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .team-card {
+            background: var(--bg2);
+            border: 1px solid var(--b1);
+            border-radius: 4px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all .3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        .team-card::after {
+            content: '';
+            position: absolute;
+            bottom:0; left:0; right:0;
+            height: 3px;
+            background: var(--p);
+            transform: scaleX(0);
+            transition: transform .3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--b2);
+            box-shadow: 0 16px 42px rgba(191,104,255,.12);
+        }
+
+        .team-card:hover::after { transform: scaleX(1); }
+
+        .tm-avatar {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            border: 2px solid var(--b2);
+            background: var(--p-dim);
+            display: flex; align-items:center; justify-content:center;
+            margin: 0 auto 1.2rem;
+            font-family: var(--f-game);
+            font-size: 1.3rem;
+            color: var(--p);
+            transition: all .35s ease;
+        }
+
+        .team-card:hover .tm-avatar {
+            border-color: var(--g);
+            color: var(--g);
+            background: var(--g-dim);
+            box-shadow: 0 0 22px var(--g-glow);
+        }
+
+        .tm-name { font-size:1.3rem; font-weight:700; color:var(--white); margin-bottom:.4rem; }
+
+        .tm-role {
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--p);
+            background: var(--p-dim);
+            padding: 4px 10px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        /* ══════════════════════════════════════════════════════
+           FINAL CTA
+        ══════════════════════════════════════════════════════ */
+        #cta {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            background: transparent;
+        }
+
+        /* Warning stripe divider at top of CTA */
+        .cta-stripe {
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--g) 0, var(--g) 6px,
+                rgba(0,0,0,0) 6px, rgba(0,0,0,0) 12px,
+                var(--p) 12px, var(--p) 18px,
+                rgba(0,0,0,0) 18px, rgba(0,0,0,0) 24px
+            );
+            opacity: .35;
+        }
+
+        .cta-title {
+            font-family: var(--f-game);
+            font-size: clamp(1.6rem, 5vw, 3.5rem);
+            color: var(--white);
+            margin-bottom: .9rem;
+            text-shadow:
+                0 0 40px rgba(106,217,69,.3),
+                0 0 80px rgba(191,104,255,.2);
+        }
+
+        .cta-sub {
+            font-size: 1.05rem;
+            color: var(--t2);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .cta-btns {
+            display: flex;
             gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .decor-block {
-            width: 10px;
-            height: 10px;
-            background-color: var(--ray-border);
+        /* ══════════════════════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════════════════════ */
+        .main-footer {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            text-align: center;
+            font-size: .82rem;
+            color: var(--t3);
+            background: transparent;
         }
-        .decor-block:nth-child(1) { background-color: var(--ray-purple); }
-        .decor-block:nth-child(2) { background-color: var(--ray-cyan); }
-        .decor-block:nth-child(3) { background-color: var(--ray-green); }
 
-        /* Media Queries for Desktop layout */
-        @media (min-width: 768px) {
-            .ray-hero {
-                grid-template-columns: 1.1fr 0.9fr;
-                align-items: center;
-            }
+        .main-footer a { color:var(--p); text-decoration:none; transition:color .2s; }
+        .main-footer a:hover { color:var(--g); }
 
-            .ray-grid-layout {
-                grid-template-columns: 2fr 1fr;
-            }
+        /* ══════════════════════════════════════════════════════
+           SCROLL REVEAL
+        ══════════════════════════════════════════════════════ */
+        .rv {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity .65s ease, transform .65s ease;
+        }
+        .rv.vis { opacity:1; transform:none; }
 
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* ══════════════════════════════════════════════════════
+           ENTRY ANIMATIONS
+        ══════════════════════════════════════════════════════ */
+        @keyframes fade-in-up {
+            from { opacity:0; transform:translateY(20px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
 
-            .team-members-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        /* ══════════════════════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════════════════════ */
+        @media (max-width: 1000px) {
+            .about-grid, .rattus-layout, .mec-layout { grid-template-columns:1fr; gap:2.5rem; }
+            .feat-grid { grid-template-columns: repeat(2,1fr); }
+            .sci-grid { grid-template-columns: 1fr; max-width:360px; margin:0 auto; }
+            .team-grid { grid-template-columns: 1fr; max-width:380px; margin:0 auto; }
+            .ss-grid { grid-template-columns: 1fr; }
+            .nav-anchors { display:none; }
+        }
+
+        @media (max-width: 600px) {
+            .hdr-inner, .game-nav { padding:0 1rem; }
+            .s-inner { padding:60px 1.25rem; }
+            .feat-grid { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction:column; align-items:center; }
+            .btn-play, .btn-gdd { justify-content:center; width:100%; max-width:280px; }
+            .title-ray { font-size: clamp(5rem, 28vw, 8rem); }
         }
     </style>
 </head>
-<body class="ray-theme">
+<body>
 
-    <!-- CABEÇALHO DA PÁGINA -->
-    <header class="main-header">
-        <div class="header-container">
-            <div class="institution-logo-container" id="logo-placeholder">
-                <span>
-                    <a href="https://portal.unis.edu.br/?hsLang=pt-br" id="hs-link-module_17286550409276_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png" class="hs-image-widget " height="60" style="height: auto;width:97px;border-width:0px;border:0px;" width="97" alt="LogoUnisBranca" title="LogoUnisBranca" srcset="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=49&amp;height=30&amp;name=LogoUnisBranca.png 49w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&amp;height=60&amp;name=LogoUnisBranca.png 97w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=146&amp;height=90&amp;name=LogoUnisBranca.png 146w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=194&amp;height=120&amp;name=LogoUnisBranca.png 194w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=243&amp;height=150&amp;name=LogoUnisBranca.png 243w, https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=291&amp;height=180&amp;name=LogoUnisBranca.png 291w" sizes="(max-width: 97px) 100vw, 97px"></a>
-                </span>
-            </div>
-            
-            <div class="header-titles">
-                <h1>EXPO_GAMES_PORTAL v1.0</h1>
-                <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
-            </div>
+<!-- Persistent lab atmosphere -->
+<div class="lab-bg"></div>
+<div id="bio-particles"></div>
+
+
+
+<!-- CABEÇALHO -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="institution-logo-container">
+            <span>
+                <a href="https://portal.unis.edu.br/?hsLang=pt-br">
+                    <img src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&height=60&name=LogoUnisBranca.png"
+                         height="60" style="height:auto;width:97px;border:0;" width="97" alt="Logo UNIS">
+                </a>
+            </span>
         </div>
-    </header>
+        <div class="header-titles">
+            <h1>EXPO_GAMES_PORTAL v1.0</h1>
+            <p>Repositório de Páginas de Loja (Store Pages) da Turma de Desenvolvimento de Games</p>
+        </div>
+    </div>
+</header>
 
-    <!-- NAVEGAÇÃO / VOLTAR -->
-    <nav class="ray-nav">
-        <a href="index.html" class="btn-back">
-            <svg style="width:14px;height:14px;fill:currentColor" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-            ← Voltar ao Portal
+<!-- ═══════════════════════════════════════════════
+     GAME SUB-NAV
+═══════════════════════════════════════════════ -->
+<nav class="game-nav">
+    <!-- Rota de volta ao portal (obrigatório) -->
+    <a href="index.html" class="nav-back" id="btn-back-portal">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Voltar ao Portal
+    </a>
+    <div class="nav-right">
+        <ul class="nav-anchors">
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#rattus">Missão</a></li>
+            <li><a href="#cientistas">Cientistas</a></li>
+            <li><a href="#features">Mecânicas</a></li>
+            <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#equipe">Equipe</a></li>
+        </ul>
+        <a href="#" class="btn-play" style="padding: 12px 28px; font-size: 11px;">
+            JOGAR
         </a>
-    </nav>
+    </div>
+</nav>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <main class="main-content">
+<!-- ═══════════════════════════════════════════════
+     ██ HERO — CINEMATIC TITLE CARD ██
+═══════════════════════════════════════════════ -->
+<section id="hero">
 
-        <!-- HERO SECTION -->
-        <section class="ray-hero">
-            <div class="ray-hero-info">
-                <span class="ray-badge">Web/Browser | RETRÔ</span>
-                <h2 class="ray-title">PROJECT RAY</h2>
-                <div class="ray-subtitle">Uma aventura de plataforma retrô com mutantes, caos e ação em pixel art.</div>
-                <p class="ray-description">
-                    Inspirado nos grandes jogos de plataforma dos anos 90, Project Ray combina jogabilidade desafiadora, inimigos mutantes e visuais nostálgicos em pixel art em um mundo urbano vibrante.
+    <!-- Background: key art da arte principal do jogo -->
+    <div class="hero-art-bg">
+        <img src="imgs_LFA/fundo.png" alt="Project Ray Banner">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-scanlines"></div>
+    <div class="hero-drip"></div>
+
+    <!-- Main content -->
+    <div class="hero-content">
+
+        <!-- Studio & engine tag -->
+        <p class="hero-studio">◈ &nbsp;LFA GAMES &nbsp;·&nbsp; GDevelop &nbsp;◈</p>
+
+        <!-- ── THE TITLE IMAGE ── -->
+        <!-- Substitua o src abaixo pela imagem do seu logo/título -->
+        <img src="imgs_LFA/titulo.png" alt="Project Ray" class="hero-title-img">
+
+
+
+        <!-- Tagline -->
+        <p class="hero-tagline">
+            Um <strong>laboratório</strong>. Um <strong>experimento</strong> que deu errado.
+            Três <strong>cientistas</strong> contra um rato gigante mutante.
+            A missão começou — e há apenas uma saída.
+        </p>
+
+        <!-- Genre tags -->
+        <div class="hero-tags">
+            <span class="htag">Plataforma 2D</span>
+            <span class="htag">Pixel Art</span>
+            <span class="htag">Retrô</span>
+            <span class="htag">Single-player</span>
+            <span class="htag">Browser</span>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-buttons">
+            <!-- BOTÃO JOGAR — atualize o href quando o jogo estiver online -->
+            <a href="#" id="btn-jogar" class="btn-play">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                JOGAR AGORA
+            </a>
+            <!-- BOTÃO BAIXAR GDD — atualize o href com o caminho do PDF -->
+            <a href="#" id="btn-gdd" class="btn-gdd" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                BAIXAR GDD
+            </a>
+        </div>
+    </div>
+
+
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SOBRE O JOGO
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="about">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Sobre o Jogo</p>
+            <h2 class="s-title">Uma aventura retrô<br>com mutantes e caos</h2>
+            <div class="s-divider"></div>
+        </div>
+        <div class="about-grid rv">
+            <div class="about-text">
+                <p>
+                    <strong>Project Ray</strong> é um jogo de plataforma 2D com estética <em>pixel art</em> retrô, desenvolvido pela <strong>LFA GAMES</strong>.
+                    A história se passa em um laboratório científico sombrio onde um experimento genético catastrófico resultou no nascimento de <em>Rattus</em> — um rato gigante, mutante e hostil.
                 </p>
-                <div class="ray-hero-buttons">
-                    <a href="javascript:void(0);" onclick="alert('O jogo estará disponível para jogar no navegador em breve! Fique atento às atualizações da equipe LFA GAMES.')" class="ray-btn ray-btn-primary">
-                        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        Jogar
-                    </a>
-                    <a href="project-ray-gdd.pdf" target="_blank" class="ray-btn ray-btn-secondary">
-                        <svg style="width:16px;height:16px;fill:currentColor" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
-                        Baixar GDD
-                    </a>
-                </div>
+                <p>
+                    Três cientistas sobreviventes — presos dentro das instalações — assumem a missão de neutralizar a ameaça antes que ela se espalhe. Cada fase representa um novo setor do laboratório infestado, mais perigoso que o anterior.
+                </p>
+                <p>
+                    Com <strong>4 fases progressivas</strong>, batalha contra chefe, sistema de moedas, trilha sonora chiptune e visuais inspirados nos arcades dos anos 90, Project Ray entrega nostalgia, tensão e diversão — direto no navegador.
+                </p>
             </div>
-
-            <!-- GALERIA DE MÍDIA INTERATIVA -->
-            <div class="ray-gallery">
-                <div class="gallery-main" id="galleryMain">
-                    <div class="crt-scanlines"></div>
-                    
-                    <!-- SVG 1 (Default display - Capsule lab scene) -->
-                    <svg id="svg-scene1" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Dark Grid Background -->
-                        <rect width="320" height="180" fill="#04060e"/>
-                        <g stroke="#10172a" stroke-width="1">
-                            <line x1="0" y1="30" x2="320" y2="30"/>
-                            <line x1="0" y1="60" x2="320" y2="60"/>
-                            <line x1="0" y1="90" x2="320" y2="90"/>
-                            <line x1="0" y1="120" x2="320" y2="120"/>
-                            <line x1="0" y1="150" x2="320" y2="150"/>
-                            <line x1="40" y1="0" x2="40" y2="180"/>
-                            <line x1="80" y1="0" x2="80" y2="180"/>
-                            <line x1="120" y1="0" x2="120" y2="180"/>
-                            <line x1="160" y1="0" x2="160" y2="180"/>
-                            <line x1="200" y1="0" x2="200" y2="180"/>
-                            <line x1="240" y1="0" x2="240" y2="180"/>
-                            <line x1="280" y1="0" x2="280" y2="180"/>
-                        </g>
-                        
-                        <!-- Laboratory Platform -->
-                        <rect x="0" y="140" width="320" height="40" fill="#1e293b"/>
-                        <rect x="0" y="140" width="320" height="4" fill="#0ea5e9"/>
-                        
-                        <!-- Mutant Capsule Chamber -->
-                        <rect x="130" y="30" width="60" height="110" fill="rgba(16, 185, 129, 0.08)" stroke="#10b981" stroke-width="3" rx="10"/>
-                        <rect x="130" y="30" width="60" height="12" fill="#334155" stroke="#10b981" stroke-width="2"/>
-                        <rect x="130" y="128" width="60" height="12" fill="#334155" stroke="#10b981" stroke-width="2"/>
-                        
-                        <!-- Inside Capsule Mutant Creature (Pixelated style) -->
-                        <rect x="150" y="60" width="20" height="45" fill="#8b5cf6" rx="5"/>
-                        <rect x="146" y="70" width="28" height="15" fill="#a78bfa" rx="2"/>
-                        <circle cx="152" cy="68" r="2" fill="#e11d48"/>
-                        <circle cx="168" cy="68" r="2" fill="#e11d48"/>
-                        
-                        <!-- Bubbles in capsule -->
-                        <circle cx="140" cy="110" r="3" fill="#10b981" opacity="0.6"/>
-                        <circle cx="178" cy="95" r="2" fill="#10b981" opacity="0.8"/>
-                        <circle cx="145" cy="80" r="4" fill="#10b981" opacity="0.5"/>
-                        <circle cx="172" cy="50" r="2.5" fill="#10b981" opacity="0.7"/>
-                        
-                        <!-- Laboratory computers -->
-                        <rect x="40" y="90" width="40" height="50" fill="#334155" rx="3"/>
-                        <rect x="45" y="95" width="30" height="25" fill="#000" stroke="#06b6d4" stroke-width="1.5"/>
-                        <line x1="50" y1="105" x2="70" y2="105" stroke="#06b6d4" stroke-width="2"/>
-                        <line x1="55" y1="112" x2="65" y2="112" stroke="#0ea5e9" stroke-width="2"/>
-                        <circle cx="50" cy="130" r="2" fill="#10b981"/>
-                        <circle cx="60" cy="130" r="2" fill="#ef4444"/>
-                        
-                        <rect x="240" y="80" width="50" height="60" fill="#334155" rx="3"/>
-                        <rect x="245" y="85" width="40" height="30" fill="#000" stroke="#a855f7" stroke-width="1.5"/>
-                        <!-- Sine Wave on display -->
-                        <path d="M 248 100 Q 255 85, 260 100 T 272 100 T 282 100" fill="none" stroke="#a855f7" stroke-width="2"/>
-                        <rect x="250" y="125" width="15" height="5" fill="#1e293b"/>
-                        <circle cx="275" cy="127" r="2" fill="#0ea5e9"/>
-                        
-                        <!-- Warning indicator -->
-                        <polygon points="160,5 170,22 150,22" fill="#e11d48"/>
-                        <text x="158" y="19" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fff">!</text>
-                        <text x="10" y="20" font-family="'Press Start 2P'" font-size="6" fill="#10b981">SISTEMA: ATIVO</text>
-                        <text x="210" y="20" font-family="'Press Start 2P'" font-size="6" fill="#ef4444">CONTENÇÃO: 84%</text>
-                    </svg>
-
-                    <!-- SVG 2 (Hidden by default - Mutant close-up) -->
-                    <svg id="svg-scene2" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-                        <rect width="320" height="180" fill="#0f0715"/>
-                        <!-- Dark Grid Background -->
-                        <g stroke="#2d123d" stroke-width="1">
-                            <line x1="0" y1="30" x2="320" y2="30"/>
-                            <line x1="0" y1="60" x2="320" y2="60"/>
-                            <line x1="0" y1="90" x2="320" y2="90"/>
-                            <line x1="0" y1="120" x2="320" y2="120"/>
-                            <line x1="0" y1="150" x2="320" y2="150"/>
-                            <line x1="40" y1="0" x2="40" y2="180"/>
-                            <line x1="80" y1="0" x2="80" y2="180"/>
-                            <line x1="120" y1="0" x2="120" y2="180"/>
-                            <line x1="160" y1="0" x2="160" y2="180"/>
-                            <line x1="200" y1="0" x2="200" y2="180"/>
-                            <line x1="240" y1="0" x2="240" y2="180"/>
-                            <line x1="280" y1="0" x2="280" y2="180"/>
-                        </g>
-
-                        <!-- Mutant Glow Background -->
-                        <circle cx="160" cy="90" r="70" fill="rgba(139, 92, 246, 0.15)" filter="blur(10px)"/>
-                        
-                        <!-- Mutant Face in Pixel Vectors -->
-                        <!-- Scaly Head outline -->
-                        <path d="M 110,60 L 210,60 L 230,100 L 210,140 L 110,140 L 90,100 Z" fill="#6d28d9" stroke="#8b5cf6" stroke-width="4"/>
-                        <!-- Brow -->
-                        <path d="M 100,80 L 150,90 L 160,90 L 170,90 L 220,80" fill="none" stroke="#4c1d95" stroke-width="6"/>
-                        <!-- Glowing Yellow Eyes -->
-                        <polygon points="115,85 145,95 140,105 110,95" fill="#facc15" stroke="#eab308" stroke-width="1.5"/>
-                        <polygon points="205,85 175,95 180,105 210,95" fill="#facc15" stroke="#eab308" stroke-width="1.5"/>
-                        <!-- Red Pupils -->
-                        <rect x="127" y="93" width="5" height="5" fill="#e11d48"/>
-                        <rect x="187" y="93" width="5" height="5" fill="#e11d48"/>
-                        <!-- Snarl / Mouth -->
-                        <path d="M 120,120 Q 160,135 200,120" fill="none" stroke="#000" stroke-width="4"/>
-                        <!-- Sharp teeth -->
-                        <polygon points="130,121 135,128 140,122" fill="#fff"/>
-                        <polygon points="145,122 150,131 155,123" fill="#fff"/>
-                        <polygon points="165,123 170,131 175,122" fill="#fff"/>
-                        <polygon points="180,122 185,128 190,121" fill="#fff"/>
-                        
-                        <!-- Green Slime patches -->
-                        <rect x="105" y="65" width="12" height="12" fill="#10b981" rx="2"/>
-                        <rect x="200" y="65" width="12" height="12" fill="#10b981" rx="2"/>
-                        <rect x="154" y="55" width="12" height="8" fill="#10b981" rx="2"/>
-                        <rect x="154" y="132" width="12" height="12" fill="#10b981" rx="2"/>
-                        
-                        <!-- Overlay Text -->
-                        <text x="10" y="25" font-family="'Press Start 2P'" font-size="8" fill="#ef4444">MUTANTE: CONFIDENCIAL</text>
-                        <text x="10" y="165" font-family="'Press Start 2P'" font-size="6" fill="#a78bfa">NÍVEL DE AMEAÇA: CRÍTICO</text>
-                    </svg>
-
-                    <!-- SVG 3 (Hidden by default - Side scrolling gameplay mockup) -->
-                    <svg id="svg-scene3" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
-                        <rect width="320" height="180" fill="#0b0f19"/>
-                        <!-- Urban Skyline Background -->
-                        <rect x="20" y="60" width="30" height="80" fill="#1e293b" opacity="0.5"/>
-                        <rect x="60" y="40" width="45" height="100" fill="#1e293b" opacity="0.4"/>
-                        <rect x="130" y="70" width="35" height="70" fill="#1e293b" opacity="0.6"/>
-                        <rect x="180" y="50" width="40" height="90" fill="#1e293b" opacity="0.5"/>
-                        <rect x="240" y="30" width="50" height="110" fill="#1e293b" opacity="0.4"/>
-                        
-                        <!-- Platforms -->
-                        <rect x="0" y="140" width="120" height="40" fill="#334155"/>
-                        <rect x="0" y="140" width="120" height="4" fill="#8b5cf6"/>
-                        
-                        <!-- Moving Platform -->
-                        <rect x="140" y="110" width="60" height="12" fill="#1e293b" stroke="#06b6d4" stroke-width="2" rx="3"/>
-                        <line x1="140" y1="116" x2="200" y2="116" stroke="#06b6d4" stroke-dasharray="4,4"/>
-
-                        <rect x="220" y="130" width="100" height="50" fill="#334155"/>
-                        <rect x="220" y="130" width="100" height="4" fill="#8b5cf6"/>
-
-                        <!-- Scientist Hero Character jumping (Dr. Axel in blue suit) -->
-                        <g transform="translate(60, 100)">
-                            <rect x="0" y="0" width="12" height="24" fill="#0ea5e9" rx="3"/> <!-- Suit -->
-                            <rect x="2" y="-10" width="8" height="10" fill="#fed7aa" rx="2"/> <!-- Head -->
-                            <rect x="2" y="-10" width="8" height="3" fill="#1e293b"/> <!-- Hair -->
-                            <rect x="-4" y="4" width="4" height="12" fill="#3b82f6" rx="1"/> <!-- Arms -->
-                            <rect x="4" y="24" width="4" height="8" fill="#1e1b4b"/> <!-- Leg 1 -->
-                            <rect x="-2" y="22" width="4" height="8" fill="#1e1b4b"/> <!-- Leg 2 -->
-                            <circle cx="8" cy="-6" r="1.5" fill="#000"/> <!-- Eye -->
-                        </g>
-
-                        <!-- Glowing mutant slime hazard -->
-                        <g transform="translate(250, 115)">
-                            <path d="M 0,15 Q 10,0 20,15 Z" fill="#10b981" stroke="#34d399" stroke-width="1.5"/>
-                            <circle cx="6" cy="10" r="1.5" fill="#fff"/>
-                            <circle cx="14" cy="8" r="1" fill="#fff"/>
-                        </g>
-                        
-                        <!-- Floating Coins to collect -->
-                        <circle cx="110" cy="90" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
-                        <circle cx="130" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
-                        <circle cx="150" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
-                        <circle cx="170" cy="80" r="4" fill="#fbbf24" stroke="#d97706" stroke-width="1"/>
-
-                        <!-- HUD Display -->
-                        <text x="10" y="20" font-family="'Press Start 2P'" font-size="6" fill="#fff">PONTOS: 00240</text>
-                        <text x="120" y="20" font-family="'Press Start 2P'" font-size="6" fill="#fbbf24">MOEDAS: x04</text>
-                        <text x="240" y="20" font-family="'Press Start 2P'" font-size="6" fill="#10b981">VIDAS: ♥ x3</text>
-                    </svg>
-                </div>
-                
-                <!-- Thumbnails row linking to script -->
-                <div class="gallery-thumbs">
-                    <div class="gallery-thumb active" onclick="switchScene(1)" id="thumb1">
-                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="80" height="45" fill="#04060e"/>
-                            <rect x="32" y="10" width="16" height="25" fill="none" stroke="#10b981" stroke-width="1" rx="2"/>
-                            <circle cx="40" cy="22" r="3" fill="#8b5cf6"/>
-                        </svg>
-                    </div>
-                    <div class="gallery-thumb" onclick="switchScene(2)" id="thumb2">
-                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="80" height="45" fill="#0f0715"/>
-                            <path d="M 28,15 L 52,15 L 56,25 L 52,35 L 28,35 Z" fill="#6d28d9" stroke="#8b5cf6" stroke-width="1"/>
-                            <circle cx="36" cy="22" r="2.5" fill="#facc15"/>
-                            <circle cx="44" cy="22" r="2.5" fill="#facc15"/>
-                        </svg>
-                    </div>
-                    <div class="gallery-thumb" onclick="switchScene(3)" id="thumb3">
-                        <svg viewBox="0 0 80 45" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="80" height="45" fill="#0b0f19"/>
-                            <rect x="10" y="35" width="30" height="10" fill="#334155"/>
-                            <rect x="10" y="35" width="30" height="1" fill="#8b5cf6"/>
-                            <rect x="25" y="25" width="4" height="10" fill="#0ea5e9"/>
-                        </svg>
+            <div class="about-card">
+                <div class="stat-row">
+                    <div class="stat-ico">🎮</div>
+                    <div>
+                        <div class="stat-lbl">Modalidade</div>
+                        <div class="stat-val">Single-player · Browser</div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- TWO COLUMN LAYOUT FOR GAME INFO -->
-        <div class="ray-grid-layout">
-            
-            <!-- LEFT COLUMN: PRIMARY DETAILS -->
-            <div class="left-col">
-                
-                <!-- ABOUT THE GAME SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h-2v-2h4v8zm0-10h-2V5h2v2z"/></svg>
-                        Sobre o Jogo
-                    </h3>
-                    <div class="ray-about-text">
-                        <p>
-                            Project Ray é um jogo de plataforma 2D de inspiração retrô desenvolvido pela LFA GAMES. Os jogadores controlam cientistas presos em um experimento perigoso que deu errado, enfrentando criaturas mutantes e fases cada vez mais difíceis.
-                        </p>
-                        <p>
-                            O jogo mistura a jogabilidade clássica de plataforma com design de níveis moderno, desafios progressivos e visuais vibrantes em pixel art inspirados em jogos de arcade dos anos 90.
-                        </p>
+                <div class="stat-row">
+                    <div class="stat-ico">🕹️</div>
+                    <div>
+                        <div class="stat-lbl">Gênero</div>
+                        <div class="stat-val">Plataforma 2D · Pixel Art</div>
                     </div>
-                </section>
-
-                <!-- GAME FEATURES SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-                        Recursos do Jogo
-                    </h3>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                            </div>
-                            <span class="feature-title">4 fases progressivas</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
-                            </div>
-                            <span class="feature-title">Batalha contra chefe</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                            </div>
-                            <span class="feature-title">Visuais em pixel art</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-                            </div>
-                            <span class="feature-title">Plataformas móveis</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-                            </div>
-                            <span class="feature-title">Trilha sonora retrô</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-                            </div>
-                            <span class="feature-title">Sistema de moedas</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                            </div>
-                            <span class="feature-title">Suporte a controle</span>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon-wrapper">
-                                <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
-                            </div>
-                            <span class="feature-title">Dificuldade progressiva</span>
-                        </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-ico">⚙️</div>
+                    <div>
+                        <div class="stat-lbl">Engine</div>
+                        <div class="stat-val">GDevelop</div>
                     </div>
-                </section>
-
-                <!-- STORY SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h-2v-2h4v8zm0-10h-2V5h2v2z"/></svg>
-                        História
-                    </h3>
-                    <div class="crt-terminal">
-                        <div class="terminal-header">
-                            <span>TERMINAL_SISTEMA_LAB_v4.0.2</span>
-                            <span>STATUS: ERRO!</span>
-                        </div>
-                        <div class="terminal-log-row">
-                            <span class="terminal-alert">&gt; [PERIGO]: VIOLAÇÃO GENÉTICA DETECTADA NO SETOR 7.</span>
-                        </div>
-                        <div class="terminal-log-row">
-                            &gt; Experimento genético fracassado. Cobaias sofreram mutações rápidas. Animais de laboratório escaparam do confinamento. Nível de contenção crítico.
-                        </div>
-                        <div class="terminal-log-row">
-                            &gt; Sobreviventes identificados: <span style="color:#a855f7;">Dra. Kim</span>, <span style="color:#0ea5e9;">Dr. Axel</span>, <span style="color:#10b981;">Dra. Andy</span>.
-                        </div>
-                        <div class="terminal-log-row">
-                            &gt; Perfil da missão: Sobreviver ao caos, navegar pelos setores infestados de mutantes, proteger amostras ativas e sintetizar a cura antes que a contaminação escape do laboratório.
-                        </div>
-                        <div class="terminal-log-row" style="border-top:1px solid #1e293b; padding-top:0.5rem; margin-top:0.5rem; color:#10b981;">
-                            &gt; EXECUTANDO PROTOCOLOS DE CONTENÇÃO... APERTE START PARA INICIAR
-                        </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-ico">🌐</div>
+                    <div>
+                        <div class="stat-lbl">Plataforma</div>
+                        <div class="stat-val">Navegadores Modernos</div>
                     </div>
-                </section>
-
-                <!-- GAMEPLAY SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2z"/></svg>
-                        Jogabilidade
-                    </h3>
-                    <ul class="gameplay-list">
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Desafios de plataforma:</strong> Navegue por elevadores, esteiras e armadilhas.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Encontros com inimigos:</strong> Derrote ou evite insetos tóxicos, robôs hostis e mutantes aterrorizantes.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Pulos de precisão:</strong> Calcule seus saltos perfeitamente para evitar poços de ácido mortal e perigos elétricos.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Plataformas móveis:</strong> Domine superfícies móveis para alcançar áreas escondidas.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Sistema de pontuação:</strong> Maximize sua pontuação completando as fases o mais rápido possível.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Moedas colecionáveis:</strong> Colete microchips dourados espalhados pelas fases.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Várias vidas:</strong> Comece com três vidas e ganhe tentativas extras conforme avança.</span>
-                        </li>
-                        <li class="gameplay-item">
-                            <span class="gameplay-bullet"></span>
-                            <span><strong>Dificuldade progressiva:</strong> Enfrente mutantes mais fortes e armadilhas mais inteligentes nas fases avançadas.</span>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-
-            <!-- RIGHT COLUMN: SIDEBAR DETAILS -->
-            <div class="right-col">
-                
-                <!-- INSPIRATIONS SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.59 10.56 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm1-8.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5zm-5 3c0-.83-.67-1.5-1.5-1.5S5 11.67 5 12.5 5.67 14 6.5 14s1.5-.67 1.5-1.5zm10 0c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5.67 1.5 1.5 1.5 1.5-.67 1.5-1.5z"/></svg>
-                        Inspirações
-                    </h3>
-                    <div class="inspirations-grid">
-                        <div class="inspiration-tag">Super Mario</div>
-                        <div class="inspiration-tag">Sonic</div>
-                        <div class="inspiration-tag">Donkey Kong Jr.</div>
-                        <div class="inspiration-tag">TMNT</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-ico">🎨</div>
+                    <div>
+                        <div class="stat-lbl">Estilo</div>
+                        <div class="stat-val">Retrô · Arcade · Dark Neon</div>
                     </div>
-                </section>
-
-                <!-- DEVELOPMENT SECTION -->
-                <section class="ray-section">
-                    <h3 class="ray-section-title">
-                        <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
-                        Desenvolvimento
-                    </h3>
-                    <div class="dev-badge-container">
-                        <div class="gdevelop-logo">GDevelop</div>
-                        <div class="dev-box-content">
-                            Project Ray foi totalmente desenvolvido utilizando o GDevelop com foco em sistemas de jogabilidade, design de níveis e experiências interativas.
-                            <br/><br/>
-                            O projeto combina recursos originais, pixel art personalizada, fluxos criativos assistidos por IA e recursos de áudio.
-                        </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-ico">📅</div>
+                    <div>
+                        <div class="stat-lbl">Classificação</div>
+                        <div class="stat-val">+10 anos</div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- TEAM SECTION -->
-        <section class="ray-section">
-            <h3 class="ray-section-title" style="justify-content: center; border-bottom: none; margin-bottom: 0;">
-                <svg viewBox="0 0 24 24" style="fill: var(--ray-cyan);"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                DESENVOLVIDO POR LFA GAMES
-            </h3>
-            <div class="team-members-grid">
-                
-                <!-- MEMBER 1 -->
-                <div class="team-member-card">
-                    <div class="member-avatar">
-                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+<!-- ═══════════════════════════════════════════════
+     MISSÃO — O VILÃO RATTUS
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="rattus">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Missão Ativa</p>
+            <h2 class="s-title">O Experimento<br>que Deu Errado</h2>
+            <div class="s-divider"></div>
+        </div>
+        <div class="rattus-layout rv">
+
+            <!-- CRT terminal briefing -->
+            <div class="crt-terminal">
+                <div class="term-header">
+                    <div class="term-dots">
+                        <div class="term-dot"></div>
+                        <div class="term-dot"></div>
+                        <div class="term-dot"></div>
                     </div>
-                    <div class="member-name">Andriele de Fátima Silva</div>
-                    <span class="member-role">Desenvolvedora / Level Designer</span>
+                    <span>TERMINAL_LAB_v4.0.2 &nbsp;·&nbsp; NÍVEL DE ACESSO: MÁXIMO</span>
+                    <span>STATUS: CRÍTICO</span>
                 </div>
-
-                <!-- MEMBER 2 -->
-                <div class="team-member-card">
-                    <div class="member-avatar">
-                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                    </div>
-                    <div class="member-name">Fernanda Laudares Silva</div>
-                    <span class="member-role">Diretora de Arte / Desenvolvedora</span>
-                </div>
-
-                <!-- MEMBER 3 -->
-                <div class="team-member-card">
-                    <div class="member-avatar">
-                        <svg style="width:32px;height:32px;fill:currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-                    </div>
-                    <div class="member-name">Lucas Silva Ciacci</div>
-                    <span class="member-role">Programador Líder / Designer de Sistemas</span>
+                <div class="tline"><span class="t-red">&gt; [ALERTA VERMELHO]: VIOLAÇÃO GENÉTICA DETECTADA — SETOR 7.</span></div>
+                <div class="tline">&gt; Experimento nº 47-R: <span class="t-white">RATTUS MAXIMUS</span>. Mutação acelerada confirmada.</div>
+                <div class="tline">&gt; Sujeito cresceu de 200g para estimados <span class="t-red">180kg</span>. Capacidade destrutiva: imprevisível.</div>
+                <div class="tline">&gt; Contenção dos setores A, B e C: <span class="t-red">FALHOU.</span></div>
+                <div class="tline">&gt; Sobreviventes identificados no complexo:</div>
+                <div class="tline">&nbsp;&nbsp;&nbsp;<span class="t-purple">◈ Dra. Kim</span> &nbsp;·&nbsp; <span class="t-cyan">Dr. Axel</span> &nbsp;·&nbsp; <span style="color:var(--g)">Dra. Andy</span></div>
+                <div class="tline">&gt; Objetivo: neutralizar Rattus. Sintetizar antídoto. Sobreviver.</div>
+                <div class="tline" style="border-top:1px solid rgba(106,217,69,.1);padding-top:.5rem;margin-top:.4rem;color:var(--g)">
+                    &gt; AGUARDANDO INTERVENÇÃO DOS CIENTISTAS...<span class="t-cursor"></span>
                 </div>
             </div>
-        </section>
 
-        <!-- DECORATIVE PIXEL BLOCKS -->
-        <div class="ray-footer-decor">
-            <div class="decor-block"></div>
-            <div class="decor-block"></div>
-            <div class="decor-block"></div>
+            <!-- Villain threat card -->
+            <div class="threat-card">
+                <div class="threat-title">⚠ RATTUS</div>
+                <div class="threat-codename">Experimento #47-R · Ameaça Máxima</div>
+                <p class="threat-desc">
+                    Nascido de um acidente em um experimento de modificação genética acelerada,
+                    <strong style="color:#ef4444">Rattus</strong> é o vilão principal de Project Ray.
+                    Um rato de laboratório que sofreu mutações massivas e agora domina os
+                    setores do complexo. Sua inteligência e brutalidade aumentaram
+                    proporcionalmente ao seu tamanho — e ele não tem intenção de ser contido novamente.
+                </p>
+                <div class="threat-stats">
+                    <div class="tstat">
+                        <span class="tstat-key">Classificação</span>
+                        <span class="tstat-val">BOSS FINAL</span>
+                    </div>
+                    <div class="tstat">
+                        <span class="tstat-key">Origem</span>
+                        <span class="tstat-val">Mutação Genética</span>
+                    </div>
+                    <div class="tstat">
+                        <span class="tstat-key">Localização</span>
+                        <span class="tstat-val">Setor Central</span>
+                    </div>
+                    <div class="tstat">
+                        <span class="tstat-key">Nível de Ameaça</span>
+                        <span class="tstat-val">CRÍTICO ██████████</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
-    </main>
+<!-- ═══════════════════════════════════════════════
+     OS CIENTISTAS — PERSONAGENS
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="cientistas">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Personagens</p>
+            <h2 class="s-title">Os Três Cientistas</h2>
+            <div class="s-divider"></div>
+        </div>
+        <p class="scientists-intro rv">
+            Presos dentro do laboratório após o colapso dos sistemas de contenção, três cientistas com habilidades complementares
+            formam a única linha de defesa contra Rattus. Juntos, eles carregam a missão de sobreviver — e vencer.
+        </p>
+        <div class="sci-grid rv">
 
-    <!-- RODAPÉ -->
-    <footer class="main-footer">
-        <p>&copy; 2026 &bull; Mostra de Games Acadêmica. Desenvolvido para publicação em <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
-    </footer>
+            <!-- Dra. Kim -->
+            <div class="sci-card c-purple">
+                <div class="sci-avatar">K</div>
+                <div class="sci-name">Dra. Kim</div>
+                <span class="sci-role">Bioquímica / Estrategista</span>
+                <p class="sci-bio" style="margin-top:.9rem">
+                    Especialista em mutações genéticas. Dra. Kim é a mente analítica do grupo —
+                    responsável por decifrar os padrões de ataque de Rattus e formular o antídoto.
+                </p>
+            </div>
 
-    <!-- INTERACTION LOGIC (DYNAMIC GALLERY PREVIEW SWAP) -->
-    <script>
-        function switchScene(sceneNumber) {
-            // Get all SVG scenes
-            const s1 = document.getElementById('svg-scene1');
-            const s2 = document.getElementById('svg-scene2');
-            const s3 = document.getElementById('svg-scene3');
-            
-            // Get all thumbnails
-            const t1 = document.getElementById('thumb1');
-            const t2 = document.getElementById('thumb2');
-            const t3 = document.getElementById('thumb3');
+            <!-- Dr. Axel -->
+            <div class="sci-card c-green">
+                <div class="sci-avatar">A</div>
+                <div class="sci-name">Dr. Axel</div>
+                <span class="sci-role">Físico / Combatente</span>
+                <p class="sci-bio" style="margin-top:.9rem">
+                    O protagonista central. Dr. Axel é ágil, corajoso e o primeiro a enfrentar
+                    os mutantes diretamente. Sua experiência em campo o torna indispensável
+                    nas fases mais intensas do laboratório.
+                </p>
+            </div>
 
-            // Reset displays
-            s1.style.display = 'none';
-            s2.style.display = 'none';
-            s3.style.display = 'none';
+            <!-- Dra. Andy -->
+            <div class="sci-card c-cyan">
+                <div class="sci-avatar">Y</div>
+                <div class="sci-name">Dra. Andy</div>
+                <span class="sci-role">Engenheira / Suporte Técnico</span>
+                <p class="sci-bio" style="margin-top:.9rem">
+                    Especialista em sistemas do laboratório. Dra. Andy mantém os equipamentos
+                    funcionando e encontra rotas alternativas pelos setores bloqueados.
+                    Sem ela, a equipe estaria perdida no complexo.
+                </p>
+            </div>
 
-            // Reset active classes
-            t1.classList.remove('active');
-            t2.classList.remove('active');
-            t3.classList.remove('active');
+        </div>
+    </div>
+</section>
 
-            // Activate chosen scene
-            if (sceneNumber === 1) {
-                s1.style.display = 'block';
-                t1.classList.add('active');
-            } else if (sceneNumber === 2) {
-                s2.style.display = 'block';
-                t2.classList.add('active');
-            } else if (sceneNumber === 3) {
-                s3.style.display = 'block';
-                t3.classList.add('active');
+<!-- ═══════════════════════════════════════════════
+     CAPTURAS DE TELA
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="capturas">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Visual</p>
+            <h2 class="s-title">Material de Gameplay</h2>
+            <div class="s-divider"></div>
+        </div>
+        <div class="ss-grid rv">
+            <div class="ss-frame">
+                <!-- Screenshot: tela do menu principal -->
+                <img src="img/screenshot_menu.png" alt="Menu Principal — Project Ray">
+                <span class="ss-lbl">Menu Principal</span>
+            </div>
+            <div class="ss-frame">
+                <!-- Screenshot: gameplay em ação -->
+                <img src="img/screenshot_gameplay.png" alt="Gameplay — Project Ray">
+                <span class="ss-lbl">Gameplay</span>
+            </div>
+            <div class="ss-frame">
+                <!-- Screenshot: personagens / arte -->
+                <img src="img/screenshot_characters1.png" alt="Personagens — Project Ray">
+                <span class="ss-lbl">Personagens</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FEATURES — CARACTERÍSTICAS DO JOGO
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="features">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Características</p>
+            <h2 class="s-title">O que você vai encontrar</h2>
+            <div class="s-divider"></div>
+        </div>
+        <div class="feat-grid rv">
+            <div class="feat-card">
+                <div class="feat-icon">🗺️</div>
+                <div class="feat-title">4 Fases Progressivas</div>
+                <p class="feat-desc">Cada setor do laboratório esconde novos inimigos, armadilhas e desafios crescentes.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">💀</div>
+                <div class="feat-title">Boss Final — Rattus</div>
+                <p class="feat-desc">O enfrentamento épico contra o rato gigante exige precisão, velocidade e estratégia.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🎨</div>
+                <div class="feat-title">Pixel Art Original</div>
+                <p class="feat-desc">Arte personalizada com cenários de laboratório escuros, iluminados por neon verde e roxo.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🎵</div>
+                <div class="feat-title">Trilha Retrô</div>
+                <p class="feat-desc">Música original em estilo chiptune que ambienta o perigo e a urgência da missão.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">⚡</div>
+                <div class="feat-title">Plataformas Móveis</div>
+                <p class="feat-desc">Elevadores, esteiras e superfícies instáveis dominam os setores mais avançados.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🪙</div>
+                <div class="feat-title">Microchips & Pontos</div>
+                <p class="feat-desc">Colete microchips dourados e maximize a pontuação completando fases rapidamente.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🎮</div>
+                <div class="feat-title">Suporte a Controle</div>
+                <p class="feat-desc">Teclado ou controle — jogue do jeito que preferir, diretamente no browser.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">📈</div>
+                <div class="feat-title">Dificuldade Crescente</div>
+                <p class="feat-desc">Mutantes mais ágeis e armadilhas mais complexas a cada setor desbloqueado.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     MECÂNICAS + INSPIRAÇÕES
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="mecanicas">
+    <div class="s-inner">
+        <div class="rv">
+            <p class="s-tag">Jogabilidade</p>
+            <h2 class="s-title">Mecânicas &amp; Inspirações</h2>
+            <div class="s-divider"></div>
+        </div>
+        <div class="mec-layout rv">
+            <ul class="mec-list">
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Desafios de plataforma:</strong> Navegue por elevadores, plataformas móveis e armadilhas progressivas pelo laboratório.</span>
+                </li>
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Encontros com inimigos:</strong> Tubos de ensaio e objetos químicos ganham vida, além de ratos mutantes do experimento bloqueiam a passagem.</span>
+                </li>
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Pulos de precisão:</strong> Evite gosmas ácidas, esgoto radioativo e veículos violentos pelo caminho.</span>
+                </li>
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Sistema de pontuação:</strong> Complete fases rapidamente e colete itens para maximizar o score.</span>
+                </li>
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Moedas colecionáveis:</strong> Itens dourados espalhados estrategicamente em cada setor que guiam o caminho.</span>
+                </li>
+                <li class="mec-item">
+                    <span class="mec-bullet"></span>
+                    <span class="mec-txt"><strong>Múltiplas vidas:</strong> Três corações por fase, com possibilidade de kits médicos para recuperar a vida.</span>
+                </li>
+            </ul>
+            <div class="inspo-block">
+                <p class="inspo-lbl">Inspirações</p>
+                <div class="inspo-grid">
+                    <div class="inspo-tag">Super Mario</div>
+                    <div class="inspo-tag">Sonic</div>
+                    <div class="inspo-tag">Donkey Kong Jr.</div>
+                    <div class="inspo-tag">TMNT</div>
+                </div>
+                <div class="dev-box">
+                    <div class="dev-badge">GDevelop</div>
+                    <p>
+                        Project Ray foi inteiramente desenvolvido no GDevelop, com foco em sistemas de jogabilidade,
+                        design de níveis e experiências interativas. O projeto combina pixel art original,
+                        fluxos criativos assistidos por IA e audio design autoral.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     EQUIPE — LFA GAMES
+═══════════════════════════════════════════════ -->
+<section class="s-wrap" id="equipe">
+    <div class="s-inner">
+        <div class="rv" style="text-align:center;max-width:480px;margin:0 auto 3.5rem;">
+            <p class="s-tag" style="justify-content:center;">Desenvolvimento</p>
+            <h2 class="s-title" style="text-align:center;">Desenvolvido por<br><span style="color:var(--g)">LFA GAMES</span></h2>
+        </div>
+        <div class="team-grid rv">
+
+            <div class="team-card">
+                <div class="tm-avatar">A</div>
+                <div class="tm-name">Andriele de Fátima Silva</div>
+                <span class="tm-role">Documentação · Testes</span>
+            </div>
+
+            <div class="team-card">
+                <div class="tm-avatar">F</div>
+                <div class="tm-name">Fernanda Laudares Silva</div>
+                <span class="tm-role">Game Designer · Desenvolvedora</span>
+            </div>
+
+            <div class="team-card">
+                <div class="tm-avatar">L</div>
+                <div class="tm-name">Lucas Silva Ciacci</div>
+                <span class="tm-role">Artista Técnico · Desenvolvedor</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FINAL CTA
+═══════════════════════════════════════════════ -->
+<section id="cta">
+    <div class="cta-stripe"></div>
+    <div class="s-inner rv">
+        <h2 class="cta-title">A missão ainda<br>não terminou.</h2>
+        <p class="cta-sub">Rattus está solto. O laboratório está em colapso. Só você pode fazer a diferença.</p>
+        <div class="cta-btns">
+            <!-- BOTÃO JOGAR — atualize o href quando o jogo estiver publicado -->
+            <a href="#" id="btn-jogar-cta" class="btn-play" style="font-size:12px;padding:19px 48px;">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                JOGAR AGORA
+            </a>
+            <!-- BOTÃO BAIXAR GDD — atualize o href com o caminho do PDF -->
+            <a href="#" id="btn-gdd-cta" class="btn-gdd" style="font-size:12px;padding:18px 44px;" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                BAIXAR GDD
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="main-footer">
+    <p>© 2026 &bull; Mostra de Games Acadêmica &bull; <strong style="color:var(--p)">LFA GAMES</strong> — Project Ray &bull; Desenvolvido para <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+    // ── Bio-particles (green + purple, lab vibes) ──
+    const pc = document.getElementById('bio-particles');
+    const colors = ['#6ad945','#bf68ff','rgba(106,217,69,.7)','rgba(191,104,255,.7)','#4ab82e','#8830d4'];
+    for (let i = 0; i < 30; i++) {
+        const el = document.createElement('div');
+        el.className = 'bp';
+        const s = Math.random() * 3.5 + 1;
+        el.style.cssText = `
+            width:${s}px; height:${s}px;
+            background:${colors[i % colors.length]};
+            left:${Math.random() * 100}%;
+            bottom:-10px;
+            animation-duration:${Math.random() * 13 + 9}s;
+            animation-delay:${Math.random() * 11}s;
+        `;
+        pc.appendChild(el);
+    }
+
+    // ── Scroll reveal ──
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('vis');
+                obs.unobserve(e.target);
             }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // ── Measure header height and position game-nav below it ──
+    const hdr = document.querySelector('.main-header');
+    function syncHeaderHeight() {
+        if (hdr) {
+            document.documentElement.style.setProperty('--header-h', hdr.offsetHeight + 'px');
         }
-    </script>
+    }
+    syncHeaderHeight();
+    window.addEventListener('resize', syncHeaderHeight);
+
+    // ── Transparent to solid Nav bar on scroll ──
+    const nav = document.querySelector('.game-nav');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+</script>
+
 </body>
 </html>
