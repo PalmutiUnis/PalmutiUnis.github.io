@@ -1,0 +1,382 @@
+/* ==========================================================================
+           RESET E VARIÁVEIS CONSTANTES (Mobile-First Architecture)
+           ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Paleta de Cores Mistas: Institucional Escuro + Toques Neon de Jogos */
+    --bg-primary: #0b0f19;
+    --bg-surface: #161f32;
+    --bg-surface-hover: #1e2942;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --brand-primary: #6366f1;
+    /* Indigo Acadêmico */
+    --brand-accent: #10b981;
+    /* Verde Level Up / Sucesso */
+    --brand-danger: #ef4444;
+    /* Vermelho Crítico */
+    --border-glow: #3b82f6;
+    /* Azul Mana */
+
+    --font-academic: 'Outfit', sans-serif;
+    --font-gamer: 'Press Start 2P', cursive;
+}
+
+body {
+    font-family: var(--font-academic);
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+           CABEÇALHO (HEADER) - Espaço para a Logo da Instituição
+           ========================================================================== */
+.main-header {
+    background-color: var(--bg-surface);
+    border-bottom: 3px solid var(--brand-primary);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.header-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+/* Espaço reservado para a logo da instituição */
+.institution-logo-container {
+    width: 100%;
+    max-width: 180px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.institution-logo-container:hover {
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.institution-logo-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.header-titles h1 {
+    font-family: var(--font-gamer);
+    font-size: 0.85rem;
+    color: var(--brand-accent);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.5px;
+}
+
+.header-titles p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ==========================================================================
+           CORPO PRINCIPAL (MAIN CONTENT) E INTERFACE DE BUSCA
+           ========================================================================== */
+.main-content {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Caixa de Controle / Filtros de Busca (Estilo Dashboard de Games) */
+.control-panel {
+    background-color: var(--bg-surface);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-primary);
+    border: 2px solid #2e3c5a;
+    border-radius: 8px;
+    color: var(--text-main);
+    font-family: var(--font-academic);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+/* Estatísticas Globais da Página (Estilo HUD de Game) */
+.hud-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.hud-stats span strong {
+    color: var(--brand-accent);
+}
+
+/* ==========================================================================
+           GRID DE CARTÕES E CARDS DE EQUIPE (MÓVEL POR PADRÃO)
+           ========================================================================== */
+.teams-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Coluna única no celular */
+    gap: 1.25rem;
+}
+
+.team-card {
+    background-color: var(--bg-surface);
+    border: 2px solid #222f47;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+}
+
+/* Efeito Gamer Hover/Focus */
+.team-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-glow);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+
+/* Tag de Categoria Superior */
+.card-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(99, 102, 241, 0.2);
+    border: 1px solid var(--brand-primary);
+    color: #a5b4fc;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.card-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-name {
+    font-size: 0.85rem;
+    font-family: var(--font-gamer);
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    padding-right: 60px;
+    /* Evita sobrepor a badge */
+    word-wrap: break-word;
+}
+
+.game-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--brand-accent);
+    margin-bottom: 0.7rem;
+}
+
+.game-description {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    flex: 1;
+    text-align: justify;
+}
+
+/* Mini Lista de Atributos/Membros */
+.meta-list {
+    list-style: none;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.meta-list li {
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.meta-list li strong {
+    color: var(--text-main);
+}
+
+/* Botão de Download / Ação Principal */
+.btn-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--brand-primary);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-download:hover {
+    background-color: #4f46e5;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-download svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* Mensagem de Feedback para Busca Vazia */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    border: 2px dashed #222f47;
+    display: none;
+}
+
+.empty-state p {
+    font-family: var(--font-gamer);
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--brand-danger);
+}
+
+/* ==========================================================================
+           RODAPÉ (FOOTER)
+           ========================================================================== */
+.main-footer {
+    background-color: #080b12;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+}
+
+.main-footer a {
+    color: var(--brand-primary);
+    text-decoration: none;
+}
+
+.main-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+           MEDIA QUERIES (ADAPTATIVIDADE DESKTOP / RESPONSIVIDADE ADICIONAL)
+           ========================================================================== */
+
+/* Ajuste para tablets pequenos ou telas médias */
+@media (min-width: 640px) {
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .institution-logo-container {
+        max-width: 150px;
+        order: 2;
+        /* Joga a logo para a direita no desktop */
+    }
+
+    .header-titles {
+        order: 1;
+    }
+
+    .header-titles h1 {
+        font-size: 1.1rem;
+    }
+
+    .teams-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 colunas */
+    }
+}
+
+/* Ajuste para desktops e monitores grandes */
+@media (min-width: 1024px) {
+    .header-titles h1 {
+        font-size: 1.3rem;
+    }
+
+    .teams-grid {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 colunas para preencher a tela */
+        gap: 1.5rem;
+    }
+
+    .control-panel {
+        padding: 1.25rem;
+    }
+}

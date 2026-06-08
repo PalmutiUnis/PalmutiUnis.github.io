@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>GDD — Eerie Dash World</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Outfit',sans-serif; background:#fff; color:#1a1a2e; font-size:11pt; line-height:1.6; }
+
+        .page { width:210mm; min-height:297mm; margin:0 auto; padding:16mm 20mm; }
+
+        @media print {
+            body { background:#fff; }
+            .page { margin:0; padding:13mm 16mm; }
+            .no-print { display:none; }
+        }
+
+        /* HEADER */
+        .doc-header {
+            display:flex; justify-content:space-between; align-items:flex-start;
+            padding-bottom:12px; border-bottom:3px solid #8b0000; margin-bottom:18px;
+        }
+        .doc-title-block h1 { font-size:24pt; font-weight:800; color:#8b0000; line-height:1.1; }
+        .doc-title-block .subtitle { font-size:9.5pt; color:#64748b; margin-top:3px; }
+        .doc-meta { text-align:right; font-size:9pt; color:#64748b; line-height:1.8; }
+        .doc-meta strong { color:#1a1a2e; }
+
+        .studio-badge {
+            display:inline-block; background:#8b0000; color:#fff;
+            font-size:8.5pt; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+            padding:3px 12px; border-radius:4px; margin-bottom:16px;
+        }
+
+        /* SECTIONS */
+        .section { margin-bottom:16px; }
+        .section-title {
+            font-size:9.5pt; font-weight:800; text-transform:uppercase; letter-spacing:0.12em;
+            color:#8b0000; border-bottom:1.5px solid #fecaca; padding-bottom:3px; margin-bottom:8px;
+        }
+
+        /* GRID */
+        .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+
+        /* INFO CARD */
+        .info-card {
+            background:#fff5f5; border:1px solid #fecaca; border-left:3px solid #8b0000;
+            border-radius:5px; padding:8px 12px;
+        }
+        .info-card .label { font-size:7.5pt; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#8b0000; margin-bottom:2px; }
+        .info-card .value { font-size:10pt; font-weight:600; color:#1a1a2e; }
+
+        /* PITCH */
+        .pitch-box {
+            background:linear-gradient(135deg, #fff5f5, #fef2f2);
+            border:1px solid #fca5a5; border-radius:7px; padding:12px 16px;
+            font-size:10.5pt; font-style:italic; color:#7f1d1d; margin-bottom:14px; line-height:1.7;
+        }
+        .pitch-box::before { content:'"'; font-size:2em; color:#8b0000; line-height:0; vertical-align:-10px; margin-right:3px; }
+
+        /* LISTS */
+        .feature-list { list-style:none; padding:0; }
+        .feature-list li {
+            display:flex; gap:8px; padding:3.5px 0;
+            font-size:10pt; color:#334155; border-bottom:1px solid #f1f5f9;
+        }
+        .feature-list li:last-child { border-bottom:none; }
+        .feature-list li .bullet { color:#8b0000; font-weight:800; flex-shrink:0; }
+
+        /* CHARACTERS */
+        .char-table { width:100%; border-collapse:collapse; font-size:10pt; }
+        .char-table th { background:#8b0000; color:#fff; text-align:left; padding:5px 9px; font-size:8.5pt; letter-spacing:0.05em; }
+        .char-table td { padding:5px 9px; border-bottom:1px solid #e2e8f0; color:#334155; }
+        .char-table tr:nth-child(even) td { background:#fff5f5; }
+
+        /* MECHANICS TABLE */
+        .mech-table { width:100%; border-collapse:collapse; font-size:10pt; }
+        .mech-table th { background:#1a1a2e; color:#fff; text-align:left; padding:5px 9px; font-size:8.5pt; }
+        .mech-table td { padding:5px 9px; border-bottom:1px solid #e2e8f0; color:#334155; }
+        .mech-table tr:nth-child(even) td { background:#f8fafc; }
+
+        /* CONTROLS */
+        .controls-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+        .control-item { background:#f1f5f9; border-radius:5px; padding:7px 8px; text-align:center; border:1px solid #e2e8f0; }
+        .control-key { display:inline-block; background:#1a1a2e; color:#fff; border-radius:3px; padding:1px 7px; font-size:8.5pt; font-weight:700; margin-bottom:3px; }
+        .control-desc { font-size:8.5pt; color:#64748b; }
+
+        /* GAMEPLAY LOOP */
+        .loop-steps { display:flex; gap:0; margin-top:6px; }
+        .loop-step {
+            flex:1; background:#fff5f5; border:1px solid #fecaca; border-right:none;
+            padding:7px 8px; text-align:center; font-size:8.5pt;
+        }
+        .loop-step:last-child { border-right:1px solid #fecaca; border-radius:0 4px 4px 0; }
+        .loop-step:first-child { border-radius:4px 0 0 4px; }
+        .loop-step .step-num { font-size:14pt; font-weight:800; color:#8b0000; display:block; }
+        .loop-step .step-label { color:#334155; font-weight:600; margin-top:2px; }
+        .loop-step .step-desc { color:#64748b; font-size:7.5pt; margin-top:2px; }
+
+        /* TEAM TABLE */
+        .team-table { width:100%; border-collapse:collapse; font-size:10pt; }
+        .team-table th { background:#1a1a2e; color:#fff; text-align:left; padding:5px 9px; font-size:8.5pt; }
+        .team-table td { padding:5px 9px; border-bottom:1px solid #e2e8f0; }
+        .team-table tr:nth-child(even) td { background:#f8fafc; }
+
+        /* SCREENSHOT IN GDD */
+        .gdd-screenshots { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px; }
+        .gdd-screenshot { width:100%; border-radius:5px; border:1px solid #fecaca; }
+
+        /* FOOTER */
+        .doc-footer {
+            margin-top:18px; padding-top:8px; border-top:1.5px solid #fecaca;
+            display:flex; justify-content:space-between; font-size:8pt; color:#94a3b8;
+        }
+
+        /* PRINT BAR */
+        .print-bar { background:#8b0000; color:#fff; text-align:center; padding:10px; font-size:10pt; font-weight:600; }
+        .print-bar button { background:#fff; color:#8b0000; border:none; padding:6px 20px; border-radius:5px; font-weight:700; font-size:10pt; cursor:pointer; margin-left:10px; }
+    </style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+    📄 Para salvar como PDF:
+    <button onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+    &nbsp;→ Selecione "Salvar como PDF" na impressora
+</div>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="doc-header">
+        <div class="doc-title-block">
+            <h1>EERIE DASH WORLD</h1>
+            <p class="subtitle">Game Design Document (GDD) — One-Sheet Overview</p>
+        </div>
+        <div class="doc-meta">
+            <strong>Versão:</strong> 1.0<br>
+            <strong>Data:</strong> 25/05/2026<br>
+            <strong>Status:</strong> Em Desenvolvimento<br>
+            <strong>Uso:</strong> Acadêmico
+        </div>
+    </div>
+
+    <span class="studio-badge">⚡ Eerie Inc. · Centro Universitário UNIS · Expo Games · Junho 2026</span>
+
+    <!-- PITCH -->
+    <div class="section">
+        <div class="section-title">🎯 Pitch do Jogo</div>
+        <div class="pitch-box">
+            Eerie Dash World é um jogo de plataforma 2D de ritmo acelerado para PC. O jogador escolhe entre dois personagens com habilidades únicas — Velocidade & Dash ou Dash Wall Jump — e enfrenta fases cronometradas em um mundo sombrio repleto de plataformas, obstáculos e coletáveis. Fácil de aprender, viciante de dominar.
+        </div>
+    </div>
+
+    <!-- FICHA TÉCNICA -->
+    <div class="section">
+        <div class="section-title">📋 Ficha Técnica</div>
+        <div class="three-col">
+            <div class="info-card"><div class="label">Título</div><div class="value">Eerie Dash World</div></div>
+            <div class="info-card"><div class="label">Gênero</div><div class="value">Plataforma 2D / Ação</div></div>
+            <div class="info-card"><div class="label">Plataforma</div><div class="value">PC · Windows</div></div>
+            <div class="info-card"><div class="label">Modo de Jogo</div><div class="value">Single Player</div></div>
+            <div class="info-card"><div class="label">Público-Alvo</div><div class="value">12+ · Casual / Hardcore</div></div>
+            <div class="info-card"><div class="label">Sessão Típica</div><div class="value">5–20 minutos</div></div>
+        </div>
+    </div>
+
+    <div class="two-col">
+    <div>
+
+        <!-- PERSONAGENS -->
+        <div class="section">
+            <div class="section-title">👾 Personagens Jogáveis</div>
+            <table class="char-table">
+                <thead><tr><th>Personagem</th><th>Habilidade 1</th><th>Habilidade 2</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Erie</strong> (demônio vermelho)</td><td>Velocidade & Dash</td><td>Dash Wall Jump</td></tr>
+                    <tr><td><strong>Cubo Sombrio</strong></td><td>Habilidade especial</td><td>—</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MECÂNICAS -->
+        <div class="section">
+            <div class="section-title">⚙️ Mecânicas Principais</div>
+            <table class="mech-table">
+                <thead><tr><th>Mecânica</th><th>Descrição</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Correr / Mover</strong></td><td>Movimento horizontal contínuo pelo cenário</td></tr>
+                    <tr><td><strong>Pular</strong></td><td>Superar plataformas, buracos e obstáculos</td></tr>
+                    <tr><td><strong>Dash</strong></td><td>Impulso rápido horizontal para desviar/alcançar</td></tr>
+                    <tr><td><strong>Wall Jump</strong></td><td>Pulo nas paredes para alcançar plataformas altas</td></tr>
+                    <tr><td><strong>Coletáveis</strong></td><td>Itens espalhados pelas fases para maximizar score</td></tr>
+                    <tr><td><strong>Cronômetro</strong></td><td>Timer por fase para comparação de recordes</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- CONTROLES -->
+        <div class="section">
+            <div class="section-title">🎮 Controles (PC — Teclado)</div>
+            <div class="controls-grid">
+                <div class="control-item"><div class="control-key">← →</div><div class="control-desc">Mover</div></div>
+                <div class="control-item"><div class="control-key">ESPAÇO</div><div class="control-desc">Pular</div></div>
+                <div class="control-item"><div class="control-key">↑</div><div class="control-desc">Pular (alt.)</div></div>
+                <div class="control-item"><div class="control-key">SHIFT</div><div class="control-desc">Dash</div></div>
+                <div class="control-item"><div class="control-key">R</div><div class="control-desc">Reiniciar</div></div>
+                <div class="control-item"><div class="control-key">ESC</div><div class="control-desc">Pausar</div></div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+
+        <!-- PONTOS DE VENDA -->
+        <div class="section">
+            <div class="section-title">💎 Pontos Principais de Venda (USPs)</div>
+            <ul class="feature-list">
+                <li><span class="bullet">★</span><span><strong>2 personagens jogáveis</strong> com mecânicas distintas.</span></li>
+                <li><span class="bullet">★</span><span><strong>Dash + Wall Jump</strong> — mecânicas avançadas de movimentação.</span></li>
+                <li><span class="bullet">★</span><span><strong>Sistema de cronômetro</strong> — speedrun nativo em cada fase.</span></li>
+                <li><span class="bullet">★</span><span><strong>Estética dark pixel art</strong> — visual sombrio e identidade forte.</span></li>
+                <li><span class="bullet">★</span><span><strong>Chapters</strong> — progressão em capítulos com dificuldade crescente.</span></li>
+                <li><span class="bullet">★</span><span><strong>Pick-up & play</strong> — sessões rápidas, alta rejogabilidade.</span></li>
+            </ul>
+        </div>
+
+        <!-- FLUXO DO JOGO -->
+        <div class="section">
+            <div class="section-title">🗺️ Fluxo Principal do Jogo</div>
+            <div class="loop-steps">
+                <div class="loop-step"><span class="step-num">1</span><div class="step-label">Menu</div><div class="step-desc">Start Game, Chapters, Characters</div></div>
+                <div class="loop-step"><span class="step-num">2</span><div class="step-label">Personagem</div><div class="step-desc">Erie ou Cubo Sombrio</div></div>
+                <div class="loop-step"><span class="step-num">3</span><div class="step-label">Fase</div><div class="step-desc">Correr, pular, coletar</div></div>
+                <div class="loop-step"><span class="step-num">4</span><div class="step-label">Fim</div><div class="step-desc">Vitória ou reinício</div></div>
+            </div>
+        </div>
+
+        <!-- AMBIENTAÇÃO -->
+        <div class="section">
+            <div class="section-title">🌑 Ambientação & Arte</div>
+            <ul class="feature-list">
+                <li><span class="bullet">▸</span><span><strong>Cenário:</strong> Floresta sombria, serras, engrenagens e trevas.</span></li>
+                <li><span class="bullet">▸</span><span><strong>Paleta:</strong> Tons escuros de verde, marrom e vermelho.</span></li>
+                <li><span class="bullet">▸</span><span><strong>Arte:</strong> Pixel art 2D com detalhamento de qualidade.</span></li>
+                <li><span class="bullet">▸</span><span><strong>HUD:</strong> Cronômetro e contador de coletáveis no canto.</span></li>
+            </ul>
+        </div>
+
+    </div>
+    </div>
+
+    <!-- EQUIPE -->
+    <div class="section">
+        <div class="section-title">👾 Equipe — Eerie Inc.</div>
+        <table class="team-table">
+            <thead><tr><th>#</th><th>Nome</th><th>Função</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>João Pedro Tavares Vicente</td><td>Desenvolvimento / Design</td></tr>
+                <tr><td>2</td><td>Ingryd de Lima</td><td>Desenvolvimento / Arte</td></tr>
+                <tr><td>3</td><td>Vinicius Henrique André Alves</td><td>Desenvolvimento / Programação</td></tr>
+                <tr><td>4</td><td>Matheus Percker Donato dos Santos</td><td>Desenvolvimento / Programação</td></tr>
+                <tr><td>5</td><td>Victor Emanuel Souza Martins</td><td>Desenvolvimento / Game Design</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+        <span>Eerie Dash World · GDD v1.0 · Uso acadêmico</span>
+        <span>Eerie Inc. · UNIS · Expo Games · Junho 2026</span>
+    </div>
+
+</div>
+</body>
+</html>
