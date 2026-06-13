@@ -570,7 +570,7 @@
         .s-inner {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 80px 2rem;
+            padding: 50px 2rem;
         }
 
         .s-tag {
@@ -869,7 +869,7 @@
         .sci-card:hover::before { transform: scaleX(1); }
 
         .sci-avatar {
-            width: 72px; height: 72px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -879,6 +879,14 @@
             font-size: 1.5rem;
             transition: all .35s;
             border: 2px solid;
+            overflow: hidden;
+        }
+
+        .sci-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .sci-card.c-green  .sci-avatar { border-color:rgba(106,217,69,.3);  background:rgba(106,217,69,.08);  color:var(--g); }
@@ -892,7 +900,7 @@
 
         .sci-name {
             font-family: var(--f-body);
-            font-size: .98rem;
+            font-size: 1.38rem;
             font-weight: 700;
             color: var(--white);
             margin-bottom: .4rem;
@@ -900,7 +908,7 @@
 
         .sci-role {
             font-family: var(--f-mono);
-            font-size: 7.5px;
+            font-size: 10px;
             letter-spacing: .14em;
             text-transform: uppercase;
             padding: 4px 10px;
@@ -1009,7 +1017,7 @@
 
         .feat-title {
             font-family: var(--f-mono);
-            font-size: 8px;
+            font-size: 12px;
             letter-spacing: .12em;
             text-transform: uppercase;
             color: var(--g);
@@ -1163,7 +1171,7 @@
         .team-card:hover::after { transform: scaleX(1); }
 
         .tm-avatar {
-            width: 68px; height: 68px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             border: 2px solid var(--b2);
             background: var(--p-dim);
@@ -1173,6 +1181,14 @@
             font-size: 1.3rem;
             color: var(--p);
             transition: all .35s ease;
+            overflow: hidden;
+        }
+
+        .tm-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .team-card:hover .tm-avatar {
@@ -1291,7 +1307,7 @@
 
         @media (max-width: 600px) {
             .hdr-inner, .game-nav { padding:0 1rem; }
-            .s-inner { padding:60px 1.25rem; }
+            .s-inner { padding:40px 1.25rem; }
             .feat-grid { grid-template-columns: 1fr; }
             .hero-buttons { flex-direction:column; align-items:center; }
             .btn-play, .btn-gdd { justify-content:center; width:100%; max-width:280px; }
@@ -1413,13 +1429,11 @@
 ═══════════════════════════════════════════════ -->
 <section class="s-wrap" id="about">
     <div class="s-inner">
-        <div class="rv">
-            <p class="s-tag">Sobre o Jogo</p>
-            <h2 class="s-title">Uma aventura retrô<br>com mutantes e caos</h2>
-            <div class="s-divider"></div>
-        </div>
         <div class="about-grid rv">
             <div class="about-text">
+                <p class="s-tag">Sobre o Jogo</p>
+                <h2 class="s-title">Uma aventura retrô<br>com mutantes e caos</h2>
+                <div class="s-divider"></div>
                 <p>
                     <strong>Project Ray</strong> é um jogo de plataforma 2D com estética <em>pixel art</em> retrô, desenvolvido pela <strong>LFA GAMES</strong>.
                     A história se passa em um laboratório científico sombrio onde um experimento genético catastrófico resultou no nascimento de <em>Rattus</em> — um rato gigante, mutante e hostil.
@@ -1566,7 +1580,9 @@
 
             <!-- Dra. Kim -->
             <div class="sci-card c-purple">
-                <div class="sci-avatar">K</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_kim.png" alt="Dra. Kim">
+                </div>
                 <div class="sci-name">Dra. Kim</div>
                 <span class="sci-role">Bioquímica / Estrategista</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1577,7 +1593,9 @@
 
             <!-- Dr. Axel -->
             <div class="sci-card c-green">
-                <div class="sci-avatar">A</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_axel.png" alt="Dr. Axel">
+                </div>
                 <div class="sci-name">Dr. Axel</div>
                 <span class="sci-role">Físico / Combatente</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1589,7 +1607,9 @@
 
             <!-- Dra. Andy -->
             <div class="sci-card c-cyan">
-                <div class="sci-avatar">Y</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_andy.png" alt="Dra. Andy">
+                </div>
                 <div class="sci-name">Dra. Andy</div>
                 <span class="sci-role">Engenheira / Suporte Técnico</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1616,18 +1636,18 @@
         <div class="ss-grid rv">
             <div class="ss-frame">
                 <!-- Screenshot: tela do menu principal -->
-                <img src="img/screenshot_menu.png" alt="Menu Principal — Project Ray">
+                <img src="imgs_LFA/screenshot_menu.png" alt="Menu Principal — Project Ray">
                 <span class="ss-lbl">Menu Principal</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: gameplay em ação -->
-                <img src="img/screenshot_gameplay.png" alt="Gameplay — Project Ray">
+                <img src="imgs_LFA/screenshot_gameplay.png" alt="Gameplay — Project Ray">
                 <span class="ss-lbl">Gameplay</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: personagens / arte -->
-                <img src="img/screenshot_characters1.png" alt="Personagens — Project Ray">
-                <span class="ss-lbl">Personagens</span>
+                <img src="imgs_LFA/screenshot_viloes.png" alt="Vilões — Project Ray">
+                <span class="ss-lbl">Vilões</span>
             </div>
         </div>
     </div>
@@ -1671,8 +1691,8 @@
             </div>
             <div class="feat-card">
                 <div class="feat-icon">🪙</div>
-                <div class="feat-title">Microchips & Pontos</div>
-                <p class="feat-desc">Colete microchips dourados e maximize a pontuação completando fases rapidamente.</p>
+                <div class="feat-title">Moedas & Pontos</div>
+                <p class="feat-desc">Colete moedas douradas e maximize a pontuação completando fases rapidamente.</p>
             </div>
             <div class="feat-card">
                 <div class="feat-icon">🎮</div>
@@ -1758,19 +1778,25 @@
         <div class="team-grid rv">
 
             <div class="team-card">
-                <div class="tm-avatar">A</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_andriele.png" alt="Andriele">
+                </div>
                 <div class="tm-name">Andriele de Fátima Silva</div>
                 <span class="tm-role">Documentação · Testes</span>
             </div>
 
             <div class="team-card">
-                <div class="tm-avatar">F</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_fernanda.png" alt="Fernanda">
+                </div>
                 <div class="tm-name">Fernanda Laudares Silva</div>
                 <span class="tm-role">Game Designer · Desenvolvedora</span>
             </div>
 
             <div class="team-card">
-                <div class="tm-avatar">L</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_lucas.png" alt="Lucas">
+                </div>
                 <div class="tm-name">Lucas Silva Ciacci</div>
                 <span class="tm-role">Artista Técnico · Desenvolvedor</span>
             </div>
