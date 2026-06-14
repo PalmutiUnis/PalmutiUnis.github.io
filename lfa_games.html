@@ -688,9 +688,9 @@
 
         .rattus-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 3.5rem;
+            align-items: start;
         }
 
         /* CRT terminal for the villain briefing */
@@ -783,6 +783,54 @@
             text-transform: uppercase;
             color: rgba(239,68,68,.6);
             margin-bottom: 1.5rem;
+        }
+
+        .threat-img-container {
+            width: 100%;
+            height: 250px;
+            border: 1px solid rgba(239,68,68,.3);
+            border-radius: 3px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+            background: #02010a;
+        }
+        
+        .threat-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.85;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .threat-img-container:hover img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .threat-img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(0,0,0,.2) 2px, rgba(0,0,0,.2) 3px
+            );
+            pointer-events: none;
+        }
+
+        .threat-img-container::before {
+            content: 'REC •';
+            position: absolute;
+            top: 10px; right: 12px;
+            color: #ef4444;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            z-index: 2;
+            animation: rec-blink 1.5s infinite;
         }
 
         .threat-desc {
@@ -1252,6 +1300,29 @@
             font-weight: 300;
         }
 
+        .cta-scenario {
+            max-width: 700px;
+            aspect-ratio: 700 / 467;
+            margin: 0 auto 3.5rem auto;
+            border: 1px solid var(--b2);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(106, 217, 69, 0.15), 0 0 80px rgba(191, 104, 255, 0.1);
+            position: relative;
+        }
+
+        .cta-scenario img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .cta-scenario:hover img {
+            transform: scale(1.03);
+        }
+
         .cta-btns {
             display: flex;
             gap: 1rem;
@@ -1355,8 +1426,8 @@
             <li><a href="#about">Sobre</a></li>
             <li><a href="#rattus">Missão</a></li>
             <li><a href="#cientistas">Cientistas</a></li>
-            <li><a href="#features">Mecânicas</a></li>
             <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#features">Mecânicas</a></li>
             <li><a href="#equipe">Equipe</a></li>
         </ul>
         <a href="#" class="btn-play" style="padding: 12px 28px; font-size: 11px;">
@@ -1498,15 +1569,15 @@
 ═══════════════════════════════════════════════ -->
 <section class="s-wrap" id="rattus">
     <div class="s-inner">
-        <div class="rv">
-            <p class="s-tag">Missão Ativa</p>
-            <h2 class="s-title">O Experimento<br>que Deu Errado</h2>
-            <div class="s-divider"></div>
-        </div>
         <div class="rattus-layout rv">
+            
+            <div class="rattus-left">
+                <p class="s-tag">Missão Ativa</p>
+                <h2 class="s-title">O Experimento<br>que Deu Errado</h2>
+                <div class="s-divider"></div>
 
-            <!-- CRT terminal briefing -->
-            <div class="crt-terminal">
+                <!-- CRT terminal briefing -->
+                <div class="crt-terminal">
                 <div class="term-header">
                     <div class="term-dots">
                         <div class="term-dot"></div>
@@ -1527,11 +1598,18 @@
                     &gt; AGUARDANDO INTERVENÇÃO DOS CIENTISTAS...<span class="t-cursor"></span>
                 </div>
             </div>
+            </div>
 
             <!-- Villain threat card -->
             <div class="threat-card">
                 <div class="threat-title">⚠ RATTUS</div>
                 <div class="threat-codename">Experimento #47-R · Ameaça Máxima</div>
+                
+                <!-- Imagem do Vilão -->
+                <div class="threat-img-container">
+                    <img src="imgs_LFA/rattus_vilao.png" alt="Rattus">
+                </div>
+
                 <p class="threat-desc">
                     Nascido de um acidente em um experimento de modificação genética acelerada,
                     <strong style="color:#ef4444">Rattus</strong> é o vilão principal de Project Ray.
@@ -1636,18 +1714,18 @@
         <div class="ss-grid rv">
             <div class="ss-frame">
                 <!-- Screenshot: tela do menu principal -->
-                <img src="imgs_LFA/screenshot_menu.png" alt="Menu Principal — Project Ray">
+                <img src="imgs_LFA/print_menu.png" alt="Menu Principal — Project Ray">
                 <span class="ss-lbl">Menu Principal</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: gameplay em ação -->
-                <img src="imgs_LFA/screenshot_gameplay.png" alt="Gameplay — Project Ray">
+                <img src="imgs_LFA/print_gameplay.png" alt="Gameplay — Project Ray">
                 <span class="ss-lbl">Gameplay</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: personagens / arte -->
-                <img src="imgs_LFA/screenshot_viloes.png" alt="Vilões — Project Ray">
-                <span class="ss-lbl">Vilões</span>
+                <img src="imgs_LFA/print_inimigos.png" alt="Inimigos — Project Ray">
+                <span class="ss-lbl">Inimigos</span>
             </div>
         </div>
     </div>
@@ -1813,6 +1891,12 @@
     <div class="s-inner rv">
         <h2 class="cta-title">A missão ainda<br>não terminou.</h2>
         <p class="cta-sub">Rattus está solto. O laboratório está em colapso. Só você pode fazer a diferença.</p>
+        
+        <!-- Imagem de Cenário -->
+        <div class="cta-scenario">
+            <img src="imgs_LFA/cenario.png" alt="Cenário do Jogo">
+        </div>
+
         <div class="cta-btns">
             <!-- BOTÃO JOGAR — atualize o href quando o jogo estiver publicado -->
             <a href="#" id="btn-jogar-cta" class="btn-play" style="font-size:12px;padding:19px 48px;">
