@@ -570,7 +570,7 @@
         .s-inner {
             max-width: 1240px;
             margin: 0 auto;
-            padding: 80px 2rem;
+            padding: 50px 2rem;
         }
 
         .s-tag {
@@ -688,9 +688,9 @@
 
         .rattus-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 3.5rem;
+            align-items: start;
         }
 
         /* CRT terminal for the villain briefing */
@@ -785,6 +785,54 @@
             margin-bottom: 1.5rem;
         }
 
+        .threat-img-container {
+            width: 100%;
+            height: 250px;
+            border: 1px solid rgba(239,68,68,.3);
+            border-radius: 3px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            position: relative;
+            background: #02010a;
+        }
+        
+        .threat-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0.85;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .threat-img-container:hover img {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .threat-img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg, transparent, transparent 2px,
+                rgba(0,0,0,.2) 2px, rgba(0,0,0,.2) 3px
+            );
+            pointer-events: none;
+        }
+
+        .threat-img-container::before {
+            content: 'REC •';
+            position: absolute;
+            top: 10px; right: 12px;
+            color: #ef4444;
+            font-family: var(--f-mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            z-index: 2;
+            animation: rec-blink 1.5s infinite;
+        }
+
         .threat-desc {
             font-size: .95rem;
             color: var(--t2);
@@ -869,7 +917,7 @@
         .sci-card:hover::before { transform: scaleX(1); }
 
         .sci-avatar {
-            width: 72px; height: 72px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -879,6 +927,14 @@
             font-size: 1.5rem;
             transition: all .35s;
             border: 2px solid;
+            overflow: hidden;
+        }
+
+        .sci-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .sci-card.c-green  .sci-avatar { border-color:rgba(106,217,69,.3);  background:rgba(106,217,69,.08);  color:var(--g); }
@@ -892,7 +948,7 @@
 
         .sci-name {
             font-family: var(--f-body);
-            font-size: .98rem;
+            font-size: 1.38rem;
             font-weight: 700;
             color: var(--white);
             margin-bottom: .4rem;
@@ -900,7 +956,7 @@
 
         .sci-role {
             font-family: var(--f-mono);
-            font-size: 7.5px;
+            font-size: 10px;
             letter-spacing: .14em;
             text-transform: uppercase;
             padding: 4px 10px;
@@ -1009,7 +1065,7 @@
 
         .feat-title {
             font-family: var(--f-mono);
-            font-size: 8px;
+            font-size: 12px;
             letter-spacing: .12em;
             text-transform: uppercase;
             color: var(--g);
@@ -1163,7 +1219,7 @@
         .team-card:hover::after { transform: scaleX(1); }
 
         .tm-avatar {
-            width: 68px; height: 68px;
+            width: 100px; height: 100px;
             border-radius: 50%;
             border: 2px solid var(--b2);
             background: var(--p-dim);
@@ -1173,6 +1229,14 @@
             font-size: 1.3rem;
             color: var(--p);
             transition: all .35s ease;
+            overflow: hidden;
+        }
+
+        .tm-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .team-card:hover .tm-avatar {
@@ -1236,6 +1300,29 @@
             font-weight: 300;
         }
 
+        .cta-scenario {
+            max-width: 700px;
+            aspect-ratio: 700 / 467;
+            margin: 0 auto 3.5rem auto;
+            border: 1px solid var(--b2);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(106, 217, 69, 0.15), 0 0 80px rgba(191, 104, 255, 0.1);
+            position: relative;
+        }
+
+        .cta-scenario img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .cta-scenario:hover img {
+            transform: scale(1.03);
+        }
+
         .cta-btns {
             display: flex;
             gap: 1rem;
@@ -1291,7 +1378,7 @@
 
         @media (max-width: 600px) {
             .hdr-inner, .game-nav { padding:0 1rem; }
-            .s-inner { padding:60px 1.25rem; }
+            .s-inner { padding:40px 1.25rem; }
             .feat-grid { grid-template-columns: 1fr; }
             .hero-buttons { flex-direction:column; align-items:center; }
             .btn-play, .btn-gdd { justify-content:center; width:100%; max-width:280px; }
@@ -1339,8 +1426,8 @@
             <li><a href="#about">Sobre</a></li>
             <li><a href="#rattus">Missão</a></li>
             <li><a href="#cientistas">Cientistas</a></li>
-            <li><a href="#features">Mecânicas</a></li>
             <li><a href="#capturas">Capturas</a></li>
+            <li><a href="#features">Mecânicas</a></li>
             <li><a href="#equipe">Equipe</a></li>
         </ul>
         <a href="#" class="btn-play" style="padding: 12px 28px; font-size: 11px;">
@@ -1398,7 +1485,7 @@
                 JOGAR AGORA
             </a>
             <!-- BOTÃO BAIXAR GDD — atualize o href com o caminho do PDF -->
-            <a href="#" id="btn-gdd" class="btn-gdd" target="_blank" rel="noopener">
+            <a href="pdfs/project-ray-gdd.pdf" id="btn-gdd" class="btn-gdd" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
                 BAIXAR GDD
             </a>
@@ -1413,13 +1500,11 @@
 ═══════════════════════════════════════════════ -->
 <section class="s-wrap" id="about">
     <div class="s-inner">
-        <div class="rv">
-            <p class="s-tag">Sobre o Jogo</p>
-            <h2 class="s-title">Uma aventura retrô<br>com mutantes e caos</h2>
-            <div class="s-divider"></div>
-        </div>
         <div class="about-grid rv">
             <div class="about-text">
+                <p class="s-tag">Sobre o Jogo</p>
+                <h2 class="s-title">Uma aventura retrô<br>com mutantes e caos</h2>
+                <div class="s-divider"></div>
                 <p>
                     <strong>Project Ray</strong> é um jogo de plataforma 2D com estética <em>pixel art</em> retrô, desenvolvido pela <strong>LFA GAMES</strong>.
                     A história se passa em um laboratório científico sombrio onde um experimento genético catastrófico resultou no nascimento de <em>Rattus</em> — um rato gigante, mutante e hostil.
@@ -1484,15 +1569,15 @@
 ═══════════════════════════════════════════════ -->
 <section class="s-wrap" id="rattus">
     <div class="s-inner">
-        <div class="rv">
-            <p class="s-tag">Missão Ativa</p>
-            <h2 class="s-title">O Experimento<br>que Deu Errado</h2>
-            <div class="s-divider"></div>
-        </div>
         <div class="rattus-layout rv">
+            
+            <div class="rattus-left">
+                <p class="s-tag">Missão Ativa</p>
+                <h2 class="s-title">O Experimento<br>que Deu Errado</h2>
+                <div class="s-divider"></div>
 
-            <!-- CRT terminal briefing -->
-            <div class="crt-terminal">
+                <!-- CRT terminal briefing -->
+                <div class="crt-terminal">
                 <div class="term-header">
                     <div class="term-dots">
                         <div class="term-dot"></div>
@@ -1513,11 +1598,18 @@
                     &gt; AGUARDANDO INTERVENÇÃO DOS CIENTISTAS...<span class="t-cursor"></span>
                 </div>
             </div>
+            </div>
 
             <!-- Villain threat card -->
             <div class="threat-card">
                 <div class="threat-title">⚠ RATTUS</div>
                 <div class="threat-codename">Experimento #47-R · Ameaça Máxima</div>
+                
+                <!-- Imagem do Vilão -->
+                <div class="threat-img-container">
+                    <img src="imgs_LFA/rattus_vilao.png" alt="Rattus">
+                </div>
+
                 <p class="threat-desc">
                     Nascido de um acidente em um experimento de modificação genética acelerada,
                     <strong style="color:#ef4444">Rattus</strong> é o vilão principal de Project Ray.
@@ -1566,7 +1658,9 @@
 
             <!-- Dra. Kim -->
             <div class="sci-card c-purple">
-                <div class="sci-avatar">K</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_kim.png" alt="Dra. Kim">
+                </div>
                 <div class="sci-name">Dra. Kim</div>
                 <span class="sci-role">Bioquímica / Estrategista</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1577,7 +1671,9 @@
 
             <!-- Dr. Axel -->
             <div class="sci-card c-green">
-                <div class="sci-avatar">A</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_axel.png" alt="Dr. Axel">
+                </div>
                 <div class="sci-name">Dr. Axel</div>
                 <span class="sci-role">Físico / Combatente</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1589,7 +1685,9 @@
 
             <!-- Dra. Andy -->
             <div class="sci-card c-cyan">
-                <div class="sci-avatar">Y</div>
+                <div class="sci-avatar">
+                    <img src="imgs_LFA/cientista_andy.png" alt="Dra. Andy">
+                </div>
                 <div class="sci-name">Dra. Andy</div>
                 <span class="sci-role">Engenheira / Suporte Técnico</span>
                 <p class="sci-bio" style="margin-top:.9rem">
@@ -1616,18 +1714,18 @@
         <div class="ss-grid rv">
             <div class="ss-frame">
                 <!-- Screenshot: tela do menu principal -->
-                <img src="img/screenshot_menu.png" alt="Menu Principal — Project Ray">
+                <img src="imgs_LFA/print_menu.png" alt="Menu Principal — Project Ray">
                 <span class="ss-lbl">Menu Principal</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: gameplay em ação -->
-                <img src="img/screenshot_gameplay.png" alt="Gameplay — Project Ray">
+                <img src="imgs_LFA/print_gameplay.png" alt="Gameplay — Project Ray">
                 <span class="ss-lbl">Gameplay</span>
             </div>
             <div class="ss-frame">
                 <!-- Screenshot: personagens / arte -->
-                <img src="img/screenshot_characters1.png" alt="Personagens — Project Ray">
-                <span class="ss-lbl">Personagens</span>
+                <img src="imgs_LFA/print_inimigos.png" alt="Inimigos — Project Ray">
+                <span class="ss-lbl">Inimigos</span>
             </div>
         </div>
     </div>
@@ -1671,8 +1769,8 @@
             </div>
             <div class="feat-card">
                 <div class="feat-icon">🪙</div>
-                <div class="feat-title">Microchips & Pontos</div>
-                <p class="feat-desc">Colete microchips dourados e maximize a pontuação completando fases rapidamente.</p>
+                <div class="feat-title">Moedas & Pontos</div>
+                <p class="feat-desc">Colete moedas douradas e maximize a pontuação completando fases rapidamente.</p>
             </div>
             <div class="feat-card">
                 <div class="feat-icon">🎮</div>
@@ -1758,19 +1856,25 @@
         <div class="team-grid rv">
 
             <div class="team-card">
-                <div class="tm-avatar">A</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_andriele.png" alt="Andriele">
+                </div>
                 <div class="tm-name">Andriele de Fátima Silva</div>
                 <span class="tm-role">Documentação · Testes</span>
             </div>
 
             <div class="team-card">
-                <div class="tm-avatar">F</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_fernanda.png" alt="Fernanda">
+                </div>
                 <div class="tm-name">Fernanda Laudares Silva</div>
                 <span class="tm-role">Game Designer · Desenvolvedora</span>
             </div>
 
             <div class="team-card">
-                <div class="tm-avatar">L</div>
+                <div class="tm-avatar">
+                    <img src="imgs_LFA/equipe_lucas.png" alt="Lucas">
+                </div>
                 <div class="tm-name">Lucas Silva Ciacci</div>
                 <span class="tm-role">Artista Técnico · Desenvolvedor</span>
             </div>
@@ -1787,6 +1891,12 @@
     <div class="s-inner rv">
         <h2 class="cta-title">A missão ainda<br>não terminou.</h2>
         <p class="cta-sub">Rattus está solto. O laboratório está em colapso. Só você pode fazer a diferença.</p>
+        
+        <!-- Imagem de Cenário -->
+        <div class="cta-scenario">
+            <img src="imgs_LFA/cenario.png" alt="Cenário do Jogo">
+        </div>
+
         <div class="cta-btns">
             <!-- BOTÃO JOGAR — atualize o href quando o jogo estiver publicado -->
             <a href="#" id="btn-jogar-cta" class="btn-play" style="font-size:12px;padding:19px 48px;">
@@ -1794,7 +1904,7 @@
                 JOGAR AGORA
             </a>
             <!-- BOTÃO BAIXAR GDD — atualize o href com o caminho do PDF -->
-            <a href="#" id="btn-gdd-cta" class="btn-gdd" style="font-size:12px;padding:18px 44px;" target="_blank" rel="noopener">
+            <a href="pdfs/project-ray-gdd.pdf" id="btn-gdd-cta" class="btn-gdd" style="font-size:12px;padding:18px 44px;" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
                 BAIXAR GDD
             </a>

@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TamaGO — Um Tamagotchi RPG Clássico com Mecânicas Modernas</title>
+
+    <link rel="shortcut icon" href="https://portal.unis.edu.br/hubfs/favicon-2021.png" />
+    <link rel="icon" type="image/png" href="https://img.icons8.com/pixel-cellphone/64/000000/game-controller.png" />
+
+    <!-- Google Fonts para estilo Acadêmico + Gamer (mesmo padrão das outras páginas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      /* ==========================================
+         CABEÇALHO PADRÃO DO PORTAL (mesmo das outras páginas)
+         ========================================== */
+      .main-header {
+        background-color: #161f32;
+        border-bottom: 3px solid #6366f1;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .header-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        text-align: center;
+      }
+
+      .institution-logo-container {
+        width: 100%;
+        max-width: 180px;
+        height: 50px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .institution-logo-container img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .header-titles h1 {
+        font-family: "Press Start 2P", cursive;
+        font-size: 0.85rem;
+        color: #10b981;
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+        margin-bottom: 0.25rem;
+        letter-spacing: -0.5px;
+      }
+
+      .header-titles p {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        font-weight: 400;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        transition: color 0.2s;
+      }
+      .back-link:hover {
+        color: #00ffcc;
+      }
+      .back-link svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      /* ==========================================
+         CONFIGURAÇÕES GERAIS E PALETA DE CORES (TUI)
+         ========================================== */
+      :root {
+        --bg-terminal: #090d16; /* Fundo ultra escuro estilo terminal [cite: 1] */
+        --bg-panel: #111827; /* Fundo dos cards e painéis laterais [cite: 1] */
+        --neon-green: #10b981; /* Cor principal de destaque (Green/Emerald) [cite: 1] */
+        --neon-text: #34d399; /* Texto verde brilhante para comandos e sublinhados [cite: 1] */
+      }
+
+      /* Aplicando as cores customizadas que foram usadas no HTML */
+      .bg-terminal {
+        background-color: var(--bg-terminal);
+      }
+
+      .bg-panel {
+        background-color: var(--bg-panel);
+      }
+
+      .bg-neonGreen {
+        background-color: var(--neon-green);
+      }
+
+      .text-neonText {
+        color: var(--neon-text);
+      }
+
+      .border-neonGreen {
+        border-color: var(--neon-green);
+      }
+
+      /* ==========================================
+         ESTILIZAÇÃO DA IMAGEM DE PREVIEW (VIDEO-BG)
+         ========================================== */
+      .video-bg {
+        /* Simula uma tela de fósforo verde antiga ou arte do jogo ao fundo */
+        background-image:
+          linear-gradient(rgba(16, 185, 129, 0.1) 50%, rgba(0, 0, 0, 0.3) 50%),
+          url("https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop");
+        background-size:
+          100% 4px,
+          cover;
+      }
+
+      /* ==========================================
+         EFEITOS E ANIMAÇÕES (RETRO TERMINAL)
+         ========================================== */
+
+      /* Animação de piscar para simular o cursor do terminal (usado no >_ TamaGO) */
+      @keyframes pulse-cursor {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .font-mono {
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      /* Suavização de transição para os botões de Screenshot */
+      .btn-screenshot {
+        transition: all 0.2s ease-in-out;
+      }
+
+      .btn-screenshot:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-terminal text-gray-300 font-sans antialiased selection:bg-neonGreen selection:text-white"
+  >
+    <!-- CABEÇALHO PADRÃO DO PORTAL -->
+    <header class="main-header">
+      <div class="header-container">
+        <div class="institution-logo-container">
+          <span>
+            <a href="https://portal.unis.edu.br/?hsLang=pt-br">
+              <img
+                src="https://portal.unis.edu.br/hs-fs/hubfs/LogoUnisBranca.png?width=97&height=60&name=LogoUnisBranca.png"
+                height="60"
+                style="height: auto; width: 97px; border: 0"
+                width="97"
+                alt="Logo UNIS"
+              />
+            </a>
+          </span>
+        </div>
+        <div class="header-titles">
+          <h1>EXPO_GAMES_PORTAL v1.0</h1>
+          <p>
+            Repositório de Páginas de Loja (Store Pages) da Turma de
+            Desenvolvimento de Games
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+      </svg>
+      Voltar ao Portal
+    </a>
+
+    <header
+      class="border-b border-gray-800 bg-panel/50 backdrop-blur"
+    >
+      <div
+        class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="bg-neonGreen text-white p-2 rounded-lg font-mono font-bold text-xl tracking-wider"
+          >
+            &gt;_ TamaGO
+          </div>
+          <div>
+            <h1 class="text-xl font-bold text-white font-mono">TamaGO</h1>
+            <p class="text-xs text-neonText">v1.25 | Go + Bubble Tea TUI</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <span
+            class="text-xs bg-gray-800 px-3 py-1.5 rounded-full text-gray-400 font-medium"
+            >CLASSIFICAÇÃO: LIVRE</span
+          >
+          <a
+            href="https://github.com/DeMart1n/Tamagotchi"
+            target="_blank"
+            class="bg-neonGreen hover:bg-emerald-600 text-white font-semibold px-5 py-2 rounded-lg flex items-center gap-2 transition text-sm shadow-lg shadow-emerald-900/20"
+          >
+            <i data-lucide="github" class="w-4 h-4"></i> Ver no GitHub
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2 space-y-4">
+          <!-- Área do Vídeo / Preview Central -->
+          <div
+            class="aspect-video bg-black rounded-xl overflow-hidden border border-gray-800 relative group flex flex-col justify-center items-center p-6 text-center"
+          >
+            <div
+              class="absolute inset-0 bg-cover bg-center opacity-30 filter blur-sm video-bg"
+            ></div>
+            <div class="relative z-10 space-y-3">
+              <div
+                class="w-16 h-16 bg-neonGreen text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-105 transition cursor-pointer btn-play"
+              >
+                <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+              </div>
+              <h3 class="font-mono font-bold text-lg text-white">
+                TamaGO - Trailer Oficial
+              </h3>
+              <p class="text-xs text-gray-400">
+                Clique para assistir a gameplay baseada em texto e comandos
+                táticos no YouTube
+              </p>
+            </div>
+          </div>
+
+          <!-- Botões de Screenshot Corrigidos -->
+          <div class="grid grid-cols-3 gap-3">
+            <button
+              data-screenshot="status"
+              class="btn-screenshot border border-neonGreen bg-panel p-3 rounded-lg text-left hover:border-emerald-500 transition focus:outline-none"
+            >
+              <span class="block text-xs font-mono text-neonText mb-1"
+                >[SCREENSHOT 1]</span
+              >
+              <span class="block text-sm font-bold text-white truncate"
+                >Status e Comandos</span
+              >
+            </button>
+            <button
+              data-screenshot="evolution"
+              class="btn-screenshot border border-gray-800 bg-panel p-3 rounded-lg text-left hover:border-gray-700 transition focus:outline-none"
+            >
+              <span class="block text-xs font-mono text-gray-500 mb-1"
+                >[SCREENSHOT 2]</span
+              >
+              <span class="block text-sm font-bold text-white truncate"
+                >5 Estágios de Vida</span
+              >
+            </button>
+            <button
+              data-screenshot="dungeon"
+              class="btn-screenshot border border-gray-800 bg-panel p-3 rounded-lg text-left hover:border-gray-700 transition focus:outline-none"
+            >
+              <span class="block text-xs font-mono text-gray-500 mb-1"
+                >[SCREENSHOT 3]</span
+              >
+              <span class="block text-sm font-bold text-white truncate"
+                >Combate RPG</span
+              >
+            </button>
+          </div>
+
+          <!-- Caixa Dinâmica de Descrição -->
+          <div
+            id="screenshot-desc"
+            class="bg-panel border border-gray-800 p-4 rounded-xl font-mono text-xs text-gray-400"
+          >
+            <span class="text-white font-bold block mb-1"
+              >Status e Comandos:</span
+            >
+            Gerencie os recursos vitais e visualize o estado atual do seu pet
+            diretamente pela interface do terminal.
+          </div>
+        </div>
+
+        <!-- Coluna Lateral Direita -->
+        <div class="space-y-6">
+          <div class="bg-panel border border-gray-800 p-6 rounded-xl space-y-4">
+            <h2 class="text-2xl font-black text-white tracking-tight">
+              TamaGO
+            </h2>
+            <p class="text-sm text-gray-400 leading-relaxed">
+              Derrote inimigos, colete artefatos e gerencie recursos vitais em
+              um ecossistema CLI dinâmico de estratégia em tempo real.
+            </p>
+
+            <hr class="border-gray-800" />
+
+            <div class="space-y-2">
+              <span class="text-xs font-mono uppercase text-gray-500 block"
+                >Gêneros</span
+              >
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded"
+                  >RPG</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded"
+                  >Simulação</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded"
+                  >Casual</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded"
+                  >TUI</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-300 text-xs px-2.5 py-1 rounded"
+                  >Sandbox</span
+                >
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <span class="text-xs font-mono uppercase text-gray-500 block"
+                >Especificações</span
+              >
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-gray-800 text-gray-400 text-xs px-2 py-0.5 rounded"
+                  >Single-player</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-400 text-xs px-2 py-0.5 rounded"
+                  >Offline-First</span
+                >
+                <span
+                  class="bg-gray-800 text-gray-400 text-xs px-2 py-0.5 rounded"
+                  >PC Terminal</span
+                >
+              </div>
+            </div>
+
+            <hr class="border-gray-800" />
+
+            <div
+              class="bg-terminal p-4 rounded-lg border border-gray-800 space-y-3"
+            >
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-mono text-gray-400"
+                  >Preço sugerido:</span
+                >
+                <span class="text-xl font-mono font-bold text-neonText"
+                  >Gratuito / Open Source</span
+                >
+              </div>
+              <button
+                id="btn-download"
+                class="w-full bg-neonGreen hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <i data-lucide="download" class="w-5 h-5"></i> Jogar Agora no
+                Terminal
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="bg-panel border border-gray-800 p-4 rounded-xl text-xs space-y-2 font-mono"
+          >
+            <span class="text-gray-500 block uppercase"
+              >Desenvolvedores (Equipe):</span
+            >
+            <ul class="text-gray-300 space-y-1">
+              <li>• Cauã De Martin</li>
+              <li>• Luiz Felipe Arcanjo Rangel</li>
+              <li>• Jean da Silva Lopes</li>
+              <li>• Luis Filipe Alves</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Abas de navegação corrigidas -->
+      <div class="border-b border-gray-800 flex gap-6 mb-6">
+        <button
+          class="border-b-2 border-neonGreen text-white font-bold pb-3 px-1 text-sm font-mono"
+        >
+          [01] HISTÓRIA E CONTEXTO NARRATIVO
+        </button>
+      </div>
+
+      <!-- Seção Inferior: Detalhes do Jogo -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-8">
+          <section class="space-y-3">
+            <p class="text-base leading-relaxed text-gray-300">
+              <strong>TamaGO</strong> une perfeitamente a nostalgia dos
+              clássicos pets virtuais com mecânicas de RPG tático moderno. Sua
+              missão é manter o pet alimentado, hidratado e feliz enquanto
+              explora masmorras perigosas. Cada ação direta impacta a complexa
+              árvore de evolução biológica do personagem.
+            </p>
+          </section>
+
+          <section class="space-y-4">
+            <h3
+              class="text-lg font-bold text-white font-mono flex items-center gap-2"
+            >
+              <span class="text-neonText">&gt;</span> Mecânicas Core Expandidas
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div
+                class="bg-panel border border-gray-800 p-4 rounded-xl space-y-1"
+              >
+                <h4
+                  class="text-white font-bold text-sm flex items-center gap-2"
+                >
+                  <i data-lucide="heart" class="w-4 h-4 text-rose-500"></i> Pet
+                  Virtual e Sobrevivência
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Controle em tempo real de Fome, Sede, Energia, Felicidade e
+                  Calma. O descaso leva ao Game Over!
+                </p>
+              </div>
+
+              <div
+                class="bg-panel border border-gray-800 p-4 rounded-xl space-y-1"
+              >
+                <h4
+                  class="text-white font-bold text-sm flex items-center gap-2"
+                >
+                  <i data-lucide="swords" class="w-4 h-4 text-amber-500"></i>
+                  Dungeon RPG Tática
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Masmorra de 5 andares liberada no Lvl 3. Enfrente 9 tipos de
+                  inimigos em combate tático por turnos.
+                </p>
+              </div>
+
+              <div
+                class="bg-panel border border-gray-800 p-4 rounded-xl space-y-1"
+              >
+                <h4
+                  class="text-white font-bold text-sm flex items-center gap-2"
+                >
+                  <i data-lucide="sparkles" class="w-4 h-4 text-purple-500"></i>
+                  Evoluções e Níveis
+                </h4>
+                <p class="text-xs text-gray-400">
+                  5 Estágios (Baby até Ancião) e 25 níveis de progressão
+                  escalável por árvore de XP.
+                </p>
+              </div>
+
+              <div
+                class="bg-panel border border-gray-800 p-4 rounded-xl space-y-1"
+              >
+                <h4
+                  class="text-white font-bold text-sm flex items-center gap-2"
+                >
+                  <i data-lucide="map" class="w-4 h-4 text-blue-500"></i> 4
+                  Biomas Dinâmicos
+                </h4>
+                <p class="text-xs text-gray-400">
+                  Zonas Florestal, Gélida, Vulcânica e Abissal com modificadores
+                  ambientais e loots exclusivos.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Sumário Técnico Corrigido de acordo com o documento -->
+          <section
+            class="bg-panel/50 p-6 rounded-xl border border-gray-800 font-mono text-xs space-y-2"
+          >
+            <h4 class="text-white font-bold mb-3 text-sm">
+              ✨ Dados e Conteúdo Geral do Sistema:
+            </h4>
+            <p class="flex justify-between border-b border-gray-800/50 py-1">
+              <span>• Armamento e Itens:</span>
+              <span class="text-white"
+                >12 Equipamentos Únicos em 3 Slots (Até Lendário)</span
+              >
+            </p>
+            <p class="flex justify-between border-b border-gray-800/50 py-1">
+              <span>• Sistema de Conquistas:</span>
+              <span class="text-white"
+                >15 Achievements integrados ao core do jogo</span
+              >
+            </p>
+            <p class="flex justify-between border-b border-gray-800/50 py-1">
+              <span>• Salvamento e Persistência:</span>
+              <span class="text-white"
+                >Persistência local e automática (Save/Load) via TUI</span
+              >
+            </p>
+            <p class="flex justify-between py-1">
+              <span>• Engine de Interface gráfica:</span>
+              <span class="text-white"
+                >Construído em Go usando Bubble Tea e Lipgloss</span
+              >
+            </p>
+          </section>
+        </div>
+
+        <!-- Requisitos do Sistema atualizados -->
+        <div class="space-y-6">
+          <div class="bg-panel border border-gray-800 p-5 rounded-xl space-y-4">
+            <h3
+              class="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2"
+            >
+              <i data-lucide="cpu" class="w-4 h-4 text-neonText"></i> Requisitos
+              de Sistema
+            </h3>
+
+            <div class="space-y-2 text-xs">
+              <span class="font-bold text-neonText block font-mono"
+                >[MINIMOS]</span
+              >
+              <p>
+                <strong class="text-gray-400">SO:</strong> Win 10+/macOS
+                10.14+/Linux
+              </p>
+              <p>
+                <strong class="text-gray-400">CPU:</strong> Dual-Core 2.0 GHz
+                (Intel i3 ou equiv.)
+              </p>
+              <p><strong class="text-gray-400">RAM:</strong> 512 MB RAM</p>
+              <p><strong class="text-gray-400">Espaço:</strong> 50 MB</p>
+              <p>
+                <strong class="text-gray-400">Console:</strong> Suporte Unicode
+                e Cores ANSI
+              </p>
+            </div>
+
+            <hr class="border-gray-800" />
+
+            <div class="space-y-2 text-xs">
+              <span class="font-bold text-emerald-400 block font-mono"
+                >[RECOMENDADOS]</span
+              >
+              <p>
+                <strong class="text-gray-400">SO:</strong> Windows 11/macOS
+                12+/Linux Atual
+              </p>
+              <p>
+                <strong class="text-gray-400">CPU:</strong> Quad-Core (Intel
+                i5+/Ryzen 5+)
+              </p>
+              <p><strong class="text-gray-400">RAM:</strong> 2 GB RAM</p>
+              <p><strong class="text-gray-400">Espaço:</strong> 100 MB SSD</p>
+              <p>
+                <strong class="text-gray-400">Rede:</strong> Offline (Futuras
+                features opcionais)
+              </p>
+            </div>
+
+            <hr class="border-gray-800" />
+            <p class="text-[10px] text-gray-500 leading-relaxed">
+              <strong class="text-gray-400">Justificativa Livre:</strong> Sem
+              conteúdo violento explícito. Linguagem totalmente apropriada para
+              todas as idades.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Inicializa os ícones Lucide
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // Banco de dados corrigido com base nas especificações do jogo
+      const screenshotsData = {
+        status: {
+          title: "Status e Comandos:",
+          desc: "Gerencie os recursos vitais e visualize o estado atual do seu pet diretamente pela interface do terminal.",
+        },
+        evolution: {
+          title: "5 Estágios de Vida:",
+          desc: "Acompanhe a árvore de evolução biológica do seu TamaGO partindo do estágio Baby até alcançar o status de Ancião.",
+        },
+        dungeon: {
+          title: "Combate RPG:",
+          desc: "Explore masmorras perigosas de até 5 andares encarando batalhas táticas por turnos contra inimigos variados.",
+        },
+      };
+
+      const screenshotButtons = document.querySelectorAll(".btn-screenshot");
+      const descriptionBox = document.getElementById("screenshot-desc");
+      const playButton = document.querySelector(".btn-play");
+      const downloadButton = document.getElementById("btn-download");
+
+      function changeMedia(event) {
+        const targetButton = event.currentTarget;
+        const screenshotKey = targetButton.getAttribute("data-screenshot");
+        const data = screenshotsData[screenshotKey];
+
+        if (!data) return;
+
+        descriptionBox.innerHTML = `<span class="text-white font-bold block mb-1">${data.title}</span> ${data.desc}`;
+
+        screenshotButtons.forEach((btn) => {
+          btn.classList.remove("border-neonGreen");
+          btn.classList.add("border-gray-800");
+
+          const label = btn.querySelector("span");
+          if (label) {
+            label.classList.remove("text-neonText");
+            label.classList.add("text-gray-500");
+          }
+        });
+
+        targetButton.classList.remove("border-gray-800");
+        targetButton.classList.add("border-neonGreen");
+
+        const activeLabel = targetButton.querySelector("span");
+        if (activeLabel) {
+          activeLabel.classList.remove("text-gray-500");
+          activeLabel.classList.add("text-neonText");
+        }
+      }
+
+      screenshotButtons.forEach((button) => {
+        button.addEventListener("click", changeMedia);
+      });
+
+      if (playButton) {
+        playButton.addEventListener("click", () => {
+          window.open(
+            "https://youtube.com/watch?v=tamago-official-trailer",
+            "_blank",
+          );
+        });
+      }
+
+      if (downloadButton) {
+        downloadButton.addEventListener("click", () => {
+          alert(
+            "Redirecionando para o repositório GitHub (DeMart1n/Tamagotchi) para clonar e rodar o projeto em Go!",
+          );
+        });
+      }
+    </script>
+  </body>
+</html>
