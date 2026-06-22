@@ -386,13 +386,21 @@
                   >Gratuito / Open Source</span
                 >
               </div>
-              <button
-                id="btn-download"
+              <a
+                href="https://github.com/DeMart1n/Tamagotchi"
+                target="_blank"
                 class="w-full bg-neonGreen hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2"
               >
                 <i class="fa-brands fa-github text-lg"></i> Jogar Agora no
                 Terminal
-              </button>
+            </a>
+              <a
+                href="https://marketplace.visualstudio.com/items?itemName=demartin.tamago-extension"
+                target="_blank"
+                class="w-full bg-neonGreen hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <i class="fa-solid fa-code"></i> Adicionar ao VS Code
+              </a>
             </div>
           </div>
 
@@ -624,7 +632,6 @@
       };
 
       const descriptionBox = document.getElementById("screenshot-desc");
-      const downloadButton = document.getElementById("btn-download");
 
       function changeMedia(event) {
         const targetButton = event.currentTarget;
@@ -659,14 +666,6 @@
       screenshotButtons.forEach((button) => {
         button.addEventListener("click", changeMedia);
       });
-
-      if (downloadButton) {
-        downloadButton.addEventListener("click", () => {
-          alert(
-            "Redirecionando para o repositório GitHub (DeMart1n/Tamagotchi) para clonar e rodar o projeto em Go!",
-          );
-        });
-      }
     </script>
   </body>
 </html>
