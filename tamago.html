@@ -242,20 +242,26 @@
         <div class="lg:col-span-2 space-y-4">
           <!-- Área do Vídeo / Preview Central -->
           <div
-            class="aspect-video bg-black rounded-xl overflow-hidden border border-gray-800 relative group flex flex-col justify-center items-center p-6 text-center"
+            id="media-container"
+            class="aspect-video bg-black rounded-xl overflow-hidden border border-gray-800 relative group flex flex-col justify-center items-center text-center"
           >
-            <div
-              class="absolute inset-0 bg-cover bg-center opacity-30 filter blur-sm video-bg"
-            ></div>
-            <div class="relative z-10 space-y-3">
-              <div
-                class="w-16 h-16 bg-neonGreen text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-105 transition cursor-pointer btn-play"
-              >
-                <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+            <div id="media-content" class="w-full h-full relative flex items-center justify-center">
+              <div class="absolute inset-0 bg-cover bg-center transition-all duration-300 opacity-40" style="background-image: linear-gradient(rgba(16, 185, 129, 0.15) 50%, rgba(0, 0, 0, 0.45) 50%), url('img/tamago/view.jpeg');"></div>
+              <div class="relative z-10 space-y-3 p-6">
+                <button
+                  class="w-16 h-16 bg-neonGreen text-white rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-105 transition cursor-pointer btn-play focus:outline-none"
+                >
+                  <i class="fa-solid fa-play text-2xl ml-1 text-white"></i>
+                  <a href="https://www.youtube.com/watch?v=jbLJWGXkjTw" 
+                    target="_blank" 
+                    class="absolute inset-0 w-full h-full flex items-center justify-center text-transparent"
+                    aria-label="Assistir Teaser Oficial de TamaGO no YouTube"
+                  ></a>
+                </button>
+                <h3 class="font-mono font-bold text-lg text-white">
+                  TamaGO - Teaser Oficial
+                </h3>
               </div>
-              <h3 class="font-mono font-bold text-lg text-white">
-                TamaGO - Teaser Oficial
-              </h3>
             </div>
           </div>
 
@@ -617,9 +623,7 @@
         },
       };
 
-      const screenshotButtons = document.querySelectorAll(".btn-screenshot");
       const descriptionBox = document.getElementById("screenshot-desc");
-      const playButton = document.querySelector(".btn-play");
       const downloadButton = document.getElementById("btn-download");
 
       function changeMedia(event) {
@@ -655,15 +659,6 @@
       screenshotButtons.forEach((button) => {
         button.addEventListener("click", changeMedia);
       });
-
-      if (playButton) {
-        playButton.addEventListener("click", () => {
-          window.open(
-            "https://youtu.be/jbLJWGXkjTw",
-            "_blank",
-          );
-        });
-      }
 
       if (downloadButton) {
         downloadButton.addEventListener("click", () => {
